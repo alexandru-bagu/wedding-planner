@@ -1,4 +1,4 @@
-﻿namespace OOD.WeddingPlanner.Web.Menus
+namespace OOD.WeddingPlanner.Web.Menus
 {
     public class WeddingPlannerMenus
     {
@@ -7,5 +7,6 @@
 
         //Add your menu items here...
 
+        public const string Location = Prefix + ".Location";
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 
@@ -15,5 +15,25 @@ namespace OOD.WeddingPlanner.Locations
         public virtual double Longitude { get; set; }
 
         public virtual double Latitude { get; set; }
+
+        protected Location()
+        {
+        }
+
+        public Location(
+            Guid id,
+            Guid? tenantId,
+            string name,
+            string description,
+            double longitude,
+            double latitude
+        ) : base(id)
+        {
+            TenantId = tenantId;
+            Name = name;
+            Description = description;
+            Longitude = longitude;
+            Latitude = latitude;
+        }
     }
 }

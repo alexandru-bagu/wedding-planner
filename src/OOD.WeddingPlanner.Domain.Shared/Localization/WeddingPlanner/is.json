@@ -3,6 +3,20 @@
   "texts": {
     "Menu:Home": "Heim",
     "Welcome": "Velkomin",
-    "LongWelcomeMessage": "Verið velkomin í forritið. Þetta er startup verkefni sem byggir á ABP. Nánari upplýsingar er að finna á abp.io."
+    "LongWelcomeMessage": "Verið velkomin í forritið. Þetta er startup verkefni sem byggir á ABP. Nánari upplýsingar er að finna á abp.io.",
+    "Permission:Location": "Location",
+    "Permission:Create": "Create",
+    "Permission:Update": "Update",
+    "Permission:Delete": "Delete",
+    "Menu:Location": "MenuLocation",
+    "Location": "Location",
+    "LocationName": "LocationName",
+    "LocationDescription": "LocationDescription",
+    "LocationLongitude": "LocationLongitude",
+    "LocationLatitude": "LocationLatitude",
+    "CreateLocation": "CreateLocation",
+    "EditLocation": "EditLocation",
+    "LocationDeletionConfirmationMessage": "Are you sure to delete the location {0}?",
+    "SuccessfullyDeleted": "Successfully deleted"
   }
 }

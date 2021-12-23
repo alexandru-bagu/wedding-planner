@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using OOD.WeddingPlanner.Locations;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -39,6 +40,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
                 /* Remove "includeAllEntities: true" to create
                  * default repositories only for aggregate roots */
                 options.AddDefaultRepositories(includeAllEntities: true);
+                options.AddRepository<Location, LocationRepository>();
             });
 
             Configure<AbpDbContextOptions>(options =>

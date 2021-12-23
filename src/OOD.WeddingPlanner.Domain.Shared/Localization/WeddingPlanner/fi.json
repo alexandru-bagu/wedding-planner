@@ -3,6 +3,20 @@
   "texts": {
     "Menu:Home": "Koti",
     "Welcome": "Tervetuloa",
-    "LongWelcomeMessage": "Tervetuloa sovellukseen. Tämä on ABP-kehykseen perustuva käynnistysprojekti. Lisätietoja on osoitteessa abp.io."
+    "LongWelcomeMessage": "Tervetuloa sovellukseen. Tämä on ABP-kehykseen perustuva käynnistysprojekti. Lisätietoja on osoitteessa abp.io.",
+    "Permission:Location": "Location",
+    "Permission:Create": "Create",
+    "Permission:Update": "Update",
+    "Permission:Delete": "Delete",
+    "Menu:Location": "MenuLocation",
+    "Location": "Location",
+    "LocationName": "LocationName",
+    "LocationDescription": "LocationDescription",
+    "LocationLongitude": "LocationLongitude",
+    "LocationLatitude": "LocationLatitude",
+    "CreateLocation": "CreateLocation",
+    "EditLocation": "EditLocation",
+    "LocationDeletionConfirmationMessage": "Are you sure to delete the location {0}?",
+    "SuccessfullyDeleted": "Successfully deleted"
   }
 }

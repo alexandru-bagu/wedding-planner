@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+using OOD.WeddingPlanner.Locations;
+using OOD.WeddingPlanner.Locations.Dtos;
+using AutoMapper;
 
 namespace OOD.WeddingPlanner
 {
@@ -9,6 +11,8 @@ namespace OOD.WeddingPlanner
             /* You can configure your AutoMapper mapping configuration here.
              * Alternatively, you can split your mapping configurations
              * into multiple profile classes for a better organization. */
+            CreateMap<Location, LocationDto>();
+            CreateMap<CreateUpdateLocationDto, Location>(MemberList.Source);
         }
     }
 }

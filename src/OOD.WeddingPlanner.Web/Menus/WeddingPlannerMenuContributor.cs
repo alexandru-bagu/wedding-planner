@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
+using OOD.WeddingPlanner.Permissions;
 using OOD.WeddingPlanner.Localization;
 using OOD.WeddingPlanner.MultiTenancy;
 using Volo.Abp.Identity.Web.Navigation;
@@ -45,6 +46,12 @@ namespace OOD.WeddingPlanner.Web.Menus
 
             administration.SetSubItemOrder(IdentityMenuNames.GroupName, 2);
             administration.SetSubItemOrder(SettingManagementMenuNames.GroupName, 3);
+            if (await context.IsGrantedAsync(WeddingPlannerPermissions.Location.Default))
+            {
+                context.Menu.AddItem(
+                    new ApplicationMenuItem(WeddingPlannerMenus.Location, l["Menu:Location"], "/Locations/Location")
+                );
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+using OOD.WeddingPlanner.Locations.Dtos;
+using OOD.WeddingPlanner.Web.Pages.Locations.Location.ViewModels;
+using AutoMapper;
 
 namespace OOD.WeddingPlanner.Web
 {
@@ -7,6 +9,8 @@ namespace OOD.WeddingPlanner.Web
         public WeddingPlannerWebAutoMapperProfile()
         {
             //Define your AutoMapper configuration here for the Web project.
+            CreateMap<LocationDto, CreateEditLocationViewModel>();
+            CreateMap<CreateEditLocationViewModel, CreateUpdateLocationDto>();
         }
     }
 }

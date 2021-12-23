@@ -260,3 +260,8 @@ src/OOD.WeddingPlanner.HttpApi.HostWithIds/Logs/*
 src/OOD.WeddingPlanner.DbMigrator/Logs/*
 src/OOD.WeddingPlanner.Blazor.Server/Logs/*
 src/OOD.WeddingPlanner.Blazor.Server.Tiered/Logs/*
+
+
+WeddingPlanner.db
+WeddingPlanner.db-wal
+WeddingPlanner.db-shm
