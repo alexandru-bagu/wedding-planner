@@ -17,13 +17,8 @@ namespace OOD.WeddingPlanner.Invitees
 
         public virtual Invitation Invitation { get; set; }
 
-        public DateTime? RSVP { get; set; }
+        public virtual DateTime? RSVP { get; set; }
 
-        public bool? Confirmed { get; set; }
-
-        public Invitee()
-        {
-
-        }
+        public virtual bool? Confirmed { get; set; }
     }
 }

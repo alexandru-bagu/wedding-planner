@@ -15,9 +15,5 @@ namespace OOD.WeddingPlanner.Locations
         public virtual double Longitude { get; set; }
 
         public virtual double Latitude { get; set; }
-
-        public Location()
-        {
-        }
     }
 }

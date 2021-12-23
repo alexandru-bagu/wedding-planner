@@ -16,10 +16,5 @@ namespace OOD.WeddingPlanner.Invitations
         public virtual List<Invitee> Invitees { get; set; }
 
         public virtual Wedding Wedding { get; set; }
-
-        public Invitation()
-        {
-            Invitees = new List<Invitee>();
-        }
     }
 }
