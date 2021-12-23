@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>OOD.WeddingPlanner</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OOD.WeddingPlanner.Domain.Shared\OOD.WeddingPlanner.Domain.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Emailing" Version="5.0.0" />
+    <PackageReference Include="Volo.Abp.Identity.Domain" Version="5.0.0" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" Version="5.0.0" />
+    <PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="5.0.0" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.IdentityServer" Version="5.0.0" />
+    <PackageReference Include="Volo.Abp.BackgroundJobs.Domain" Version="5.0.0" />
+    <PackageReference Include="Volo.Abp.AuditLogging.Domain" Version="5.0.0" />
+    <PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="5.0.0" />
+    <PackageReference Include="Volo.Abp.FeatureManagement.Domain" Version="5.0.0" />
+    <PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Invitations\" />
+    <None Remove="Invitees\" />
+    <None Remove="Weddings\" />
+    <None Remove="Locations\" />
+    <None Remove="Event\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Invitations\" />
+    <Folder Include="Invitees\" />
+    <Folder Include="Weddings\" />
+    <Folder Include="Locations\" />
+    <Folder Include="Events\" />
+  </ItemGroup>
+</Project>
