@@ -13,18 +13,18 @@ namespace OOD.WeddingPlanner.Web
     {
       Log.Logger = new LoggerConfiguration()
 #if DEBUG
-                .MinimumLevel.Debug()
+      .MinimumLevel.Debug()
 #else
-                .MinimumLevel.Information()
+      .MinimumLevel.Information()
 #endif
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-          .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
-          .Enrich.FromLogContext()
-          .WriteTo.Async(c => c.File("Logs/logs.txt"))
+      .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+      .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
+      .Enrich.FromLogContext()
+      .WriteTo.Async(c => c.File("Logs/logs.txt"))
 #if DEBUG
-                .WriteTo.Async(c => c.Console())
+      .WriteTo.Async(c => c.Console())
 #endif
-                .CreateLogger();
+      .CreateLogger();
 
       try
       {

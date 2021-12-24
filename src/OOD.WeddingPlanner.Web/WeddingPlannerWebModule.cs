@@ -38,6 +38,7 @@ using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
 using Lsw.Abp.AspNetCore.Mvc.UI.Theme.Stisla;
+using Lsw.Abp.AspNetCore.Mvc.UI.Theme.Stisla.Bundling;
 
 namespace OOD.WeddingPlanner.Web
 {
@@ -101,12 +102,10 @@ namespace OOD.WeddingPlanner.Web
       Configure<AbpBundlingOptions>(options =>
       {
         options.StyleBundles.Configure(
-                  BasicThemeBundles.Styles.Global,
-                  bundle =>
-                  {
-                bundle.AddFiles("/global-styles.css");
-              }
-              );
+          StislaThemeBundles.Styles.Global, bundle =>
+          {
+            bundle.AddFiles("/global-styles.css");
+          });
       });
     }
 
