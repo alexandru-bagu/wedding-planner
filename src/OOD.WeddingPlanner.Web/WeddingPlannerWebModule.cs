@@ -37,6 +37,7 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using Lsw.Abp.AspNetCore.Mvc.UI.Theme.Stisla;
 
 namespace OOD.WeddingPlanner.Web
 {
@@ -48,7 +49,7 @@ namespace OOD.WeddingPlanner.Web
         typeof(AbpIdentityWebModule),
         typeof(AbpSettingManagementWebModule),
         typeof(AbpAccountWebIdentityServerModule),
-        typeof(AbpAspNetCoreMvcUiBasicThemeModule),
+        typeof(AbpAspNetCoreMvcUiStislaThemeModule),
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
         typeof(AbpTenantManagementWebModule),
         typeof(AbpAspNetCoreSerilogModule),

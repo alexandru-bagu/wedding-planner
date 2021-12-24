@@ -19,6 +19,7 @@
     <Content Remove="Logs\**" />
     <EmbeddedResource Remove="Logs\**" />
     <None Remove="Logs\**" />
+    <None Remove="Lsw.Abp.AspNetCore.Mvc.UI.Theme.Stisla" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +32,7 @@
   <ItemGroup>
     <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
+    <PackageReference Include="Lsw.Abp.AspNetCore.Mvc.UI.Theme.Stisla" Version="1.9.0" />
   </ItemGroup>
 
   <ItemGroup>
