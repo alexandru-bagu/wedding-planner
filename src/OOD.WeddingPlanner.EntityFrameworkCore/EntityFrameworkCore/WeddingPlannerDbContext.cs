@@ -16,6 +16,7 @@ using OOD.WeddingPlanner.Locations;
 using Volo.Abp.EntityFrameworkCore.Modeling;
 using OOD.WeddingPlanner.Events;
 using OOD.WeddingPlanner.Invitees;
+using OOD.WeddingPlanner.Invitations;
 
 namespace OOD.WeddingPlanner.EntityFrameworkCore
 {
@@ -58,6 +59,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
         public DbSet<Location> Locations { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Invitee> Invitees { get; set; }
+        public DbSet<Invitation> Invitations { get; set; }
         
         public WeddingPlannerDbContext(DbContextOptions<WeddingPlannerDbContext> options)
             : base(options)
@@ -113,6 +115,16 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
             builder.Entity<Invitee>(b =>
             {
                 b.ToTable(WeddingPlannerConsts.DbTablePrefix + "Invitees", WeddingPlannerConsts.DbSchema);
+                b.ConfigureByConvention(); 
+                
+
+                /* Configure more properties here */
+            });
+
+
+            builder.Entity<Invitation>(b =>
+            {
+                b.ToTable(WeddingPlannerConsts.DbTablePrefix + "Invitations", WeddingPlannerConsts.DbSchema);
                 b.ConfigureByConvention(); 
                 
 

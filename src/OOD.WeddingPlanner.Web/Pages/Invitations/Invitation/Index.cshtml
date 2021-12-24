@@ -1,0 +1,48 @@
+@page
+@using OOD.WeddingPlanner.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using OOD.WeddingPlanner.Web.Pages.Invitations.Invitation
+@using OOD.WeddingPlanner.Localization
+@using OOD.WeddingPlanner.Web.Menus
+@model IndexModel
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<WeddingPlannerResource> L
+@inject IAuthorizationService Authorization
+@{
+    PageLayout.Content.Title = L["Invitation"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:Invitation"].Value);
+    PageLayout.Content.MenuItemName = WeddingPlannerMenus.Invitation;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Invitations/Invitation/index.js" />
+}
+@section styles
+{
+    <abp-style src="/Pages/Invitations/Invitation/index.css"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["Invitation"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-right">
+			    @if (await Authorization.IsGrantedAsync(WeddingPlannerPermissions.Invitation.Create))
+                {
+                <abp-button id="NewInvitationButton"
+                            text="@L["CreateInvitation"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="InvitationTable" class="nowrap"/>
+    </abp-card-body>
+</abp-card>

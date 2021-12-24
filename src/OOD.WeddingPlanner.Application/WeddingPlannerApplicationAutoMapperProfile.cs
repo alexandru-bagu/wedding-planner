@@ -4,6 +4,8 @@ using OOD.WeddingPlanner.Events;
 using OOD.WeddingPlanner.Events.Dtos;
 using OOD.WeddingPlanner.Invitees;
 using OOD.WeddingPlanner.Invitees.Dtos;
+using OOD.WeddingPlanner.Invitations;
+using OOD.WeddingPlanner.Invitations.Dtos;
 using AutoMapper;
 
 namespace OOD.WeddingPlanner
@@ -21,6 +23,8 @@ namespace OOD.WeddingPlanner
             CreateMap<CreateUpdateEventDto, Event>(MemberList.Source);
             CreateMap<Invitee, InviteeDto>();
             CreateMap<CreateUpdateInviteeDto, Invitee>(MemberList.Source);
+            CreateMap<Invitation, InvitationDto>();
+            CreateMap<CreateUpdateInvitationDto, Invitation>(MemberList.Source);
         }
     }
 }

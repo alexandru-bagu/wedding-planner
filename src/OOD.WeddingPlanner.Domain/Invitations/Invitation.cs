@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using OOD.WeddingPlanner.Invitees;
 using OOD.WeddingPlanner.Weddings;
@@ -12,5 +12,19 @@ namespace OOD.WeddingPlanner.Invitations
         public virtual Guid? TenantId { get; set; }
 
         public virtual Guid? WeddingId { get; set; }
+
+        protected Invitation()
+        {
+        }
+
+        public Invitation(
+            Guid id,
+            Guid? tenantId,
+            Guid? weddingId
+        ) : base(id)
+        {
+            TenantId = tenantId;
+            WeddingId = weddingId;
+        }
     }
 }

@@ -38,6 +38,13 @@
     "InviteeConfirmed": "InviteeConfirmed",
     "CreateInvitee": "CreateInvitee",
     "EditInvitee": "EditInvitee",
-    "InviteeDeletionConfirmationMessage": "Are you sure to delete the invitee {0}?"
+    "InviteeDeletionConfirmationMessage": "Are you sure to delete the invitee {0}?",
+    "Permission:Invitation": "Invitation",
+    "Menu:Invitation": "MenuInvitation",
+    "Invitation": "Invitation",
+    "InvitationWeddingId": "InvitationWeddingId",
+    "CreateInvitation": "CreateInvitation",
+    "EditInvitation": "EditInvitation",
+    "InvitationDeletionConfirmationMessage": "Are you sure to delete the invitation {0}?"
   }
 }
