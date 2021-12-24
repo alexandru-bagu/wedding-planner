@@ -1,6 +1,5 @@
 using System;
 using OOD.WeddingPlanner.Events.Dtos;
-using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using System.Threading.Tasks;
 
@@ -10,7 +9,7 @@ namespace OOD.WeddingPlanner.Events
         ICrudAppService< 
             EventDto, 
             Guid, 
-            PagedAndSortedResultRequestDto,
+            GetEventsInputDto,
             CreateUpdateEventDto,
             CreateUpdateEventDto>
     {

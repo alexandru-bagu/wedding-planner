@@ -10,7 +10,7 @@ namespace OOD.WeddingPlanner.Weddings
         ICrudAppService< 
             WeddingDto, 
             Guid, 
-            PagedAndSortedResultRequestDto,
+            GetWeddingsInputDto,
             CreateUpdateWeddingDto,
             CreateUpdateWeddingDto>
     {

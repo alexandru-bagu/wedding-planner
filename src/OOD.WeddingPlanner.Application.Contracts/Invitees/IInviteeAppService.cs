@@ -10,7 +10,7 @@ namespace OOD.WeddingPlanner.Invitees
         ICrudAppService< 
             InviteeDto, 
             Guid, 
-            PagedAndSortedResultRequestDto,
+            GetInviteesInputDto,
             CreateUpdateInviteeDto,
             CreateUpdateInviteeDto>
     {

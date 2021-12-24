@@ -10,7 +10,7 @@ namespace OOD.WeddingPlanner.Locations
         ICrudAppService< 
             LocationDto, 
             Guid, 
-            PagedAndSortedResultRequestDto,
+            GetLocationsInputDto,
             CreateUpdateLocationDto,
             CreateUpdateLocationDto>
     {
