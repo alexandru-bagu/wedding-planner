@@ -265,3 +265,5 @@ src/OOD.WeddingPlanner.Blazor.Server.Tiered/Logs/*
 WeddingPlanner.db
 WeddingPlanner.db-wal
 WeddingPlanner.db-shm
+
+.vscode/

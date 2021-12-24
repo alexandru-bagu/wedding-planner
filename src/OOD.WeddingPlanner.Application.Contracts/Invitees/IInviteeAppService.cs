@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using OOD.WeddingPlanner.Invitees.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -13,6 +14,6 @@ namespace OOD.WeddingPlanner.Invitees
             CreateUpdateInviteeDto,
             CreateUpdateInviteeDto>
     {
-
+        Task<InviteeWithNavigationPropertiesDto> GetWithNavigationById(Guid id);
     }
 }
