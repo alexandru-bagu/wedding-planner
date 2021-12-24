@@ -1,3 +1,4 @@
+using OOD.WeddingPlanner.Invitees;
 using OOD.WeddingPlanner.Events;
 using OOD.WeddingPlanner.Locations;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,6 +44,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
                 options.AddDefaultRepositories(includeAllEntities: true);
                 options.AddRepository<Location, LocationRepository>();
                 options.AddRepository<Event, EventRepository>();
+                options.AddRepository<Invitee, InviteeRepository>();
             });
 
             Configure<AbpDbContextOptions>(options =>

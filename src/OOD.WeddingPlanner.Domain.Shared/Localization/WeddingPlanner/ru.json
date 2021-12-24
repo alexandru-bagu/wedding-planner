@@ -27,6 +27,17 @@
     "EventTime": "EventTime",
     "CreateEvent": "CreateEvent",
     "EditEvent": "EditEvent",
-    "EventDeletionConfirmationMessage": "Are you sure to delete the event {0}?"
+    "EventDeletionConfirmationMessage": "Are you sure to delete the event {0}?",
+    "Permission:Invitee": "Invitee",
+    "Menu:Invitee": "MenuInvitee",
+    "Invitee": "Invitee",
+    "InviteeSurname": "InviteeSurname",
+    "InviteeGivenName": "InviteeGivenName",
+    "InviteeInvitationId": "InviteeInvitationId",
+    "InviteeRSVP": "InviteeRSVP",
+    "InviteeConfirmed": "InviteeConfirmed",
+    "CreateInvitee": "CreateInvitee",
+    "EditInvitee": "EditInvitee",
+    "InviteeDeletionConfirmationMessage": "Are you sure to delete the invitee {0}?"
   }
 }

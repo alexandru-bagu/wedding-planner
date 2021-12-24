@@ -21,6 +21,11 @@ namespace OOD.WeddingPlanner.Permissions
             eventPermission.AddChild(WeddingPlannerPermissions.Event.Create, L("Permission:Create"));
             eventPermission.AddChild(WeddingPlannerPermissions.Event.Update, L("Permission:Update"));
             eventPermission.AddChild(WeddingPlannerPermissions.Event.Delete, L("Permission:Delete"));
+
+            var inviteePermission = myGroup.AddPermission(WeddingPlannerPermissions.Invitee.Default, L("Permission:Invitee"));
+            inviteePermission.AddChild(WeddingPlannerPermissions.Invitee.Create, L("Permission:Create"));
+            inviteePermission.AddChild(WeddingPlannerPermissions.Invitee.Update, L("Permission:Update"));
+            inviteePermission.AddChild(WeddingPlannerPermissions.Invitee.Delete, L("Permission:Delete"));
         }
 
         private static LocalizableString L(string name)

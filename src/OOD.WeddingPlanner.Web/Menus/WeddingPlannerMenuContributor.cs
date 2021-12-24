@@ -58,6 +58,12 @@ namespace OOD.WeddingPlanner.Web.Menus
                     new ApplicationMenuItem(WeddingPlannerMenus.Event, l["Menu:Event"], "/Events/Event")
                 );
             }
+            if (await context.IsGrantedAsync(WeddingPlannerPermissions.Invitee.Default))
+            {
+                context.Menu.AddItem(
+                    new ApplicationMenuItem(WeddingPlannerMenus.Invitee, l["Menu:Invitee"], "/Invitees/Invitee")
+                );
+            }
         }
     }
 }
