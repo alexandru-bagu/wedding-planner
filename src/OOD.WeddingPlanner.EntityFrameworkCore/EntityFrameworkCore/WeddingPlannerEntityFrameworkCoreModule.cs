@@ -1,3 +1,4 @@
+using OOD.WeddingPlanner.Events;
 using OOD.WeddingPlanner.Locations;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -41,6 +42,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
                  * default repositories only for aggregate roots */
                 options.AddDefaultRepositories(includeAllEntities: true);
                 options.AddRepository<Location, LocationRepository>();
+                options.AddRepository<Event, EventRepository>();
             });
 
             Configure<AbpDbContextOptions>(options =>

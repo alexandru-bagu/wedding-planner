@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using OOD.WeddingPlanner.Locations;
 using OOD.WeddingPlanner.Weddings;
 using Volo.Abp.Domain.Entities.Auditing;
@@ -17,5 +17,25 @@ namespace OOD.WeddingPlanner.Events
         public virtual string Name { get; set; }
 
         public virtual DateTime Time { get; set; }
+
+        protected Event()
+        {
+        }
+
+        public Event(
+            Guid id,
+            Guid? tenantId,
+            Guid? locationId,
+            Guid? weddingId,
+            string name,
+            DateTime time
+        ) : base(id)
+        {
+            TenantId = tenantId;
+            LocationId = locationId;
+            WeddingId = weddingId;
+            Name = name;
+            Time = time;
+        }
     }
 }

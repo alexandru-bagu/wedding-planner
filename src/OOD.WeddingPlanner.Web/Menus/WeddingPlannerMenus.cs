@@ -8,5 +8,6 @@ namespace OOD.WeddingPlanner.Web.Menus
         //Add your menu items here...
 
         public const string Location = Prefix + ".Location";
+        public const string Event = Prefix + ".Event";
     }
 }

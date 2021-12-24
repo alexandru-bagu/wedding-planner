@@ -17,6 +17,16 @@
     "CreateLocation": "CreateLocation",
     "EditLocation": "EditLocation",
     "LocationDeletionConfirmationMessage": "Are you sure to delete the location {0}?",
-    "SuccessfullyDeleted": "Successfully deleted"
+    "SuccessfullyDeleted": "Successfully deleted",
+    "Permission:Event": "Event",
+    "Menu:Event": "MenuEvent",
+    "Event": "Event",
+    "EventLocationId": "EventLocationId",
+    "EventWeddingId": "EventWeddingId",
+    "EventName": "EventName",
+    "EventTime": "EventTime",
+    "CreateEvent": "CreateEvent",
+    "EditEvent": "EditEvent",
+    "EventDeletionConfirmationMessage": "Are you sure to delete the event {0}?"
   }
 }

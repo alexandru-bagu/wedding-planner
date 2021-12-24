@@ -1,5 +1,7 @@
 using OOD.WeddingPlanner.Locations;
 using OOD.WeddingPlanner.Locations.Dtos;
+using OOD.WeddingPlanner.Events;
+using OOD.WeddingPlanner.Events.Dtos;
 using AutoMapper;
 
 namespace OOD.WeddingPlanner
@@ -13,6 +15,8 @@ namespace OOD.WeddingPlanner
              * into multiple profile classes for a better organization. */
             CreateMap<Location, LocationDto>();
             CreateMap<CreateUpdateLocationDto, Location>(MemberList.Source);
+            CreateMap<Event, EventDto>();
+            CreateMap<CreateUpdateEventDto, Event>(MemberList.Source);
         }
     }
 }

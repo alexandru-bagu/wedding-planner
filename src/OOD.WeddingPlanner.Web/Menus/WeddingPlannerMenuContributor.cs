@@ -52,6 +52,12 @@ namespace OOD.WeddingPlanner.Web.Menus
                     new ApplicationMenuItem(WeddingPlannerMenus.Location, l["Menu:Location"], "/Locations/Location")
                 );
             }
+            if (await context.IsGrantedAsync(WeddingPlannerPermissions.Event.Default))
+            {
+                context.Menu.AddItem(
+                    new ApplicationMenuItem(WeddingPlannerMenus.Event, l["Menu:Event"], "/Events/Event")
+                );
+            }
         }
     }
 }

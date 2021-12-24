@@ -14,6 +14,7 @@ using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using OOD.WeddingPlanner.Locations;
 using Volo.Abp.EntityFrameworkCore.Modeling;
+using OOD.WeddingPlanner.Events;
 
 namespace OOD.WeddingPlanner.EntityFrameworkCore
 {
@@ -54,6 +55,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
 
         #endregion
         public DbSet<Location> Locations { get; set; }
+        public DbSet<Event> Events { get; set; }
         
         public WeddingPlannerDbContext(DbContextOptions<WeddingPlannerDbContext> options)
             : base(options)
@@ -89,6 +91,16 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
             builder.Entity<Location>(b =>
             {
                 b.ToTable(WeddingPlannerConsts.DbTablePrefix + "Locations", WeddingPlannerConsts.DbSchema);
+                b.ConfigureByConvention(); 
+                
+
+                /* Configure more properties here */
+            });
+
+
+            builder.Entity<Event>(b =>
+            {
+                b.ToTable(WeddingPlannerConsts.DbTablePrefix + "Events", WeddingPlannerConsts.DbSchema);
                 b.ConfigureByConvention(); 
                 
 
