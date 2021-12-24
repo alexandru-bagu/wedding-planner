@@ -16,8 +16,6 @@ namespace OOD.WeddingPlanner.Events
 
         public virtual string Name { get; set; }
 
-        public virtual DateOnly Date { get; set; }
-
-        public virtual TimeOnly Time { get; set; }
+        public virtual DateTime Time { get; set; }
     }
 }

@@ -15,8 +15,6 @@ namespace OOD.WeddingPlanner.Invitees
 
         public virtual Guid? InvitationId { get; set; }
 
-        public virtual Invitation Invitation { get; set; }
-
         public virtual DateTime? RSVP { get; set; }
 
         public virtual bool? Confirmed { get; set; }
