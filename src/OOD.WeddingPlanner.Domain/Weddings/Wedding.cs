@@ -10,6 +10,12 @@ namespace OOD.WeddingPlanner.Weddings
     {
         public virtual Guid? TenantId { get; set; }
 
-        public virtual List<Event> Events { get; set; }
+        public virtual string GroomName { get; set; }
+
+        public virtual string BrideName { get; set; }
+
+        public virtual string Name { get; set; }
+
+        public virtual string ContactPhoneNumber { get; set; }
     }
 }

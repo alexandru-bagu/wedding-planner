@@ -12,9 +12,5 @@ namespace OOD.WeddingPlanner.Invitations
         public virtual Guid? TenantId { get; set; }
 
         public virtual Guid? WeddingId { get; set; }
-
-        public virtual List<Invitee> Invitees { get; set; }
-
-        public virtual Wedding Wedding { get; set; }
     }
 }

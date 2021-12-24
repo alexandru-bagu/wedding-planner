@@ -19,9 +19,5 @@ namespace OOD.WeddingPlanner.Events
         public virtual DateOnly Date { get; set; }
 
         public virtual TimeOnly Time { get; set; }
-
-        public virtual Location Location { get; set; }
-
-        public virtual Wedding Wedding { get; set; }
     }
 }
