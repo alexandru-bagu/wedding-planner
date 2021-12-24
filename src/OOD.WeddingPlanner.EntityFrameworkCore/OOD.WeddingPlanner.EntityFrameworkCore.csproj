@@ -9,10 +9,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OOD.WeddingPlanner.Domain\OOD.WeddingPlanner.Domain.csproj" />
-    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="5.0.0" />
     <PackageReference Include="Volo.Abp.PermissionManagement.EntityFrameworkCore" Version="5.0.0" />
     <PackageReference Include="Volo.Abp.SettingManagement.EntityFrameworkCore" Version="5.0.0" />
-    <PackageReference Include="Volo.Abp.Identity.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Volo.Abp.Identity.EntityFrameworkCore" Version="5.0.0" />    
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore.MySql" Version="5.0.0" />
     <PackageReference Include="Volo.Abp.IdentityServer.EntityFrameworkCore" Version="5.0.0" />
     <PackageReference Include="Volo.Abp.BackgroundJobs.EntityFrameworkCore" Version="5.0.0" />
     <PackageReference Include="Volo.Abp.AuditLogging.EntityFrameworkCore" Version="5.0.0" />
@@ -27,4 +27,7 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Pomelo.EntityFrameworkCore.MySql" />
+  </ItemGroup>
 </Project>

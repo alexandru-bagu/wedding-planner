@@ -15,8 +15,11 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
 
             var configuration = BuildConfiguration();
 
+            var connectionString = configuration.GetConnectionString("Default");
+            var serverVersion = ServerVersion.AutoDetect(connectionString);
+
             var builder = new DbContextOptionsBuilder<WeddingPlannerDbContext>()
-                .UseSqlite(configuration.GetConnectionString("Default"));
+                .UseMySql(connectionString, serverVersion);
 
             return new WeddingPlannerDbContext(builder.Options);
         }
