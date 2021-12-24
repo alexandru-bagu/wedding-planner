@@ -23,9 +23,10 @@ namespace OOD.WeddingPlanner.Events
       _repository = repository;
     }
 
-    public Task<EventWithNavigationPropertiesDto> GetWithNavigationById(Guid id)
+    public async Task<EventWithNavigationPropertiesDto> GetWithNavigationById(Guid id)
     {
-      throw new NotImplementedException();
+      return ObjectMapper.Map<EventWithNavigationProperties, EventWithNavigationPropertiesDto>(
+        await _repository.GetWithNavigationById(id));
     }
   }
 }

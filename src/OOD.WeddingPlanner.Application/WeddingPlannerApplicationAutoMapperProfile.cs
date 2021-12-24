@@ -16,19 +16,23 @@ namespace OOD.WeddingPlanner
     {
         public WeddingPlannerApplicationAutoMapperProfile()
         {
-            /* You can configure your AutoMapper mapping configuration here.
-             * Alternatively, you can split your mapping configurations
-             * into multiple profile classes for a better organization. */
             CreateMap<Location, LocationDto>();
-            CreateMap<CreateUpdateLocationDto, Location>(MemberList.Source);
             CreateMap<Event, EventDto>();
-            CreateMap<CreateUpdateEventDto, Event>(MemberList.Source);
             CreateMap<Invitee, InviteeDto>();
-            CreateMap<CreateUpdateInviteeDto, Invitee>(MemberList.Source);
             CreateMap<Invitation, InvitationDto>();
-            CreateMap<CreateUpdateInvitationDto, Invitation>(MemberList.Source);
             CreateMap<Wedding, WeddingDto>();
+            
+            CreateMap<CreateUpdateLocationDto, Location>(MemberList.Source);
+            CreateMap<CreateUpdateEventDto, Event>(MemberList.Source);
+            CreateMap<CreateUpdateInviteeDto, Invitee>(MemberList.Source);
+            CreateMap<CreateUpdateInvitationDto, Invitation>(MemberList.Source);
             CreateMap<CreateUpdateWeddingDto, Wedding>(MemberList.Source);
+
+            CreateMap<EventWithNavigationProperties, EventWithNavigationPropertiesDto>();
+            CreateMap<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>();
+            CreateMap<InviteeWithNavigationProperties, InviteeWithNavigationPropertiesDto>();
+            CreateMap<LocationWithNavigationProperties, LocationWithNavigationPropertiesDto>();
+            CreateMap<WeddingWithNavigationProperties, WeddingWithNavigationPropertiesDto>();
         }
     }
 }

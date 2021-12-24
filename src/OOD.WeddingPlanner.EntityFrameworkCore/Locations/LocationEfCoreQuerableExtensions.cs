@@ -13,8 +13,7 @@ namespace OOD.WeddingPlanner.Locations
       }
 
       return queryable
-          // .Include(x => x.xxx) // TODO: AbpHelper generated
-          ;
+          .Include(p => p.Events);
     }
   }
 }

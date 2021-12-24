@@ -13,8 +13,7 @@ namespace OOD.WeddingPlanner.Invitees
       }
 
       return queryable
-          // .Include(x => x.xxx) // TODO: AbpHelper generated
-          ;
+          .Include(p => p.Invitation);
     }
   }
 }

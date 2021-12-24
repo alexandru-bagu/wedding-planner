@@ -3,6 +3,7 @@ using OOD.WeddingPlanner.Permissions;
 using OOD.WeddingPlanner.Invitations.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using System.Threading.Tasks;
 
 namespace OOD.WeddingPlanner.Invitations
 {
@@ -20,6 +21,12 @@ namespace OOD.WeddingPlanner.Invitations
     public InvitationAppService(IInvitationRepository repository) : base(repository)
     {
       _repository = repository;
+    }
+
+    public async Task<InvitationWithNavigationPropertiesDto> GetWithNavigationById(Guid id)
+    {
+      return ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(
+        await _repository.GetWithNavigationById(id));
     }
   }
 }
