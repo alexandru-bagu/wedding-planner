@@ -6,6 +6,8 @@ using OOD.WeddingPlanner.Invitees.Dtos;
 using OOD.WeddingPlanner.Web.Pages.Invitees.Invitee.ViewModels;
 using OOD.WeddingPlanner.Invitations.Dtos;
 using OOD.WeddingPlanner.Web.Pages.Invitations.Invitation.ViewModels;
+using OOD.WeddingPlanner.Weddings.Dtos;
+using OOD.WeddingPlanner.Web.Pages.Weddings.Wedding.ViewModels;
 using AutoMapper;
 
 namespace OOD.WeddingPlanner.Web
@@ -23,6 +25,8 @@ namespace OOD.WeddingPlanner.Web
             CreateMap<CreateEditInviteeViewModel, CreateUpdateInviteeDto>();
             CreateMap<InvitationDto, CreateEditInvitationViewModel>();
             CreateMap<CreateEditInvitationViewModel, CreateUpdateInvitationDto>();
+            CreateMap<WeddingDto, CreateEditWeddingViewModel>();
+            CreateMap<CreateEditWeddingViewModel, CreateUpdateWeddingDto>();
         }
     }
 }

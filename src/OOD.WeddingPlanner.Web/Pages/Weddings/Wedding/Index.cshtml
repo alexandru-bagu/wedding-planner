@@ -1,0 +1,48 @@
+@page
+@using OOD.WeddingPlanner.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using OOD.WeddingPlanner.Web.Pages.Weddings.Wedding
+@using OOD.WeddingPlanner.Localization
+@using OOD.WeddingPlanner.Web.Menus
+@model IndexModel
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<WeddingPlannerResource> L
+@inject IAuthorizationService Authorization
+@{
+    PageLayout.Content.Title = L["Wedding"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:Wedding"].Value);
+    PageLayout.Content.MenuItemName = WeddingPlannerMenus.Wedding;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Weddings/Wedding/index.js" />
+}
+@section styles
+{
+    <abp-style src="/Pages/Weddings/Wedding/index.css"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["Wedding"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-right">
+			    @if (await Authorization.IsGrantedAsync(WeddingPlannerPermissions.Wedding.Create))
+                {
+                <abp-button id="NewWeddingButton"
+                            text="@L["CreateWedding"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="WeddingTable" class="nowrap"/>
+    </abp-card-body>
+</abp-card>

@@ -11,5 +11,6 @@ namespace OOD.WeddingPlanner.Web.Menus
         public const string Event = Prefix + ".Event";
         public const string Invitee = Prefix + ".Invitee";
         public const string Invitation = Prefix + ".Invitation";
+        public const string Wedding = Prefix + ".Wedding";
     }
 }

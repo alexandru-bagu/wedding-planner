@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using OOD.WeddingPlanner.Events;
 using Volo.Abp.Domain.Entities.Auditing;
@@ -17,5 +17,25 @@ namespace OOD.WeddingPlanner.Weddings
         public virtual string Name { get; set; }
 
         public virtual string ContactPhoneNumber { get; set; }
+
+        protected Wedding()
+        {
+        }
+
+        public Wedding(
+            Guid id,
+            Guid? tenantId,
+            string groomName,
+            string brideName,
+            string name,
+            string contactPhoneNumber
+        ) : base(id)
+        {
+            TenantId = tenantId;
+            GroomName = groomName;
+            BrideName = brideName;
+            Name = name;
+            ContactPhoneNumber = contactPhoneNumber;
+        }
     }
 }

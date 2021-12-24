@@ -45,6 +45,16 @@
     "InvitationWeddingId": "InvitationWeddingId",
     "CreateInvitation": "CreateInvitation",
     "EditInvitation": "EditInvitation",
-    "InvitationDeletionConfirmationMessage": "Are you sure to delete the invitation {0}?"
+    "InvitationDeletionConfirmationMessage": "Are you sure to delete the invitation {0}?",
+    "Permission:Wedding": "Wedding",
+    "Menu:Wedding": "MenuWedding",
+    "Wedding": "Wedding",
+    "WeddingGroomName": "WeddingGroomName",
+    "WeddingBrideName": "WeddingBrideName",
+    "WeddingName": "WeddingName",
+    "WeddingContactPhoneNumber": "WeddingContactPhoneNumber",
+    "CreateWedding": "CreateWedding",
+    "EditWedding": "EditWedding",
+    "WeddingDeletionConfirmationMessage": "Are you sure to delete the wedding {0}?"
   }
 }
