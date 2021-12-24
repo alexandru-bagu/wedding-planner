@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using OOD.WeddingPlanner.Events;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 
@@ -15,6 +17,8 @@ namespace OOD.WeddingPlanner.Locations
         public virtual double Longitude { get; set; }
 
         public virtual double Latitude { get; set; }
+
+        public virtual List<Event> Events { get; set; } = new List<Event>();
 
         protected Location()
         {

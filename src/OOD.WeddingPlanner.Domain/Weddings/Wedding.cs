@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using OOD.WeddingPlanner.Events;
+using OOD.WeddingPlanner.Invitations;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 
@@ -17,6 +18,10 @@ namespace OOD.WeddingPlanner.Weddings
         public virtual string Name { get; set; }
 
         public virtual string ContactPhoneNumber { get; set; }
+
+        public virtual List<Invitation> Invitations { get; set; } = new List<Invitation>();
+
+        public virtual List<Event> Events { get; set; } = new List<Event>();
 
         protected Wedding()
         {

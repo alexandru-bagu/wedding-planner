@@ -19,6 +19,8 @@ namespace OOD.WeddingPlanner.Invitees
 
         public virtual bool? Confirmed { get; set; }
 
+        public virtual Invitation Invitation { get; set; }
+
         protected Invitee()
         {
         }

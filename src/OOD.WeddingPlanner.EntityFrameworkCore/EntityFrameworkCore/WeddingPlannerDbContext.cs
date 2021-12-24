@@ -84,63 +84,51 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
             builder.ConfigureFeatureManagement();
             builder.ConfigureTenantManagement();
 
-            /* Configure your own tables/entities inside here */
-
-            //builder.Entity<YourEntity>(b =>
-            //{
-            //    b.ToTable(WeddingPlannerConsts.DbTablePrefix + "YourEntities", WeddingPlannerConsts.DbSchema);
-            //    b.ConfigureByConvention(); //auto configure for the base class props
-            //    //...
-            //});
-
-
             builder.Entity<Location>(b =>
             {
                 b.ToTable(WeddingPlannerConsts.DbTablePrefix + "Locations", WeddingPlannerConsts.DbSchema);
-                b.ConfigureByConvention(); 
-                
+                b.ConfigureByConvention();
 
-                /* Configure more properties here */
+                b.HasMany(p => p.Events).WithOne(p => p.Location);
             });
 
 
             builder.Entity<Event>(b =>
             {
                 b.ToTable(WeddingPlannerConsts.DbTablePrefix + "Events", WeddingPlannerConsts.DbSchema);
-                b.ConfigureByConvention(); 
-                
+                b.ConfigureByConvention();
 
-                /* Configure more properties here */
+                b.HasOne(p => p.Location).WithMany(p => p.Events);
+                b.HasOne(p => p.Wedding).WithMany(p => p.Events);
             });
 
 
             builder.Entity<Invitee>(b =>
             {
                 b.ToTable(WeddingPlannerConsts.DbTablePrefix + "Invitees", WeddingPlannerConsts.DbSchema);
-                b.ConfigureByConvention(); 
-                
+                b.ConfigureByConvention();
 
-                /* Configure more properties here */
+                b.HasOne(p => p.Invitation).WithMany(p => p.Invitees);
             });
 
 
             builder.Entity<Invitation>(b =>
             {
                 b.ToTable(WeddingPlannerConsts.DbTablePrefix + "Invitations", WeddingPlannerConsts.DbSchema);
-                b.ConfigureByConvention(); 
-                
+                b.ConfigureByConvention();
 
-                /* Configure more properties here */
+                b.HasMany(p => p.Invitees).WithOne(p => p.Invitation);
+                b.HasOne(p => p.Wedding).WithMany(p => p.Invitations);
             });
 
 
             builder.Entity<Wedding>(b =>
             {
                 b.ToTable(WeddingPlannerConsts.DbTablePrefix + "Weddings", WeddingPlannerConsts.DbSchema);
-                b.ConfigureByConvention(); 
-                
+                b.ConfigureByConvention();
 
-                /* Configure more properties here */
+                b.HasMany(p => p.Invitations).WithOne(p => p.Wedding);
+                b.HasMany(p => p.Events).WithOne(p => p.Wedding);
             });
         }
     }
