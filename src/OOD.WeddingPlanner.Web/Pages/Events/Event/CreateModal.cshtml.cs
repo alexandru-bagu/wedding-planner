@@ -6,23 +6,23 @@ using OOD.WeddingPlanner.Web.Pages.Events.Event.ViewModels;
 
 namespace OOD.WeddingPlanner.Web.Pages.Events.Event
 {
-    public class CreateModalModel : WeddingPlannerPageModel
+  public class CreateModalModel : WeddingPlannerPageModel
+  {
+    [BindProperty]
+    public CreateEditEventViewModel ViewModel { get; set; }
+
+    private readonly IEventAppService _service;
+
+    public CreateModalModel(IEventAppService service)
     {
-        [BindProperty]
-        public CreateEditEventViewModel ViewModel { get; set; }
-
-        private readonly IEventAppService _service;
-
-        public CreateModalModel(IEventAppService service)
-        {
-            _service = service;
-        }
-
-        public virtual async Task<IActionResult> OnPostAsync()
-        {
-            var dto = ObjectMapper.Map<CreateEditEventViewModel, CreateUpdateEventDto>(ViewModel);
-            await _service.CreateAsync(dto);
-            return NoContent();
-        }
+      _service = service;
     }
+
+    public virtual async Task<IActionResult> OnPostAsync()
+    {
+      var dto = ObjectMapper.Map<CreateEditEventViewModel, CreateUpdateEventDto>(ViewModel);
+      await _service.CreateAsync(dto);
+      return NoContent();
+    }
+  }
 }

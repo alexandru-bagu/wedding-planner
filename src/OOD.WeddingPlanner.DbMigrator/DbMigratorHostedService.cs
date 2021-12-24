@@ -9,39 +9,39 @@ using Volo.Abp;
 
 namespace OOD.WeddingPlanner.DbMigrator
 {
-    public class DbMigratorHostedService : IHostedService
+  public class DbMigratorHostedService : IHostedService
+  {
+    private readonly IHostApplicationLifetime _hostApplicationLifetime;
+    private readonly IConfiguration _configuration;
+
+    public DbMigratorHostedService(IHostApplicationLifetime hostApplicationLifetime, IConfiguration configuration)
     {
-        private readonly IHostApplicationLifetime _hostApplicationLifetime;
-        private readonly IConfiguration _configuration;
-
-        public DbMigratorHostedService(IHostApplicationLifetime hostApplicationLifetime, IConfiguration configuration)
-        {
-            _hostApplicationLifetime = hostApplicationLifetime;
-            _configuration = configuration;
-        }
-
-        public async Task StartAsync(CancellationToken cancellationToken)
-        {
-            using (var application = AbpApplicationFactory.Create<WeddingPlannerDbMigratorModule>(options =>
-            {
-                options.Services.ReplaceConfiguration(_configuration);
-                options.UseAutofac();
-                options.Services.AddLogging(c => c.AddSerilog());
-            }))
-            {
-                application.Initialize();
-
-                await application
-                    .ServiceProvider
-                    .GetRequiredService<WeddingPlannerDbMigrationService>()
-                    .MigrateAsync();
-
-                application.Shutdown();
-
-                _hostApplicationLifetime.StopApplication();
-            }
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+      _hostApplicationLifetime = hostApplicationLifetime;
+      _configuration = configuration;
     }
+
+    public async Task StartAsync(CancellationToken cancellationToken)
+    {
+      using (var application = AbpApplicationFactory.Create<WeddingPlannerDbMigratorModule>(options =>
+      {
+        options.Services.ReplaceConfiguration(_configuration);
+        options.UseAutofac();
+        options.Services.AddLogging(c => c.AddSerilog());
+      }))
+      {
+        application.Initialize();
+
+        await application
+            .ServiceProvider
+            .GetRequiredService<WeddingPlannerDbMigrationService>()
+            .MigrateAsync();
+
+        application.Shutdown();
+
+        _hostApplicationLifetime.StopApplication();
+      }
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+  }
 }

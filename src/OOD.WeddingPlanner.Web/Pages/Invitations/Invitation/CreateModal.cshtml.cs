@@ -6,23 +6,23 @@ using OOD.WeddingPlanner.Web.Pages.Invitations.Invitation.ViewModels;
 
 namespace OOD.WeddingPlanner.Web.Pages.Invitations.Invitation
 {
-    public class CreateModalModel : WeddingPlannerPageModel
+  public class CreateModalModel : WeddingPlannerPageModel
+  {
+    [BindProperty]
+    public CreateEditInvitationViewModel ViewModel { get; set; }
+
+    private readonly IInvitationAppService _service;
+
+    public CreateModalModel(IInvitationAppService service)
     {
-        [BindProperty]
-        public CreateEditInvitationViewModel ViewModel { get; set; }
-
-        private readonly IInvitationAppService _service;
-
-        public CreateModalModel(IInvitationAppService service)
-        {
-            _service = service;
-        }
-
-        public virtual async Task<IActionResult> OnPostAsync()
-        {
-            var dto = ObjectMapper.Map<CreateEditInvitationViewModel, CreateUpdateInvitationDto>(ViewModel);
-            await _service.CreateAsync(dto);
-            return NoContent();
-        }
+      _service = service;
     }
+
+    public virtual async Task<IActionResult> OnPostAsync()
+    {
+      var dto = ObjectMapper.Map<CreateEditInvitationViewModel, CreateUpdateInvitationDto>(ViewModel);
+      await _service.CreateAsync(dto);
+      return NoContent();
+    }
+  }
 }

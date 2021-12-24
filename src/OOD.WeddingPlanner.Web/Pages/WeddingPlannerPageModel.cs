@@ -3,13 +3,13 @@ using Volo.Abp.AspNetCore.Mvc.UI.RazorPages;
 
 namespace OOD.WeddingPlanner.Web.Pages
 {
-    /* Inherit your PageModel classes from this class.
-     */
-    public abstract class WeddingPlannerPageModel : AbpPageModel
+  /* Inherit your PageModel classes from this class.
+   */
+  public abstract class WeddingPlannerPageModel : AbpPageModel
+  {
+    protected WeddingPlannerPageModel()
     {
-        protected WeddingPlannerPageModel()
-        {
-            LocalizationResourceType = typeof(WeddingPlannerResource);
-        }
+      LocalizationResourceType = typeof(WeddingPlannerResource);
     }
+  }
 }

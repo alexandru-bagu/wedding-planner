@@ -3,13 +3,13 @@ using Volo.Abp.AspNetCore.Mvc;
 
 namespace OOD.WeddingPlanner.Controllers
 {
-    /* Inherit your controllers from this class.
-     */
-    public abstract class WeddingPlannerController : AbpControllerBase
+  /* Inherit your controllers from this class.
+   */
+  public abstract class WeddingPlannerController : AbpControllerBase
+  {
+    protected WeddingPlannerController()
     {
-        protected WeddingPlannerController()
-        {
-            LocalizationResource = typeof(WeddingPlannerResource);
-        }
+      LocalizationResource = typeof(WeddingPlannerResource);
     }
+  }
 }

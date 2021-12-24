@@ -12,21 +12,21 @@ using AutoMapper;
 
 namespace OOD.WeddingPlanner.Web
 {
-    public class WeddingPlannerWebAutoMapperProfile : Profile
+  public class WeddingPlannerWebAutoMapperProfile : Profile
+  {
+    public WeddingPlannerWebAutoMapperProfile()
     {
-        public WeddingPlannerWebAutoMapperProfile()
-        {
-            //Define your AutoMapper configuration here for the Web project.
-            CreateMap<LocationDto, CreateEditLocationViewModel>();
-            CreateMap<CreateEditLocationViewModel, CreateUpdateLocationDto>();
-            CreateMap<EventDto, CreateEditEventViewModel>();
-            CreateMap<CreateEditEventViewModel, CreateUpdateEventDto>();
-            CreateMap<InviteeDto, CreateEditInviteeViewModel>();
-            CreateMap<CreateEditInviteeViewModel, CreateUpdateInviteeDto>();
-            CreateMap<InvitationDto, CreateEditInvitationViewModel>();
-            CreateMap<CreateEditInvitationViewModel, CreateUpdateInvitationDto>();
-            CreateMap<WeddingDto, CreateEditWeddingViewModel>();
-            CreateMap<CreateEditWeddingViewModel, CreateUpdateWeddingDto>();
-        }
+      //Define your AutoMapper configuration here for the Web project.
+      CreateMap<LocationDto, CreateEditLocationViewModel>();
+      CreateMap<CreateEditLocationViewModel, CreateUpdateLocationDto>();
+      CreateMap<EventDto, CreateEditEventViewModel>();
+      CreateMap<CreateEditEventViewModel, CreateUpdateEventDto>();
+      CreateMap<InviteeDto, CreateEditInviteeViewModel>();
+      CreateMap<CreateEditInviteeViewModel, CreateUpdateInviteeDto>();
+      CreateMap<InvitationDto, CreateEditInvitationViewModel>();
+      CreateMap<CreateEditInvitationViewModel, CreateUpdateInvitationDto>();
+      CreateMap<WeddingDto, CreateEditWeddingViewModel>();
+      CreateMap<CreateEditWeddingViewModel, CreateUpdateWeddingDto>();
     }
+  }
 }

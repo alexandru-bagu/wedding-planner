@@ -6,14 +6,14 @@ using Volo.Abp.Application.Services;
 
 namespace OOD.WeddingPlanner.Invitees
 {
-    public interface IInviteeAppService :
-        ICrudAppService< 
-            InviteeDto, 
-            Guid, 
-            GetInviteesInputDto,
-            CreateUpdateInviteeDto,
-            CreateUpdateInviteeDto>
-    {
-        Task<InviteeWithNavigationPropertiesDto> GetWithNavigationById(Guid id);
-    }
+  public interface IInviteeAppService :
+      ICrudAppService<
+          InviteeDto,
+          Guid,
+          GetInviteesInputDto,
+          CreateUpdateInviteeDto,
+          CreateUpdateInviteeDto>
+  {
+    Task<InviteeWithNavigationPropertiesDto> GetWithNavigationById(Guid id);
+  }
 }

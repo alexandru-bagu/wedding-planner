@@ -5,10 +5,10 @@ using Volo.Abp.EntityFrameworkCore;
 
 namespace OOD.WeddingPlanner.Weddings
 {
-    public class WeddingRepository : EfCoreRepository<WeddingPlannerDbContext, Wedding, Guid>, IWeddingRepository
+  public class WeddingRepository : EfCoreRepository<WeddingPlannerDbContext, Wedding, Guid>, IWeddingRepository
+  {
+    public WeddingRepository(IDbContextProvider<WeddingPlannerDbContext> dbContextProvider) : base(dbContextProvider)
     {
-        public WeddingRepository(IDbContextProvider<WeddingPlannerDbContext> dbContextProvider) : base(dbContextProvider)
-        {
-        }
     }
+  }
 }

@@ -16,31 +16,31 @@ using Volo.Abp.TenantManagement;
 
 namespace OOD.WeddingPlanner
 {
-    [DependsOn(
-        typeof(WeddingPlannerDomainSharedModule),
-        typeof(AbpAuditLoggingDomainModule),
-        typeof(AbpBackgroundJobsDomainModule),
-        typeof(AbpFeatureManagementDomainModule),
-        typeof(AbpIdentityDomainModule),
-        typeof(AbpPermissionManagementDomainIdentityModule),
-        typeof(AbpIdentityServerDomainModule),
-        typeof(AbpPermissionManagementDomainIdentityServerModule),
-        typeof(AbpSettingManagementDomainModule),
-        typeof(AbpTenantManagementDomainModule),
-        typeof(AbpEmailingModule)
-    )]
-    public class WeddingPlannerDomainModule : AbpModule
+  [DependsOn(
+      typeof(WeddingPlannerDomainSharedModule),
+      typeof(AbpAuditLoggingDomainModule),
+      typeof(AbpBackgroundJobsDomainModule),
+      typeof(AbpFeatureManagementDomainModule),
+      typeof(AbpIdentityDomainModule),
+      typeof(AbpPermissionManagementDomainIdentityModule),
+      typeof(AbpIdentityServerDomainModule),
+      typeof(AbpPermissionManagementDomainIdentityServerModule),
+      typeof(AbpSettingManagementDomainModule),
+      typeof(AbpTenantManagementDomainModule),
+      typeof(AbpEmailingModule)
+  )]
+  public class WeddingPlannerDomainModule : AbpModule
+  {
+    public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        public override void ConfigureServices(ServiceConfigurationContext context)
-        {
-            Configure<AbpMultiTenancyOptions>(options =>
-            {
-                options.IsEnabled = MultiTenancyConsts.IsEnabled;
-            });
+      Configure<AbpMultiTenancyOptions>(options =>
+      {
+        options.IsEnabled = MultiTenancyConsts.IsEnabled;
+      });
 
 #if DEBUG
-            context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());
+      context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());
 #endif
-        }
     }
+  }
 }

@@ -6,7 +6,7 @@ using Volo.Abp.Application.Services;
 
 namespace OOD.WeddingPlanner.Invitees
 {
-    public class InviteeAppService : CrudAppService<Invitee, InviteeDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateInviteeDto, CreateUpdateInviteeDto>,
+    public class InviteeAppService : CrudAppService<Invitee, InviteeDto, Guid, GetInviteesInputDto, CreateUpdateInviteeDto, CreateUpdateInviteeDto>,
         IInviteeAppService
     {
         protected override string GetPolicyName { get; set; } = WeddingPlannerPermissions.Invitee.Default;

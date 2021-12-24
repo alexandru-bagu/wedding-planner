@@ -3,18 +3,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace OOD.WeddingPlanner.Invitations
 {
-    public static class InvitationEfCoreQueryableExtensions
+  public static class InvitationEfCoreQueryableExtensions
+  {
+    public static IQueryable<Invitation> IncludeDetails(this IQueryable<Invitation> queryable, bool include = true)
     {
-        public static IQueryable<Invitation> IncludeDetails(this IQueryable<Invitation> queryable, bool include = true)
-        {
-            if (!include)
-            {
-                return queryable;
-            }
+      if (!include)
+      {
+        return queryable;
+      }
 
-            return queryable
-                // .Include(x => x.xxx) // TODO: AbpHelper generated
-                ;
-        }
+      return queryable
+          // .Include(x => x.xxx) // TODO: AbpHelper generated
+          ;
     }
+  }
 }

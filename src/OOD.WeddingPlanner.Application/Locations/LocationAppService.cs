@@ -6,7 +6,7 @@ using Volo.Abp.Application.Services;
 
 namespace OOD.WeddingPlanner.Locations
 {
-    public class LocationAppService : CrudAppService<Location, LocationDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateLocationDto, CreateUpdateLocationDto>,
+    public class LocationAppService : CrudAppService<Location, LocationDto, Guid, GetLocationsInputDto, CreateUpdateLocationDto, CreateUpdateLocationDto>,
         ILocationAppService
     {
         protected override string GetPolicyName { get; set; } = WeddingPlannerPermissions.Location.Default;

@@ -3,7 +3,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace OOD.WeddingPlanner.Invitees
 {
-    public interface IInviteeRepository : IRepository<Invitee, Guid>
-    {
-    }
+  public interface IInviteeRepository : IRepository<Invitee, Guid>
+  {
+  }
 }

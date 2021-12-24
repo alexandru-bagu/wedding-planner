@@ -11,38 +11,35 @@
 @inject IHtmlLocalizer<WeddingPlannerResource> L
 @inject IAuthorizationService Authorization
 @{
-    PageLayout.Content.Title = L["Invitee"].Value;
-    PageLayout.Content.BreadCrumb.Add(L["Menu:Invitee"].Value);
-    PageLayout.Content.MenuItemName = WeddingPlannerMenus.Invitee;
+  PageLayout.Content.Title = L["Invitee"].Value;
+  PageLayout.Content.BreadCrumb.Add(L["Menu:Invitee"].Value);
+  PageLayout.Content.MenuItemName = WeddingPlannerMenus.Invitee;
 }
 
 @section scripts
 {
-    <abp-script src="/Pages/Invitees/Invitee/index.js" />
+<abp-script src="/Pages/Invitees/Invitee/index.js" />
 }
 @section styles
 {
-    <abp-style src="/Pages/Invitees/Invitee/index.css"/>
+<abp-style src="/Pages/Invitees/Invitee/index.css" />
 }
 
 <abp-card>
-    <abp-card-header>
-        <abp-row>
-            <abp-column size-md="_6">
-                <abp-card-title>@L["Invitee"]</abp-card-title>
-            </abp-column>
-            <abp-column size-md="_6" class="text-right">
-			    @if (await Authorization.IsGrantedAsync(WeddingPlannerPermissions.Invitee.Create))
-                {
-                <abp-button id="NewInviteeButton"
-                            text="@L["CreateInvitee"].Value"
-                            icon="plus"
-                            button-type="Primary" />
-                }
-            </abp-column>
-        </abp-row>
-    </abp-card-header>
-    <abp-card-body>
-        <abp-table striped-rows="true" id="InviteeTable" class="nowrap"/>
-    </abp-card-body>
+  <abp-card-header>
+    <abp-row>
+      <abp-column size-md="_6">
+        <abp-card-title>@L["Invitee"]</abp-card-title>
+      </abp-column>
+      <abp-column size-md="_6" class="text-right">
+        @if (await Authorization.IsGrantedAsync(WeddingPlannerPermissions.Invitee.Create))
+        {
+          <abp-button id="NewInviteeButton" text="@L["CreateInvitee"].Value" icon="plus" button-type="Primary" />
+        }
+      </abp-column>
+    </abp-row>
+  </abp-card-header>
+  <abp-card-body>
+    <abp-table striped-rows="true" id="InviteeTable" class="nowrap" />
+  </abp-card-body>
 </abp-card>

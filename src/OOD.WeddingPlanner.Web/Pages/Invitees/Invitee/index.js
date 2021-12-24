@@ -1,82 +1,82 @@
 $(function () {
 
-    var l = abp.localization.getResource('WeddingPlanner');
+  var l = abp.localization.getResource('WeddingPlanner');
 
-    var service = oOD.weddingPlanner.invitees.invitee;
-    var createModal = new abp.ModalManager(abp.appPath + 'Invitees/Invitee/CreateModal');
-    var editModal = new abp.ModalManager(abp.appPath + 'Invitees/Invitee/EditModal');
+  var service = oOD.weddingPlanner.invitees.invitee;
+  var createModal = new abp.ModalManager(abp.appPath + 'Invitees/Invitee/CreateModal');
+  var editModal = new abp.ModalManager(abp.appPath + 'Invitees/Invitee/EditModal');
 
-    var dataTable = $('#InviteeTable').DataTable(abp.libs.datatables.normalizeConfiguration({
-        processing: true,
-        serverSide: true,
-        paging: true,
-        searching: false,
-        autoWidth: false,
-        scrollCollapse: true,
-        order: [[0, "asc"]],
-        ajax: abp.libs.datatables.createAjax(service.getList),
-        columnDefs: [
-            {
-                rowAction: {
-                    items:
-                        [
-                            {
-                                text: l('Edit'),
-                                visible: abp.auth.isGranted('WeddingPlanner.Invitee.Update'),
-                                action: function (data) {
-                                    editModal.open({ id: data.record.id });
-                                }
-                            },
-                            {
-                                text: l('Delete'),
-                                visible: abp.auth.isGranted('WeddingPlanner.Invitee.Delete'),
-                                confirmMessage: function (data) {
-                                    return l('InviteeDeletionConfirmationMessage', data.record.id);
-                                },
-                                action: function (data) {
-                                    service.delete(data.record.id)
-                                        .then(function () {
-                                            abp.notify.info(l('SuccessfullyDeleted'));
-                                            dataTable.ajax.reload();
-                                        });
-                                }
-                            }
-                        ]
+  var dataTable = $('#InviteeTable').DataTable(abp.libs.datatables.normalizeConfiguration({
+    processing: true,
+    serverSide: true,
+    paging: true,
+    searching: false,
+    autoWidth: false,
+    scrollCollapse: true,
+    order: [[0, "asc"]],
+    ajax: abp.libs.datatables.createAjax(service.getList),
+    columnDefs: [
+      {
+        rowAction: {
+          items:
+            [
+              {
+                text: l('Edit'),
+                visible: abp.auth.isGranted('WeddingPlanner.Invitee.Update'),
+                action: function (data) {
+                  editModal.open({ id: data.record.id });
                 }
-            },
-            {
-                title: l('InviteeSurname'),
-                data: "surname"
-            },
-            {
-                title: l('InviteeGivenName'),
-                data: "givenName"
-            },
-            {
-                title: l('InviteeInvitationId'),
-                data: "invitationId"
-            },
-            {
-                title: l('InviteeRSVP'),
-                data: "rSVP"
-            },
-            {
-                title: l('InviteeConfirmed'),
-                data: "confirmed"
-            },
-        ]
-    }));
+              },
+              {
+                text: l('Delete'),
+                visible: abp.auth.isGranted('WeddingPlanner.Invitee.Delete'),
+                confirmMessage: function (data) {
+                  return l('InviteeDeletionConfirmationMessage', data.record.id);
+                },
+                action: function (data) {
+                  service.delete(data.record.id)
+                    .then(function () {
+                      abp.notify.info(l('SuccessfullyDeleted'));
+                      dataTable.ajax.reload();
+                    });
+                }
+              }
+            ]
+        }
+      },
+      {
+        title: l('InviteeSurname'),
+        data: "surname"
+      },
+      {
+        title: l('InviteeGivenName'),
+        data: "givenName"
+      },
+      {
+        title: l('InviteeInvitationId'),
+        data: "invitationId"
+      },
+      {
+        title: l('InviteeRSVP'),
+        data: "rSVP"
+      },
+      {
+        title: l('InviteeConfirmed'),
+        data: "confirmed"
+      },
+    ]
+  }));
 
-    createModal.onResult(function () {
-        dataTable.ajax.reload();
-    });
+  createModal.onResult(function () {
+    dataTable.ajax.reload();
+  });
 
-    editModal.onResult(function () {
-        dataTable.ajax.reload();
-    });
+  editModal.onResult(function () {
+    dataTable.ajax.reload();
+  });
 
-    $('#NewInviteeButton').click(function (e) {
-        e.preventDefault();
-        createModal.open();
-    });
+  $('#NewInviteeButton').click(function (e) {
+    e.preventDefault();
+    createModal.open();
+  });
 });

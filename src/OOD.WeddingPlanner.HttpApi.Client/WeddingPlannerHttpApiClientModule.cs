@@ -10,30 +10,30 @@ using Volo.Abp.VirtualFileSystem;
 
 namespace OOD.WeddingPlanner
 {
-    [DependsOn(
-        typeof(WeddingPlannerApplicationContractsModule),
-        typeof(AbpAccountHttpApiClientModule),
-        typeof(AbpIdentityHttpApiClientModule),
-        typeof(AbpPermissionManagementHttpApiClientModule),
-        typeof(AbpTenantManagementHttpApiClientModule),
-        typeof(AbpFeatureManagementHttpApiClientModule),
-        typeof(AbpSettingManagementHttpApiClientModule)
-    )]
-    public class WeddingPlannerHttpApiClientModule : AbpModule
+  [DependsOn(
+      typeof(WeddingPlannerApplicationContractsModule),
+      typeof(AbpAccountHttpApiClientModule),
+      typeof(AbpIdentityHttpApiClientModule),
+      typeof(AbpPermissionManagementHttpApiClientModule),
+      typeof(AbpTenantManagementHttpApiClientModule),
+      typeof(AbpFeatureManagementHttpApiClientModule),
+      typeof(AbpSettingManagementHttpApiClientModule)
+  )]
+  public class WeddingPlannerHttpApiClientModule : AbpModule
+  {
+    public const string RemoteServiceName = "Default";
+
+    public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        public const string RemoteServiceName = "Default";
+      context.Services.AddHttpClientProxies(
+          typeof(WeddingPlannerApplicationContractsModule).Assembly,
+          RemoteServiceName
+      );
 
-        public override void ConfigureServices(ServiceConfigurationContext context)
-        {
-            context.Services.AddHttpClientProxies(
-                typeof(WeddingPlannerApplicationContractsModule).Assembly,
-                RemoteServiceName
-            );
-
-            Configure<AbpVirtualFileSystemOptions>(options =>
-            {
-                options.FileSets.AddEmbedded<WeddingPlannerHttpApiClientModule>();
-            });
-        }
+      Configure<AbpVirtualFileSystemOptions>(options =>
+      {
+        options.FileSets.AddEmbedded<WeddingPlannerHttpApiClientModule>();
+      });
     }
+  }
 }

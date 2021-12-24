@@ -2,9 +2,9 @@
 
 namespace OOD.WeddingPlanner.Localization
 {
-    [LocalizationResourceName("WeddingPlanner")]
-    public class WeddingPlannerResource
-    {
+  [LocalizationResourceName("WeddingPlanner")]
+  public class WeddingPlannerResource
+  {
 
-    }
+  }
 }

@@ -18,45 +18,45 @@ using Volo.Abp.EntityFrameworkCore.MySQL;
 
 namespace OOD.WeddingPlanner.EntityFrameworkCore
 {
-    [DependsOn(
-        typeof(WeddingPlannerDomainModule),
-        typeof(AbpIdentityEntityFrameworkCoreModule),
-        typeof(AbpIdentityServerEntityFrameworkCoreModule),
-        typeof(AbpPermissionManagementEntityFrameworkCoreModule),
-        typeof(AbpSettingManagementEntityFrameworkCoreModule),
-        typeof(AbpEntityFrameworkCoreMySQLModule),
-        typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
-        typeof(AbpAuditLoggingEntityFrameworkCoreModule),
-        typeof(AbpTenantManagementEntityFrameworkCoreModule),
-        typeof(AbpFeatureManagementEntityFrameworkCoreModule)
-        )]
-    public class WeddingPlannerEntityFrameworkCoreModule : AbpModule
+  [DependsOn(
+      typeof(WeddingPlannerDomainModule),
+      typeof(AbpIdentityEntityFrameworkCoreModule),
+      typeof(AbpIdentityServerEntityFrameworkCoreModule),
+      typeof(AbpPermissionManagementEntityFrameworkCoreModule),
+      typeof(AbpSettingManagementEntityFrameworkCoreModule),
+      typeof(AbpEntityFrameworkCoreMySQLModule),
+      typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
+      typeof(AbpAuditLoggingEntityFrameworkCoreModule),
+      typeof(AbpTenantManagementEntityFrameworkCoreModule),
+      typeof(AbpFeatureManagementEntityFrameworkCoreModule)
+      )]
+  public class WeddingPlannerEntityFrameworkCoreModule : AbpModule
+  {
+    public override void PreConfigureServices(ServiceConfigurationContext context)
     {
-        public override void PreConfigureServices(ServiceConfigurationContext context)
-        {
-            WeddingPlannerEfCoreEntityExtensionMappings.Configure();
-        }
-
-        public override void ConfigureServices(ServiceConfigurationContext context)
-        {
-            context.Services.AddAbpDbContext<WeddingPlannerDbContext>(options =>
-            {
-                /* Remove "includeAllEntities: true" to create
-                 * default repositories only for aggregate roots */
-                options.AddDefaultRepositories(includeAllEntities: true);
-                options.AddRepository<Location, LocationRepository>();
-                options.AddRepository<Event, EventRepository>();
-                options.AddRepository<Invitee, InviteeRepository>();
-                options.AddRepository<Invitation, InvitationRepository>();
-                options.AddRepository<Wedding, WeddingRepository>();
-            });
-
-            Configure<AbpDbContextOptions>(options =>
-            {
-                /* The main point to change your DBMS.
-                 * See also WeddingPlannerMigrationsDbContextFactory for EF Core tooling. */
-                options.UseMySQL();
-            });
-        }
+      WeddingPlannerEfCoreEntityExtensionMappings.Configure();
     }
+
+    public override void ConfigureServices(ServiceConfigurationContext context)
+    {
+      context.Services.AddAbpDbContext<WeddingPlannerDbContext>(options =>
+      {
+              /* Remove "includeAllEntities: true" to create
+               * default repositories only for aggregate roots */
+        options.AddDefaultRepositories(includeAllEntities: true);
+        options.AddRepository<Location, LocationRepository>();
+        options.AddRepository<Event, EventRepository>();
+        options.AddRepository<Invitee, InviteeRepository>();
+        options.AddRepository<Invitation, InvitationRepository>();
+        options.AddRepository<Wedding, WeddingRepository>();
+      });
+
+      Configure<AbpDbContextOptions>(options =>
+      {
+              /* The main point to change your DBMS.
+               * See also WeddingPlannerMigrationsDbContextFactory for EF Core tooling. */
+        options.UseMySQL();
+      });
+    }
+  }
 }

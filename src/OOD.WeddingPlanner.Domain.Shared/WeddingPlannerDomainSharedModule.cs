@@ -15,45 +15,45 @@ using Volo.Abp.VirtualFileSystem;
 
 namespace OOD.WeddingPlanner
 {
-    [DependsOn(
-        typeof(AbpAuditLoggingDomainSharedModule),
-        typeof(AbpBackgroundJobsDomainSharedModule),
-        typeof(AbpFeatureManagementDomainSharedModule),
-        typeof(AbpIdentityDomainSharedModule),
-        typeof(AbpIdentityServerDomainSharedModule),
-        typeof(AbpPermissionManagementDomainSharedModule),
-        typeof(AbpSettingManagementDomainSharedModule),
-        typeof(AbpTenantManagementDomainSharedModule)
-        )]
-    public class WeddingPlannerDomainSharedModule : AbpModule
+  [DependsOn(
+      typeof(AbpAuditLoggingDomainSharedModule),
+      typeof(AbpBackgroundJobsDomainSharedModule),
+      typeof(AbpFeatureManagementDomainSharedModule),
+      typeof(AbpIdentityDomainSharedModule),
+      typeof(AbpIdentityServerDomainSharedModule),
+      typeof(AbpPermissionManagementDomainSharedModule),
+      typeof(AbpSettingManagementDomainSharedModule),
+      typeof(AbpTenantManagementDomainSharedModule)
+      )]
+  public class WeddingPlannerDomainSharedModule : AbpModule
+  {
+    public override void PreConfigureServices(ServiceConfigurationContext context)
     {
-        public override void PreConfigureServices(ServiceConfigurationContext context)
-        {
-            WeddingPlannerGlobalFeatureConfigurator.Configure();
-            WeddingPlannerModuleExtensionConfigurator.Configure();
-        }
-
-        public override void ConfigureServices(ServiceConfigurationContext context)
-        {
-            Configure<AbpVirtualFileSystemOptions>(options =>
-            {
-                options.FileSets.AddEmbedded<WeddingPlannerDomainSharedModule>();
-            });
-
-            Configure<AbpLocalizationOptions>(options =>
-            {
-                options.Resources
-                    .Add<WeddingPlannerResource>("en")
-                    .AddBaseTypes(typeof(AbpValidationResource))
-                    .AddVirtualJson("/Localization/WeddingPlanner");
-
-                options.DefaultResourceType = typeof(WeddingPlannerResource);
-            });
-
-            Configure<AbpExceptionLocalizationOptions>(options =>
-            {
-                options.MapCodeNamespace("WeddingPlanner", typeof(WeddingPlannerResource));
-            });
-        }
+      WeddingPlannerGlobalFeatureConfigurator.Configure();
+      WeddingPlannerModuleExtensionConfigurator.Configure();
     }
+
+    public override void ConfigureServices(ServiceConfigurationContext context)
+    {
+      Configure<AbpVirtualFileSystemOptions>(options =>
+      {
+        options.FileSets.AddEmbedded<WeddingPlannerDomainSharedModule>();
+      });
+
+      Configure<AbpLocalizationOptions>(options =>
+      {
+        options.Resources
+                  .Add<WeddingPlannerResource>("en")
+                  .AddBaseTypes(typeof(AbpValidationResource))
+                  .AddVirtualJson("/Localization/WeddingPlanner");
+
+        options.DefaultResourceType = typeof(WeddingPlannerResource);
+      });
+
+      Configure<AbpExceptionLocalizationOptions>(options =>
+      {
+        options.MapCodeNamespace("WeddingPlanner", typeof(WeddingPlannerResource));
+      });
+    }
+  }
 }

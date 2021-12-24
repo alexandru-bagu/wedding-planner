@@ -3,16 +3,16 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace OOD.WeddingPlanner.Web
 {
-    public class Startup
+  public class Startup
+  {
+    public void ConfigureServices(IServiceCollection services)
     {
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddApplication<WeddingPlannerWebModule>();
-        }
-
-        public void Configure(IApplicationBuilder app)
-        {
-            app.InitializeApplication();
-        }
+      services.AddApplication<WeddingPlannerWebModule>();
     }
+
+    public void Configure(IApplicationBuilder app)
+    {
+      app.InitializeApplication();
+    }
+  }
 }

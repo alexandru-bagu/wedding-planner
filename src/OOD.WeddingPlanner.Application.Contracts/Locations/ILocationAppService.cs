@@ -6,14 +6,14 @@ using Volo.Abp.Application.Services;
 
 namespace OOD.WeddingPlanner.Locations
 {
-    public interface ILocationAppService :
-        ICrudAppService< 
-            LocationDto, 
-            Guid, 
-            GetLocationsInputDto,
-            CreateUpdateLocationDto,
-            CreateUpdateLocationDto>
-    {
-        Task<LocationWithNavigationPropertiesDto> GetWithNavigationById(Guid id);
-    }
+  public interface ILocationAppService :
+      ICrudAppService<
+          LocationDto,
+          Guid,
+          GetLocationsInputDto,
+          CreateUpdateLocationDto,
+          CreateUpdateLocationDto>
+  {
+    Task<LocationWithNavigationPropertiesDto> GetWithNavigationById(Guid id);
+  }
 }
