@@ -36,7 +36,7 @@ namespace OOD.WeddingPlanner
       CreateMap<Event, LookupDto<Guid>>()
         .ForMember(p => p.DisplayName, p => p.MapFrom(q => q.Name));
       CreateMap<Invitation, LookupDto<Guid>>()
-        .ForMember(p => p.DisplayName, p => p.MapFrom(q => q.Id.ToString()));
+        .ForMember(p => p.DisplayName, p => p.MapFrom(q => q.Destination));
       CreateMap<Invitee, LookupDto<Guid>>()
         .ForMember(p => p.DisplayName, p => p.MapFrom(q => $"{q.Surname} {q.GivenName}"));
       CreateMap<Location, LookupDto<Guid>>()

@@ -35,7 +35,7 @@ namespace OOD.WeddingPlanner.Weddings
         WeddingPlannerPermissions.Event.Create,
         WeddingPlannerPermissions.Event.Update);
       var count = await _repository.GetCountAsync();
-      var list = await _repository.GetPagedListAsync(input.SkipCount, input.MaxResultCount, null);
+      var list = await _repository.GetPagedListAsync(input.SkipCount, input.MaxResultCount, nameof(Wedding.CreationTime));
       return new PagedResultDto<LookupDto<Guid>>(count, ObjectMapper.Map<List<Wedding>, List<LookupDto<Guid>>>(list));
     }
   }

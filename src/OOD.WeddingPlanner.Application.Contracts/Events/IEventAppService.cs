@@ -16,6 +16,7 @@ namespace OOD.WeddingPlanner.Events
           CreateUpdateEventDto>
   {
     Task<EventWithNavigationPropertiesDto> GetWithNavigationByIdAsync(Guid id);
+    Task<PagedResultDto<EventWithNavigationPropertiesDto>> GetListWithNavigationAsync(GetEventsInputDto input);
     Task<PagedResultDto<LookupDto<Guid>>> GetLookupListAsync(LookupRequestDto input);
   }
 }

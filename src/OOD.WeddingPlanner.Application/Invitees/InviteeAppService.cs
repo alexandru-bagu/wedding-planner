@@ -39,8 +39,15 @@ namespace OOD.WeddingPlanner.Invitees
         WeddingPlannerPermissions.Invitation.Create,
         WeddingPlannerPermissions.Invitation.Update);
       var count = await _repository.GetCountAsync();
-      var list = await _repository.GetPagedListAsync(input.SkipCount, input.MaxResultCount, null);
+      var list = await _repository.GetPagedListAsync(input.SkipCount, input.MaxResultCount, nameof(Invitee.CreationTime));
       return new PagedResultDto<LookupDto<Guid>>(count, ObjectMapper.Map<List<Invitee>, List<LookupDto<Guid>>>(list));
+    }
+    
+    public async Task<PagedResultDto<InviteeWithNavigationPropertiesDto>> GetListWithNavigationAsync(GetInviteesInputDto input)
+    {
+      var count = await _repository.GetCountAsync();
+      var list = await _repository.GetListWithNavigationAsync(input.Sorting, input.SkipCount, input.MaxResultCount);
+      return new PagedResultDto<InviteeWithNavigationPropertiesDto>(count, ObjectMapper.Map<List<InviteeWithNavigationProperties>, List<InviteeWithNavigationPropertiesDto>>(list));
     }
   }
 }

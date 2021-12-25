@@ -33,7 +33,7 @@ namespace OOD.WeddingPlanner.Locations
         WeddingPlannerPermissions.Event.Create,
         WeddingPlannerPermissions.Event.Update);
       var count = await _repository.GetCountAsync();
-      var list = await _repository.GetPagedListAsync(input.SkipCount, input.MaxResultCount, null);
+      var list = await _repository.GetPagedListAsync(input.SkipCount, input.MaxResultCount, nameof(Location.CreationTime));
       return new PagedResultDto<LookupDto<Guid>>(count, ObjectMapper.Map<List<Location>, List<LookupDto<Guid>>>(list));
     }
   }

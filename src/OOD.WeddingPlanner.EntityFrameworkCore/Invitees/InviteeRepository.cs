@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using OOD.WeddingPlanner.EntityFrameworkCore;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
+using System.Collections.Generic;
 
 namespace OOD.WeddingPlanner.Invitees
 {
@@ -22,8 +24,21 @@ namespace OOD.WeddingPlanner.Invitees
       return await query.Select(p => new InviteeWithNavigationProperties()
       {
         Invitee = p,
-        Invitation = p.Invitation
+        Invitation = p.Invitation,
+        Wedding = p.Invitation == null ? null : p.Invitation.Wedding
       }).SingleAsync();
+    }
+    
+    public async Task<List<InviteeWithNavigationProperties>> GetListWithNavigationAsync(string sorting, int skipCount, int maxResultCount)
+    {
+      var query = await this.GetQueryableAsync();
+      query = query.IncludeDetails();
+      return await query.OrderBy(sorting).Skip(skipCount).Take(maxResultCount).Select(p => new InviteeWithNavigationProperties()
+      {
+        Invitee = p,
+        Invitation = p.Invitation,
+        Wedding = p.Invitation == null ? null : p.Invitation.Wedding
+      }).ToListAsync();
     }
   }
 }
