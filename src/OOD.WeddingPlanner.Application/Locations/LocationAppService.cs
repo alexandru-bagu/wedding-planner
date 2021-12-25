@@ -4,6 +4,8 @@ using OOD.WeddingPlanner.Locations.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OOD.WeddingPlanner.Locations
 {
@@ -23,10 +25,16 @@ namespace OOD.WeddingPlanner.Locations
       _repository = repository;
     }
 
-    public async Task<LocationWithNavigationPropertiesDto> GetWithNavigationById(Guid id)
+    [AllowAnonymous]
+    public async Task<PagedResultDto<LookupDto<Guid>>> GetLookupListAsync(LookupRequestDto input)
     {
-      return ObjectMapper.Map<LocationWithNavigationProperties, LocationWithNavigationPropertiesDto>(
-        await _repository.GetWithNavigationById(id));
+      await AuthorizationService.AnyPolicy(
+        WeddingPlannerPermissions.Location.Default,
+        WeddingPlannerPermissions.Event.Create,
+        WeddingPlannerPermissions.Event.Update);
+      var count = await _repository.GetCountAsync();
+      var list = await _repository.GetPagedListAsync(input.SkipCount, input.MaxResultCount, null);
+      return new PagedResultDto<LookupDto<Guid>>(count, ObjectMapper.Map<List<Location>, List<LookupDto<Guid>>>(list));
     }
   }
 }

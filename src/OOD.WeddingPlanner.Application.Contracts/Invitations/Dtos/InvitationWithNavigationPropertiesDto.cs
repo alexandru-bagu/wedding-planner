@@ -10,7 +10,5 @@ namespace OOD.WeddingPlanner.Invitations.Dtos
     public InvitationDto Invitation { get; set; }
 
     public WeddingDto Wedding { get; set; }
-
-    public List<InviteeDto> Invitees { get; set; }
   }
 }

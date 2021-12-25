@@ -8,5 +8,8 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.Invitation.ViewModels
   {
     [Display(Name = "InvitationWeddingId")]
     public Guid? WeddingId { get; set; }
+
+    [Display(Name = "InvitationDestination")]
+    public string Destination { get; set; }
   }
 }

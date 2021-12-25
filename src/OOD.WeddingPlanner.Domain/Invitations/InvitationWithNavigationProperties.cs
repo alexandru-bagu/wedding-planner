@@ -9,7 +9,5 @@ namespace OOD.WeddingPlanner.Invitations
     public Invitation Invitation { get; set; }
 
     public Wedding Wedding { get; set; }
-
-    public List<Invitee> Invitees { get; set; }
   }
 }

@@ -48,6 +48,10 @@ $(function () {
         title: l('InvitationWeddingId'),
         data: "weddingId"
       },
+      {
+        title: l('InvitationDestination'),
+        data: "destination"
+      },
     ]
   }));
 

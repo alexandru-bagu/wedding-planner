@@ -13,6 +13,8 @@ namespace OOD.WeddingPlanner.Invitations
 
     public virtual Guid? WeddingId { get; set; }
 
+    public virtual string Destination { get; set; }
+
     public virtual List<Invitee> Invitees { get; set; } = new List<Invitee>();
 
     public virtual Wedding Wedding { get; set; }
@@ -24,11 +26,13 @@ namespace OOD.WeddingPlanner.Invitations
     public Invitation(
         Guid id,
         Guid? tenantId,
-        Guid? weddingId
+        Guid? weddingId,
+        string destination
     ) : base(id)
     {
       TenantId = tenantId;
       WeddingId = weddingId;
+      Destination = destination;
     }
   }
 }

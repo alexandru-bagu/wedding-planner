@@ -14,7 +14,7 @@ namespace OOD.WeddingPlanner.Invitees
     {
     }
 
-    public async Task<InviteeWithNavigationProperties> GetWithNavigationById(Guid id)
+    public async Task<InviteeWithNavigationProperties> GetWithNavigationByIdAsync(Guid id)
     {
       var query = await this.GetQueryableAsync();
       query = query.IncludeDetails();

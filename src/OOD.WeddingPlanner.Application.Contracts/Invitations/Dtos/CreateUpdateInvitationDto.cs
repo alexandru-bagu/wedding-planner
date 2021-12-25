@@ -6,5 +6,7 @@ namespace OOD.WeddingPlanner.Invitations.Dtos
   public class CreateUpdateInvitationDto
   {
     public Guid? WeddingId { get; set; }
+    
+    public string Destination { get; set; }
   }
 }

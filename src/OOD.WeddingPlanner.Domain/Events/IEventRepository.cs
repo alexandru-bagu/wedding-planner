@@ -6,6 +6,6 @@ namespace OOD.WeddingPlanner.Events
 {
   public interface IEventRepository : IRepository<Event, Guid>
   {
-    Task<EventWithNavigationProperties> GetWithNavigationById(Guid id);
+    Task<EventWithNavigationProperties> GetWithNavigationByIdAsync(Guid id);
   }
 }

@@ -14,7 +14,7 @@ namespace OOD.WeddingPlanner.Invitations
     {
     }
 
-    public async Task<InvitationWithNavigationProperties> GetWithNavigationById(Guid id)
+    public async Task<InvitationWithNavigationProperties> GetWithNavigationByIdAsync(Guid id)
     {
       var query = await this.GetQueryableAsync();
       query = query.IncludeDetails();
@@ -22,8 +22,7 @@ namespace OOD.WeddingPlanner.Invitations
       return await query.Select(p => new InvitationWithNavigationProperties()
       {
         Invitation = p,
-        Wedding = p.Wedding,
-        Invitees = p.Invitees
+        Wedding = p.Wedding
       }).SingleAsync();
     }
   }

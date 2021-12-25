@@ -6,6 +6,5 @@ namespace OOD.WeddingPlanner.Locations
 {
   public interface ILocationRepository : IRepository<Location, Guid>
   {
-    Task<LocationWithNavigationProperties> GetWithNavigationById(Guid id);
   }
 }

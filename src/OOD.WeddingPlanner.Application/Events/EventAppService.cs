@@ -4,6 +4,8 @@ using OOD.WeddingPlanner.Events.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OOD.WeddingPlanner.Events
 {
@@ -17,16 +19,29 @@ namespace OOD.WeddingPlanner.Events
     protected override string DeletePolicyName { get; set; } = WeddingPlannerPermissions.Event.Delete;
 
     private readonly IEventRepository _repository;
-
     public EventAppService(IEventRepository repository) : base(repository)
     {
       _repository = repository;
     }
 
-    public async Task<EventWithNavigationPropertiesDto> GetWithNavigationById(Guid id)
+    public async Task<EventWithNavigationPropertiesDto> GetWithNavigationByIdAsync(Guid id)
     {
       return ObjectMapper.Map<EventWithNavigationProperties, EventWithNavigationPropertiesDto>(
-        await _repository.GetWithNavigationById(id));
+        await _repository.GetWithNavigationByIdAsync(id));
+    }
+
+    [AllowAnonymous]
+    public async Task<PagedResultDto<LookupDto<Guid>>> GetLookupListAsync(LookupRequestDto input)
+    {
+      await AuthorizationService.AnyPolicy(
+        WeddingPlannerPermissions.Event.Default,
+        WeddingPlannerPermissions.Wedding.Create,
+        WeddingPlannerPermissions.Wedding.Update,
+        WeddingPlannerPermissions.Location.Create,
+        WeddingPlannerPermissions.Location.Update);
+      var count = await _repository.GetCountAsync();
+      var list = await _repository.GetPagedListAsync(input.SkipCount, input.MaxResultCount, null);
+      return new PagedResultDto<LookupDto<Guid>>(count, ObjectMapper.Map<List<Event>, List<LookupDto<Guid>>>(list));
     }
   }
 }

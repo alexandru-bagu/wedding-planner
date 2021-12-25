@@ -14,6 +14,7 @@ namespace OOD.WeddingPlanner.Invitations
           CreateUpdateInvitationDto,
           CreateUpdateInvitationDto>
   {
-    Task<InvitationWithNavigationPropertiesDto> GetWithNavigationById(Guid id);
+    Task<InvitationWithNavigationPropertiesDto> GetWithNavigationByIdAsync(Guid id);
+    Task<PagedResultDto<LookupDto<Guid>>> GetLookupListAsync(LookupRequestDto input);
   }
 }
