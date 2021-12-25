@@ -13,8 +13,8 @@ $(function () {
     searching: false,
     autoWidth: false,
     scrollCollapse: true,
-    order: [[0, "asc"]],
-    ajax: abp.libs.datatables.createAjax(service.getList),
+    order: [[1, "asc"]],
+    ajax: abp.libs.datatables.createAjax(service.getListWithNavigation),
     columnDefs: [
       {
         rowAction: {
@@ -24,17 +24,17 @@ $(function () {
                 text: l('Edit'),
                 visible: abp.auth.isGranted('WeddingPlanner.Event.Update'),
                 action: function (data) {
-                  editModal.open({ id: data.record.id });
+                  editModal.open({ id: data.record.event.id });
                 }
               },
               {
                 text: l('Delete'),
                 visible: abp.auth.isGranted('WeddingPlanner.Event.Delete'),
                 confirmMessage: function (data) {
-                  return l('EventDeletionConfirmationMessage', data.record.id);
+                  return l('EventDeletionConfirmationMessage', data.record.event.id);
                 },
                 action: function (data) {
-                  service.delete(data.record.id)
+                  service.delete(data.record.event.id)
                     .then(function () {
                       abp.notify.info(l('SuccessfullyDeleted'));
                       dataTable.ajax.reload();
@@ -45,21 +45,21 @@ $(function () {
         }
       },
       {
-        title: l('EventLocationId'),
-        data: "locationId"
-      },
-      {
-        title: l('EventWeddingId'),
-        data: "weddingId"
-      },
-      {
         title: l('EventName'),
-        data: "name"
+        data: "event.name"
       },
       {
         title: l('EventTime'),
-        data: "time"
+        data: "event.time"
       },
+      {
+        title: l('Location'),
+        data: "location.name"
+      },
+      {
+        title: l('Wedding'),
+        data: "wedding.name"
+      }
     ]
   }));
 

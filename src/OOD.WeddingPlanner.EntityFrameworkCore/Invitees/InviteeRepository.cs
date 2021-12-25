@@ -33,12 +33,14 @@ namespace OOD.WeddingPlanner.Invitees
     {
       var query = await this.GetQueryableAsync();
       query = query.IncludeDetails();
-      return await query.OrderBy(sorting).Skip(skipCount).Take(maxResultCount).Select(p => new InviteeWithNavigationProperties()
+      return await query.Select(p => new InviteeWithNavigationProperties()
       {
         Invitee = p,
         Invitation = p.Invitation,
         Wedding = p.Invitation == null ? null : p.Invitation.Wedding
-      }).ToListAsync();
+      })
+      .OrderBy(string.IsNullOrWhiteSpace(sorting) ? $"{nameof(InviteeWithNavigationProperties.Invitee)}.{nameof(Invitee.Surname)}" : sorting)
+      .Skip(skipCount).Take(maxResultCount).ToListAsync();
     }
   }
 }
