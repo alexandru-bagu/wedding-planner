@@ -6,10 +6,10 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.Invitation.ViewModels
 {
   public class CreateEditInvitationViewModel
   {
-    [Display(Name = "InvitationWeddingId")]
+    [Required] [Display(Name = "InvitationWeddingId")]
     public Guid? WeddingId { get; set; }
 
-    [Display(Name = "InvitationDestination")]
+    [Required] [Display(Name = "InvitationDestination")]
     public string Destination { get; set; }
   }
 }

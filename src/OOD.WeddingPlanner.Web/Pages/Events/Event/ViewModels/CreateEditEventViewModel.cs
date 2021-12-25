@@ -8,18 +8,16 @@ namespace OOD.WeddingPlanner.Web.Pages.Events.Event.ViewModels
 {
   public class CreateEditEventViewModel
   {
-    [Display(Name = "EventLocationId")]
-    [SelectItems(nameof(LocationItems))]
+    [Required] [Display(Name = "EventLocationId")] [SelectItems(nameof(LocationItems))]
     public Guid? LocationId { get; set; }
 
-    [Display(Name = "EventWeddingId")]
-    [SelectItems(nameof(WeddingItems))]
+    [Required] [Display(Name = "EventWeddingId")] [SelectItems(nameof(WeddingItems))]
     public Guid? WeddingId { get; set; }
 
-    [Display(Name = "EventName")]
+    [Required] [Display(Name = "EventName")]
     public string Name { get; set; }
 
-    [Display(Name = "EventTime")]
+    [Required] [Display(Name = "EventTime")]
     public DateTime Time { get; set; }
 
     public List<SelectListItem> LocationItems { get; set; } = new List<SelectListItem>();

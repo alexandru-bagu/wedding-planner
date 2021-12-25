@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,7 @@ namespace OOD.WeddingPlanner.Web.Pages.Events.Event
     public virtual async Task OnGetAsync()
     {
       ViewModel = new CreateEditEventViewModel();
+      ViewModel.Time = DateTime.Now;
       ViewModel.WeddingItems.AddRange(
         (await _weddingAppService.GetLookupListAsync(new LookupRequestDto()))
           .Items
