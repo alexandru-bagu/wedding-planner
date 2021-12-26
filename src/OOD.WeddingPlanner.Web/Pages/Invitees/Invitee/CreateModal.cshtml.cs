@@ -3,6 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using OOD.WeddingPlanner.Invitees;
 using OOD.WeddingPlanner.Invitees.Dtos;
 using OOD.WeddingPlanner.Web.Pages.Invitees.Invitee.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
+
 
 namespace OOD.WeddingPlanner.Web.Pages.Invitees.Invitee
 {
@@ -16,6 +22,18 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees.Invitee
     public CreateModalModel(IInviteeAppService service)
     {
       _service = service;
+    }
+
+    public virtual Task OnGetAsync()
+    {
+      ViewModel = new CreateEditInviteeViewModel();
+      ViewModel.BooleanItems = new List<SelectListItem>()
+      {
+        new SelectListItem("", ""),
+        new SelectListItem("No", "False"),
+        new SelectListItem("Yes", "True"),
+      };
+      return Task.CompletedTask;
     }
 
     public virtual async Task<IActionResult> OnPostAsync()
