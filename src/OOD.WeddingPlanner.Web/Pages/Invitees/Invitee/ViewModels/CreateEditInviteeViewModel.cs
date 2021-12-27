@@ -17,11 +17,16 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees.Invitee.ViewModels
     [Display(Name = "InviteeRSVP")]
     public DateTime? RSVP { get; set; }
 
-    [Required] 
-    [Display(Name = "InviteeConfirmed")] 
-    [SelectItems(nameof(BooleanItems))]
+    [Display(Name = "InviteeConfirmed")] [SelectItems(nameof(BooleanItems))]
     public bool? Confirmed { get; set; }
-    
-    public List<SelectListItem> BooleanItems { get; set; }
+
+    [Required] [Display(Name = "InviteeChild")] [SelectItems(nameof(BooleanItems))]
+    public bool? Child { get; set; }
+
+    [Display(Name = "Invitation")] [SelectItems(nameof(InvitationItems))]
+    public Guid? InvitationId { get; set; }
+
+    public List<SelectListItem> BooleanItems { get; set; } = new List<SelectListItem>();
+    public List<SelectListItem> InvitationItems { get; set; } = new List<SelectListItem>();
   }
 }

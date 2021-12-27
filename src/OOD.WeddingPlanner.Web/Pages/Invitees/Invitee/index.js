@@ -14,7 +14,7 @@ $(function () {
     autoWidth: false,
     scrollCollapse: true,
     order: [[0, "asc"]],
-    ajax: abp.libs.datatables.createAjax(service.getList),
+    ajax: abp.libs.datatables.createAjax(service.getListWithNavigation),
     columnDefs: [
       {
         rowAction: {
@@ -24,17 +24,17 @@ $(function () {
                 text: l('Edit'),
                 visible: abp.auth.isGranted('WeddingPlanner.Invitee.Update'),
                 action: function (data) {
-                  editModal.open({ id: data.record.id });
+                  editModal.open({ id: data.record.invitee.id });
                 }
               },
               {
                 text: l('Delete'),
                 visible: abp.auth.isGranted('WeddingPlanner.Invitee.Delete'),
                 confirmMessage: function (data) {
-                  return l('InviteeDeletionConfirmationMessage', data.record.id);
+                  return l('InviteeDeletionConfirmationMessage', data.record.invitee.id);
                 },
                 action: function (data) {
-                  service.delete(data.record.id)
+                  service.delete(data.record.invitee.id)
                     .then(function () {
                       abp.notify.info(l('SuccessfullyDeleted'));
                       dataTable.ajax.reload();
@@ -46,23 +46,39 @@ $(function () {
       },
       {
         title: l('InviteeSurname'),
-        data: "surname"
+        data: "invitee.surname"
       },
       {
         title: l('InviteeGivenName'),
-        data: "givenName"
-      },
-      {
-        title: l('InviteeInvitationId'),
-        data: "invitationId"
+        data: "invitee.givenName"
       },
       {
         title: l('InviteeRSVP'),
-        data: "rSVP"
+        data: "invitee.rsvp"
       },
       {
         title: l('InviteeConfirmed'),
-        data: "confirmed"
+        data: "invitee.confirmed"
+      },
+      {
+        title: l('InviteeChild'),
+        data: "invitee.child"
+      },
+      {
+        title: l('Invitation'),
+        render: function(_, type, record) {
+          if(record.invitation)
+            return record.invitation.destination;
+          return "";
+        }
+      },
+      {
+        title: l('Wedding'),
+        render: function(_, type, record) {
+          if(record.wedding)
+            return record.wedding.name;
+          return "";
+        }
       },
     ]
   }));

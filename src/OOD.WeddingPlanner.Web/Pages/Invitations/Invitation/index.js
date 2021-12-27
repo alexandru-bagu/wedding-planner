@@ -14,7 +14,7 @@ $(function () {
     autoWidth: false,
     scrollCollapse: true,
     order: [[0, "asc"]],
-    ajax: abp.libs.datatables.createAjax(service.getList),
+    ajax: abp.libs.datatables.createAjax(service.getListWithNavigation),
     columnDefs: [
       {
         rowAction: {
@@ -24,17 +24,17 @@ $(function () {
                 text: l('Edit'),
                 visible: abp.auth.isGranted('WeddingPlanner.Invitation.Update'),
                 action: function (data) {
-                  editModal.open({ id: data.record.id });
+                  editModal.open({ id: data.record.invitation.id });
                 }
               },
               {
                 text: l('Delete'),
                 visible: abp.auth.isGranted('WeddingPlanner.Invitation.Delete'),
                 confirmMessage: function (data) {
-                  return l('InvitationDeletionConfirmationMessage', data.record.id);
+                  return l('InvitationDeletionConfirmationMessage', data.record.invitation.id);
                 },
                 action: function (data) {
-                  service.delete(data.record.id)
+                  service.delete(data.record.invitation.id)
                     .then(function () {
                       abp.notify.info(l('SuccessfullyDeleted'));
                       dataTable.ajax.reload();
@@ -45,12 +45,12 @@ $(function () {
         }
       },
       {
-        title: l('InvitationWeddingId'),
-        data: "weddingId"
+        title: l('Wedding'),
+        data: "wedding.name"
       },
       {
         title: l('InvitationDestination'),
-        data: "destination"
+        data: "invitation.destination"
       },
     ]
   }));

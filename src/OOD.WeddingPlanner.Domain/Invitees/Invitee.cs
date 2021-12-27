@@ -19,6 +19,8 @@ namespace OOD.WeddingPlanner.Invitees
 
     public virtual bool? Confirmed { get; set; }
 
+    public virtual bool Child { get; set; }
+
     public virtual Invitation Invitation { get; set; }
 
     protected Invitee()
@@ -32,7 +34,8 @@ namespace OOD.WeddingPlanner.Invitees
         string givenName,
         Guid? invitationId,
         DateTime? rsvp,
-        bool? confirmed
+        bool? confirmed,
+        bool child
     ) : base(id)
     {
       TenantId = tenantId;
@@ -41,6 +44,7 @@ namespace OOD.WeddingPlanner.Invitees
       InvitationId = invitationId;
       RSVP = rsvp;
       Confirmed = confirmed;
+      Child = child;
     }
   }
 }

@@ -8,7 +8,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
-
+using OOD.WeddingPlanner.Invitations;
+using System.Linq;
 
 namespace OOD.WeddingPlanner.Web.Pages.Invitees.Invitee
 {
@@ -18,22 +19,28 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees.Invitee
     public CreateEditInviteeViewModel ViewModel { get; set; }
 
     private readonly IInviteeAppService _service;
+    private readonly IInvitationAppService _invitationAppService;
 
-    public CreateModalModel(IInviteeAppService service)
+    public CreateModalModel(IInviteeAppService service, IInvitationAppService invitationAppService)
     {
       _service = service;
+      _invitationAppService = invitationAppService;
     }
 
-    public virtual Task OnGetAsync()
+    public virtual async Task OnGetAsync()
     {
       ViewModel = new CreateEditInviteeViewModel();
-      ViewModel.BooleanItems = new List<SelectListItem>()
-      {
+      ViewModel.BooleanItems.AddRange(new[] {
         new SelectListItem("", ""),
         new SelectListItem("No", "False"),
         new SelectListItem("Yes", "True"),
-      };
-      return Task.CompletedTask;
+      });
+      ViewModel.InvitationItems.AddRange(new[] {
+        new SelectListItem("", "")
+      });
+      ViewModel.InvitationItems.AddRange(
+        (await _invitationAppService.GetLookupListAsync(new LookupRequestDto()))
+          .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
     }
 
     public virtual async Task<IActionResult> OnPostAsync()

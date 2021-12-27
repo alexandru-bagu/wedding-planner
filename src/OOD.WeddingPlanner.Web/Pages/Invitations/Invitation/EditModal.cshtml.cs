@@ -1,9 +1,15 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using OOD.WeddingPlanner.Invitations;
 using OOD.WeddingPlanner.Invitations.Dtos;
+using OOD.WeddingPlanner.Invitees;
+using OOD.WeddingPlanner.Invitees.Dtos;
 using OOD.WeddingPlanner.Web.Pages.Invitations.Invitation.ViewModels;
+using OOD.WeddingPlanner.Weddings;
+using Volo.Abp.Application.Dtos;
 
 namespace OOD.WeddingPlanner.Web.Pages.Invitations.Invitation
 {
@@ -17,16 +23,28 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.Invitation
     public CreateEditInvitationViewModel ViewModel { get; set; }
 
     private readonly IInvitationAppService _service;
+    private readonly IWeddingAppService _weddingAppService;
+    private readonly IInviteeAppService _inviteeAppService;
 
-    public EditModalModel(IInvitationAppService service)
+    public EditModalModel(IInvitationAppService service, IWeddingAppService weddingAppService, IInviteeAppService inviteeAppService)
     {
       _service = service;
+      _weddingAppService = weddingAppService;
+      _inviteeAppService = inviteeAppService;
     }
 
     public virtual async Task OnGetAsync()
     {
       var dto = await _service.GetAsync(Id);
+      var invitees = await _inviteeAppService.GetListAsync(new GetInviteesInputDto() { InvitationId = Id, MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount });
       ViewModel = ObjectMapper.Map<InvitationDto, CreateEditInvitationViewModel>(dto);
+      ViewModel.Invitees = invitees.Items.Select(p => p.Id).ToArray(); 
+      ViewModel.WeddingItems.AddRange(
+        (await _weddingAppService.GetLookupListAsync(new LookupRequestDto()))
+          .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
+      ViewModel.InviteeItems.AddRange(
+        (await _inviteeAppService.GetLookupListAsync(new LookupRequestDto()))
+          .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
     }
 
     public virtual async Task<IActionResult> OnPostAsync()

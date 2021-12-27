@@ -45,6 +45,7 @@
     "Invitation": "Invitation",
     "InvitationWeddingId": "Wedding",
     "InvitationDestination": "Destination",
+    "InviteeChild": "Is child?",
     "CreateInvitation": "Add invitation",
     "EditInvitation": "Edit invitation",
     "InvitationDeletionConfirmationMessage": "Are you sure to delete the invitation {0}?",

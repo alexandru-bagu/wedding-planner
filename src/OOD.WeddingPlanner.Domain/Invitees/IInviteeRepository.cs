@@ -8,6 +8,6 @@ namespace OOD.WeddingPlanner.Invitees
   public interface IInviteeRepository : IRepository<Invitee, Guid>
   {
     Task<InviteeWithNavigationProperties> GetWithNavigationByIdAsync(Guid id);
-    Task<List<InviteeWithNavigationProperties>> GetListWithNavigationAsync(string sorting, int skipCount, int maxResultCount);
+    Task<List<InviteeWithNavigationProperties>> GetListWithNavigationAsync(Guid? invitationId, string sorting, int skipCount, int maxResultCount);
   }
 }

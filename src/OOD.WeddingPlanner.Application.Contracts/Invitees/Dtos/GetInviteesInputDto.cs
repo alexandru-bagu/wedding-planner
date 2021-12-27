@@ -5,6 +5,7 @@ namespace OOD.WeddingPlanner.Invitees.Dtos
 {
   public class GetInviteesInputDto : PagedAndSortedResultRequestDto
   {
+    public Guid? InvitationId { get; set; }
     public GetInviteesInputDto()
     {
     }

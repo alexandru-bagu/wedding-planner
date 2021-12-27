@@ -28,8 +28,8 @@ namespace OOD.WeddingPlanner.Invitees
         Wedding = p.Invitation == null ? null : p.Invitation.Wedding
       }).SingleAsync();
     }
-    
-    public async Task<List<InviteeWithNavigationProperties>> GetListWithNavigationAsync(string sorting, int skipCount, int maxResultCount)
+
+    public async Task<List<InviteeWithNavigationProperties>> GetListWithNavigationAsync(Guid? invitationId, string sorting, int skipCount, int maxResultCount)
     {
       var query = await this.GetQueryableAsync();
       query = query.IncludeDetails();
@@ -39,6 +39,7 @@ namespace OOD.WeddingPlanner.Invitees
         Invitation = p.Invitation,
         Wedding = p.Invitation == null ? null : p.Invitation.Wedding
       })
+      .WhereIf(invitationId.HasValue, p => p.Invitee.InvitationId == invitationId)
       .OrderBy(string.IsNullOrWhiteSpace(sorting) ? $"{nameof(InviteeWithNavigationProperties.Invitee)}.{nameof(Invitee.Surname)}" : sorting)
       .Skip(skipCount).Take(maxResultCount).ToListAsync();
     }
