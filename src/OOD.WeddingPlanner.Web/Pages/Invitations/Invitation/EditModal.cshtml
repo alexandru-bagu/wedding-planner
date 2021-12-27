@@ -12,9 +12,7 @@
     <abp-modal-header title="@L["EditInvitation"].Value"></abp-modal-header>
     <abp-modal-body>
       <abp-input asp-for="Id" />
-      <abp-form-content>
-        <abp-select asp-for="ViewModel.Invitees" asp-items="Model.ViewModel.InviteeItems" multiple="true" />
-      </abp-form-content>
+      <abp-form-content />
     </abp-modal-body>
     <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
   </abp-modal>

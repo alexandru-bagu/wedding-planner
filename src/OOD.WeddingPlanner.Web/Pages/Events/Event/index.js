@@ -3,8 +3,16 @@ $(function () {
   var l = abp.localization.getResource('WeddingPlanner');
 
   var service = oOD.weddingPlanner.events.event;
-  var createModal = new abp.ModalManager(abp.appPath + 'Events/Event/CreateModal');
-  var editModal = new abp.ModalManager(abp.appPath + 'Events/Event/EditModal');
+  var createModal = new abp.ModalManager({
+    viewUrl: abp.appPath + 'Events/Event/CreateModal',
+    scriptUrl: "/Pages/select2modal.js",
+    modalClass: "select2modal"
+  });
+  var editModal = new abp.ModalManager({
+    viewUrl: abp.appPath + 'Events/Event/EditModal',
+    scriptUrl: "/Pages/select2modal.js",
+    modalClass: "select2modal"
+  });
 
   var dataTable = $('#EventTable').DataTable(abp.libs.datatables.normalizeConfiguration({
     processing: true,
@@ -58,7 +66,10 @@ $(function () {
       },
       {
         title: l('Wedding'),
-        data: "wedding.name"
+        render: function (_, type, record) {
+          if (record.wedding) return record.wedding.name;
+          return "";
+        }
       }
     ]
   }));

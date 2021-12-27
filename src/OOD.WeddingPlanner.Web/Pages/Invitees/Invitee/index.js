@@ -3,8 +3,16 @@ $(function () {
   var l = abp.localization.getResource('WeddingPlanner');
 
   var service = oOD.weddingPlanner.invitees.invitee;
-  var createModal = new abp.ModalManager(abp.appPath + 'Invitees/Invitee/CreateModal');
-  var editModal = new abp.ModalManager(abp.appPath + 'Invitees/Invitee/EditModal');
+  var createModal = new abp.ModalManager({
+    viewUrl: abp.appPath + 'Invitees/Invitee/CreateModal',
+    scriptUrl: "/Pages/select2modal.js",
+    modalClass: "select2modal"
+  });
+  var editModal = new abp.ModalManager({
+    viewUrl: abp.appPath + 'Invitees/Invitee/EditModal',
+    scriptUrl: "/Pages/select2modal.js",
+    modalClass: "select2modal"
+  });
 
   var dataTable = $('#InviteeTable').DataTable(abp.libs.datatables.normalizeConfiguration({
     processing: true,

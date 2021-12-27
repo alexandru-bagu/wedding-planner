@@ -3,8 +3,16 @@ $(function () {
   var l = abp.localization.getResource('WeddingPlanner');
 
   var service = oOD.weddingPlanner.locations.location;
-  var createModal = new abp.ModalManager(abp.appPath + 'Locations/Location/CreateModal');
-  var editModal = new abp.ModalManager(abp.appPath + 'Locations/Location/EditModal');
+  var createModal = new abp.ModalManager({
+    viewUrl: abp.appPath + 'Locations/Location/CreateModal',
+    scriptUrl: "/Pages/select2modal.js",
+    modalClass: "select2modal"
+  });
+  var editModal = new abp.ModalManager({
+    viewUrl: abp.appPath + 'Locations/Location/EditModal',
+    scriptUrl: "/Pages/select2modal.js",
+    modalClass: "select2modal"
+  });
 
   var dataTable = $('#LocationTable').DataTable(abp.libs.datatables.normalizeConfiguration({
     processing: true,

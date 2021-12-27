@@ -6,6 +6,8 @@ using Volo.Abp.Application.Services;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using OOD.WeddingPlanner.Invitees;
+using Volo.Abp.Uow;
 
 namespace OOD.WeddingPlanner.Invitations
 {
@@ -19,10 +21,12 @@ namespace OOD.WeddingPlanner.Invitations
     protected override string DeletePolicyName { get; set; } = WeddingPlannerPermissions.Invitation.Delete;
 
     private readonly IInvitationRepository _repository;
+    private readonly IInviteeRepository _inviteeRepository;
 
-    public InvitationAppService(IInvitationRepository repository) : base(repository)
+    public InvitationAppService(IInvitationRepository repository, IInviteeRepository inviteeRepository) : base(repository)
     {
       _repository = repository;
+      _inviteeRepository = inviteeRepository;
     }
 
     public async Task<InvitationWithNavigationPropertiesDto> GetWithNavigationByIdAsync(Guid id)
@@ -50,6 +54,41 @@ namespace OOD.WeddingPlanner.Invitations
       var count = await _repository.GetCountAsync();
       var list = await _repository.GetListWithNavigationAsync(input.Sorting, input.SkipCount, input.MaxResultCount);
       return new PagedResultDto<InvitationWithNavigationPropertiesDto>(count, ObjectMapper.Map<List<InvitationWithNavigationProperties>, List<InvitationWithNavigationPropertiesDto>>(list));
+    }
+
+    [UnitOfWork]
+    public override async Task<InvitationDto> CreateAsync(CreateUpdateInvitationDto input)
+    {
+      var invitation = await base.CreateAsync(input);
+      List<Invitee> inviteeList = new List<Invitee>();
+      foreach (var inviteeId in input.InviteeIds)
+      {
+        var invitee = await _inviteeRepository.GetAsync(inviteeId);
+        invitee.InvitationId = invitation.Id;
+        inviteeList.Add(invitee);
+      }
+      await _inviteeRepository.UpdateManyAsync(inviteeList, true);
+      return invitation;
+    }
+
+    [UnitOfWork]
+    public override async Task<InvitationDto> UpdateAsync(Guid id, CreateUpdateInvitationDto input)
+    {
+      var invitation = await base.UpdateAsync(id, input);
+
+      HashSet<Invitee> inviteeList = new HashSet<Invitee>(await _inviteeRepository.GetListAsync(p => p.InvitationId == id));
+      foreach (var invitee in inviteeList)
+      {
+        invitee.InvitationId = null;
+      }
+      foreach (var inviteeId in input.InviteeIds)
+      {
+        var invitee = await _inviteeRepository.GetAsync(inviteeId);
+        invitee.InvitationId = invitation.Id;
+        inviteeList.Add(invitee);
+      }
+      await _inviteeRepository.UpdateManyAsync(inviteeList, true);
+      return invitation;
     }
   }
 }

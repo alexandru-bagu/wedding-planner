@@ -31,10 +31,10 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.Invitation
       ViewModel = new CreateEditInvitationViewModel();
       ViewModel.WeddingItems.AddRange(
         (await _weddingAppService.GetLookupListAsync(new LookupRequestDto()))
-          .Items.Select(p=>new SelectListItem(p.DisplayName, p.Id.ToString())));
+          .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
       ViewModel.InviteeItems.AddRange(
         (await _inviteeAppService.GetLookupListAsync(new LookupRequestDto()))
-          .Items.Select(p=>new SelectListItem(p.DisplayName, p.Id.ToString())));
+          .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
     }
 
     public virtual async Task<IActionResult> OnPostAsync()

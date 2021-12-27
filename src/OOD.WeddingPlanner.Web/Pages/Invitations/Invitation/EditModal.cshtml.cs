@@ -38,7 +38,7 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.Invitation
       var dto = await _service.GetAsync(Id);
       var invitees = await _inviteeAppService.GetListAsync(new GetInviteesInputDto() { InvitationId = Id, MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount });
       ViewModel = ObjectMapper.Map<InvitationDto, CreateEditInvitationViewModel>(dto);
-      ViewModel.Invitees = invitees.Items.Select(p => p.Id).ToArray(); 
+      ViewModel.InviteeIds = invitees.Items.Select(p => p.Id).ToList();
       ViewModel.WeddingItems.AddRange(
         (await _weddingAppService.GetLookupListAsync(new LookupRequestDto()))
           .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));

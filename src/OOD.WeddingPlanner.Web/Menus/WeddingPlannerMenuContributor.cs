@@ -49,31 +49,31 @@ namespace OOD.WeddingPlanner.Web.Menus
       if (await context.IsGrantedAsync(WeddingPlannerPermissions.Location.Default))
       {
         context.Menu.AddItem(
-            new ApplicationMenuItem(WeddingPlannerMenus.Location, l["Menu:Location"], "/Locations/Location")
+            new ApplicationMenuItem(WeddingPlannerMenus.Location, l["Menu:Location"], "/Locations/Location", icon: "fas fa-location-arrow")
         );
       }
       if (await context.IsGrantedAsync(WeddingPlannerPermissions.Event.Default))
       {
         context.Menu.AddItem(
-            new ApplicationMenuItem(WeddingPlannerMenus.Event, l["Menu:Event"], "/Events/Event")
+            new ApplicationMenuItem(WeddingPlannerMenus.Event, l["Menu:Event"], "/Events/Event", icon: "fas fa-calendar")
         );
       }
       if (await context.IsGrantedAsync(WeddingPlannerPermissions.Invitee.Default))
       {
         context.Menu.AddItem(
-            new ApplicationMenuItem(WeddingPlannerMenus.Invitee, l["Menu:Invitee"], "/Invitees/Invitee")
+            new ApplicationMenuItem(WeddingPlannerMenus.Invitee, l["Menu:Invitee"], "/Invitees/Invitee", icon: "fas fa-user")
         );
       }
       if (await context.IsGrantedAsync(WeddingPlannerPermissions.Invitation.Default))
       {
         context.Menu.AddItem(
-            new ApplicationMenuItem(WeddingPlannerMenus.Invitation, l["Menu:Invitation"], "/Invitations/Invitation")
+            new ApplicationMenuItem(WeddingPlannerMenus.Invitation, l["Menu:Invitation"], "/Invitations/Invitation", icon: "fas fa-envelope")
         );
       }
       if (await context.IsGrantedAsync(WeddingPlannerPermissions.Wedding.Default))
       {
         context.Menu.AddItem(
-            new ApplicationMenuItem(WeddingPlannerMenus.Wedding, l["Menu:Wedding"], "/Weddings/Wedding")
+            new ApplicationMenuItem(WeddingPlannerMenus.Wedding, l["Menu:Wedding"], "/Weddings/Wedding", icon: "fas fa-church")
         );
       }
     }
