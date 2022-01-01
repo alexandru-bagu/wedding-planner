@@ -9,6 +9,8 @@ using OOD.WeddingPlanner.Invitations.Dtos;
 using OOD.WeddingPlanner.Weddings;
 using OOD.WeddingPlanner.Weddings.Dtos;
 using AutoMapper;
+using OOD.WeddingPlanner.InvitationDesigns;
+using OOD.WeddingPlanner.InvitationDesigns.Dtos;
 using System;
 
 namespace OOD.WeddingPlanner
@@ -22,12 +24,14 @@ namespace OOD.WeddingPlanner
       CreateMap<Invitee, InviteeDto>();
       CreateMap<Invitation, InvitationDto>();
       CreateMap<Wedding, WeddingDto>();
+      CreateMap<InvitationDesign, InvitationDesignDto>();
 
       CreateMap<CreateUpdateLocationDto, Location>(MemberList.Source);
       CreateMap<CreateUpdateEventDto, Event>(MemberList.Source);
       CreateMap<CreateUpdateInviteeDto, Invitee>(MemberList.Source);
       CreateMap<CreateUpdateInvitationDto, Invitation>(MemberList.Source);
       CreateMap<CreateUpdateWeddingDto, Wedding>(MemberList.Source);
+      CreateMap<CreateUpdateInvitationDesignDto, InvitationDesign>(MemberList.Source);
 
       CreateMap<EventWithNavigationProperties, EventWithNavigationPropertiesDto>();
       CreateMap<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>();
@@ -42,6 +46,8 @@ namespace OOD.WeddingPlanner
       CreateMap<Location, LookupDto<Guid>>()
         .ForMember(p => p.DisplayName, p => p.MapFrom(q => q.Name));
       CreateMap<Wedding, LookupDto<Guid>>()
+        .ForMember(p => p.DisplayName, p => p.MapFrom(q => q.Name));
+      CreateMap<InvitationDesign, LookupDto<Guid>>()
         .ForMember(p => p.DisplayName, p => p.MapFrom(q => q.Name));
     }
   }

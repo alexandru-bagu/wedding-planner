@@ -81,6 +81,56 @@ namespace OOD.WeddingPlanner.Migrations
                     b.ToTable("AppEvents", (string)null);
                 });
 
+            modelBuilder.Entity("OOD.WeddingPlanner.InvitationDesigns.InvitationDesign", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("TenantId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppInvitationDesigns", (string)null);
+                });
+
             modelBuilder.Entity("OOD.WeddingPlanner.Invitations.Invitation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -101,6 +151,9 @@ namespace OOD.WeddingPlanner.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("DeletionTime");
+
+                    b.Property<Guid?>("DesignId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Destination")
                         .HasColumnType("longtext");
@@ -127,6 +180,8 @@ namespace OOD.WeddingPlanner.Migrations
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DesignId");
 
                     b.HasIndex("WeddingId");
 
@@ -2238,9 +2293,15 @@ namespace OOD.WeddingPlanner.Migrations
 
             modelBuilder.Entity("OOD.WeddingPlanner.Invitations.Invitation", b =>
                 {
+                    b.HasOne("OOD.WeddingPlanner.InvitationDesigns.InvitationDesign", "Design")
+                        .WithMany("Invitations")
+                        .HasForeignKey("DesignId");
+
                     b.HasOne("OOD.WeddingPlanner.Weddings.Wedding", "Wedding")
                         .WithMany("Invitations")
                         .HasForeignKey("WeddingId");
+
+                    b.Navigation("Design");
 
                     b.Navigation("Wedding");
                 });
@@ -2529,6 +2590,11 @@ namespace OOD.WeddingPlanner.Migrations
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("OOD.WeddingPlanner.InvitationDesigns.InvitationDesign", b =>
+                {
+                    b.Navigation("Invitations");
                 });
 
             modelBuilder.Entity("OOD.WeddingPlanner.Invitations.Invitation", b =>

@@ -5,13 +5,13 @@ $(function () {
   var service = oOD.weddingPlanner.invitees.invitee;
   var createModal = new abp.ModalManager({
     viewUrl: abp.appPath + 'Invitees/Invitee/CreateModal',
-    scriptUrl: "/Pages/select2modal.js",
-    modalClass: "select2modal"
+    scriptUrl: "/Pages/Invitees/Invitee/invitee.js",
+    modalClass: "inviteeModal"
   });
   var editModal = new abp.ModalManager({
     viewUrl: abp.appPath + 'Invitees/Invitee/EditModal',
-    scriptUrl: "/Pages/select2modal.js",
-    modalClass: "select2modal"
+    scriptUrl: "/Pages/Invitees/Invitee/invitee.js",
+    modalClass: "inviteeModal"
   });
 
   var dataTable = $('#InviteeTable').DataTable(abp.libs.datatables.normalizeConfiguration({
@@ -21,7 +21,7 @@ $(function () {
     searching: false,
     autoWidth: false,
     scrollCollapse: true,
-    order: [[0, "asc"]],
+    order: [[1, "asc"]],
     ajax: abp.libs.datatables.createAjax(service.getListWithNavigation),
     columnDefs: [
       {
@@ -39,7 +39,7 @@ $(function () {
                 text: l('Delete'),
                 visible: abp.auth.isGranted('WeddingPlanner.Invitee.Delete'),
                 confirmMessage: function (data) {
-                  return l('InviteeDeletionConfirmationMessage', data.record.invitee.id);
+                  return l('InviteeDeletionConfirmationMessage', data.record.invitee.name);
                 },
                 action: function (data) {
                   service.delete(data.record.invitee.id)
@@ -74,16 +74,16 @@ $(function () {
       },
       {
         title: l('Invitation'),
-        render: function(_, type, record) {
-          if(record.invitation)
+        render: function (_, type, record) {
+          if (record.invitation)
             return record.invitation.destination;
           return "";
         }
       },
       {
         title: l('Wedding'),
-        render: function(_, type, record) {
-          if(record.wedding)
+        render: function (_, type, record) {
+          if (record.wedding)
             return record.wedding.name;
           return "";
         }

@@ -32,6 +32,8 @@ namespace OOD.WeddingPlanner.Weddings
         WeddingPlannerPermissions.Wedding.Default,
         WeddingPlannerPermissions.Invitation.Create,
         WeddingPlannerPermissions.Invitation.Update,
+        WeddingPlannerPermissions.Invitee.Create,
+        WeddingPlannerPermissions.Invitee.Update,
         WeddingPlannerPermissions.Event.Create,
         WeddingPlannerPermissions.Event.Update);
       var count = await _repository.GetCountAsync();

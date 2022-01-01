@@ -39,7 +39,7 @@ $(function () {
                 text: l('Delete'),
                 visible: abp.auth.isGranted('WeddingPlanner.Invitation.Delete'),
                 confirmMessage: function (data) {
-                  return l('InvitationDeletionConfirmationMessage', data.record.invitation.id);
+                  return l('InvitationDeletionConfirmationMessage', data.record.invitation.destination);
                 },
                 action: function (data) {
                   service.delete(data.record.invitation.id)

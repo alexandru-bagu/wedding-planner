@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using OOD.WeddingPlanner.Invitees;
 using Volo.Abp.Uow;
+using System.Linq;
 
 namespace OOD.WeddingPlanner.Invitations
 {
@@ -36,7 +37,7 @@ namespace OOD.WeddingPlanner.Invitations
     }
 
     [AllowAnonymous]
-    public async Task<PagedResultDto<LookupDto<Guid>>> GetLookupListAsync(LookupRequestDto input)
+    public async Task<PagedResultDto<LookupDto<Guid>>> GetLookupListAsync(LookupInvitationsInputDto input)
     {
       await AuthorizationService.AnyPolicy(
         WeddingPlannerPermissions.Invitation.Default,
@@ -44,15 +45,22 @@ namespace OOD.WeddingPlanner.Invitations
         WeddingPlannerPermissions.Wedding.Update,
         WeddingPlannerPermissions.Invitee.Create,
         WeddingPlannerPermissions.Invitee.Update);
-      var count = await _repository.GetCountAsync();
-      var list = await _repository.GetPagedListAsync(input.SkipCount, input.MaxResultCount, nameof(Invitation.CreationTime));
+      var count = await _repository.GetCountAsync(input.WeddingId);
+      var list = await _repository.GetPagedListAsync(input.WeddingId, input.SkipCount, input.MaxResultCount, nameof(Invitation.CreationTime));
       return new PagedResultDto<LookupDto<Guid>>(count, ObjectMapper.Map<List<Invitation>, List<LookupDto<Guid>>>(list));
+    }
+
+    protected override async Task<IQueryable<Invitation>> CreateFilteredQueryAsync(GetInvitationsInputDto input)
+    {
+      var query = await base.CreateFilteredQueryAsync(input);
+      query = query.WhereIf(input.WeddingId.HasValue, p => p.WeddingId == input.WeddingId);
+      return query;
     }
 
     public async Task<PagedResultDto<InvitationWithNavigationPropertiesDto>> GetListWithNavigationAsync(GetInvitationsInputDto input)
     {
-      var count = await _repository.GetCountAsync();
-      var list = await _repository.GetListWithNavigationAsync(input.Sorting, input.SkipCount, input.MaxResultCount);
+      var count = await _repository.GetCountAsync(input.WeddingId);
+      var list = await _repository.GetListWithNavigationAsync(input.WeddingId, input.Sorting, input.SkipCount, input.MaxResultCount);
       return new PagedResultDto<InvitationWithNavigationPropertiesDto>(count, ObjectMapper.Map<List<InvitationWithNavigationProperties>, List<InvitationWithNavigationPropertiesDto>>(list));
     }
 

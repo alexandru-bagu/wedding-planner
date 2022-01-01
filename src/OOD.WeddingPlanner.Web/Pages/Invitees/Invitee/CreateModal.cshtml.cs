@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 using OOD.WeddingPlanner.Invitations;
 using System.Linq;
+using OOD.WeddingPlanner.Weddings;
 
 namespace OOD.WeddingPlanner.Web.Pages.Invitees.Invitee
 {
@@ -19,12 +20,12 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees.Invitee
     public CreateEditInviteeViewModel ViewModel { get; set; }
 
     private readonly IInviteeAppService _service;
-    private readonly IInvitationAppService _invitationAppService;
+    private readonly IWeddingAppService _weddingAppService;
 
-    public CreateModalModel(IInviteeAppService service, IInvitationAppService invitationAppService)
+    public CreateModalModel(IInviteeAppService service, IWeddingAppService weddingAppService)
     {
       _service = service;
-      _invitationAppService = invitationAppService;
+      _weddingAppService = weddingAppService;
     }
 
     public virtual async Task OnGetAsync()
@@ -38,8 +39,11 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees.Invitee
       ViewModel.InvitationItems.AddRange(new[] {
         new SelectListItem("", "")
       });
-      ViewModel.InvitationItems.AddRange(
-        (await _invitationAppService.GetLookupListAsync(new LookupRequestDto()))
+      ViewModel.WeddingItems.AddRange(new[] {
+        new SelectListItem("", "")
+      });
+      ViewModel.WeddingItems.AddRange(
+        (await _weddingAppService.GetLookupListAsync(new LookupRequestDto()))
           .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
     }
 

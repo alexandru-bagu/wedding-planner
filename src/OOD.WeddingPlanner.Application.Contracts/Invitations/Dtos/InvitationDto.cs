@@ -7,7 +7,9 @@ namespace OOD.WeddingPlanner.Invitations.Dtos
   public class InvitationDto : FullAuditedEntityDto<Guid>
   {
     public Guid? WeddingId { get; set; }
-    
+
+    public Guid? DesignId { get; set; }
+
     public string Destination { get; set; }
   }
 }

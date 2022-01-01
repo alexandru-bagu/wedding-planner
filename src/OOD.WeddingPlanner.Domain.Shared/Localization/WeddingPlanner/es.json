@@ -55,6 +55,14 @@
     "WeddingContactPhoneNumber": "WeddingContactPhoneNumber",
     "CreateWedding": "CreateWedding",
     "EditWedding": "EditWedding",
-    "WeddingDeletionConfirmationMessage": "Are you sure to delete the wedding {0}?"
+    "WeddingDeletionConfirmationMessage": "Are you sure to delete the wedding {0}?",
+    "Permission:InvitationDesign": "InvitationDesign",
+    "Menu:InvitationDesign": "MenuInvitationDesign",
+    "InvitationDesign": "InvitationDesign",
+    "InvitationDesignName": "InvitationDesignName",
+    "InvitationDesignBody": "InvitationDesignBody",
+    "CreateInvitationDesign": "CreateInvitationDesign",
+    "EditInvitationDesign": "EditInvitationDesign",
+    "InvitationDesignDeletionConfirmationMessage": "Are you sure to delete the invitationDesign {0}?"
   }
 }

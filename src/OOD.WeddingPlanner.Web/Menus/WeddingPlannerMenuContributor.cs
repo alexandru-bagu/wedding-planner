@@ -35,7 +35,8 @@ namespace OOD.WeddingPlanner.Web.Menus
           )
       );
 
-      if (MultiTenancyConsts.IsEnabled)
+      var multiTenancy = MultiTenancyConsts.IsEnabled && true;
+      if (multiTenancy)
       {
         administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 1);
       }
@@ -74,6 +75,12 @@ namespace OOD.WeddingPlanner.Web.Menus
       {
         context.Menu.AddItem(
             new ApplicationMenuItem(WeddingPlannerMenus.Wedding, l["Menu:Wedding"], "/Weddings/Wedding", icon: "fas fa-church")
+        );
+      }
+      if (await context.IsGrantedAsync(WeddingPlannerPermissions.InvitationDesign.Default))
+      {
+        context.Menu.AddItem(
+            new ApplicationMenuItem(WeddingPlannerMenus.InvitationDesign, l["Menu:InvitationDesign"], "/InvitationDesigns/InvitationDesign", icon: "fas fa-object-group")
         );
       }
     }

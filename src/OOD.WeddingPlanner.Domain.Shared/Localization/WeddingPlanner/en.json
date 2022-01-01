@@ -45,6 +45,7 @@
     "Invitation": "Invitation",
     "InvitationWeddingId": "Wedding",
     "InvitationDestination": "Destination",
+    "InvitationDesignId": "Design",
     "InviteeChild": "Is child?",
     "CreateInvitation": "Add invitation",
     "EditInvitation": "Edit invitation",
@@ -58,6 +59,14 @@
     "WeddingContactPhoneNumber": "Contact Phone number",
     "CreateWedding": "Add wedding",
     "EditWedding": "Edit wedding",
-    "WeddingDeletionConfirmationMessage": "Are you sure to delete the wedding {0}?"
+    "WeddingDeletionConfirmationMessage": "Are you sure to delete the wedding {0}?",
+    "Permission:InvitationDesign": "InvitationDesign",
+    "Menu:InvitationDesign": "Invitation Designs",
+    "InvitationDesign": "InvitationDesign",
+    "InvitationDesignName": "Name",
+    "InvitationDesignBody": "Body",
+    "CreateInvitationDesign": "Create design",
+    "EditInvitationDesign": "Edit",
+    "InvitationDesignDeletionConfirmationMessage": "Are you sure to delete the invitation design {0}?"
   }
 }

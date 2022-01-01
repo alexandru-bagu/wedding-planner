@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using OOD.WeddingPlanner.InvitationDesigns;
 using OOD.WeddingPlanner.Invitations;
 using OOD.WeddingPlanner.Invitations.Dtos;
 using OOD.WeddingPlanner.Invitees;
@@ -18,12 +19,14 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.Invitation
     private readonly IInvitationAppService _service;
     private readonly IWeddingAppService _weddingAppService;
     private readonly IInviteeAppService _inviteeAppService;
+    private readonly IInvitationDesignAppService _invitationDesignAppService;
 
-    public CreateModalModel(IInvitationAppService service, IWeddingAppService weddingAppService, IInviteeAppService inviteeAppService)
+    public CreateModalModel(IInvitationAppService service, IWeddingAppService weddingAppService, IInviteeAppService inviteeAppService, IInvitationDesignAppService invitationDesignAppService)
     {
       _service = service;
       _weddingAppService = weddingAppService;
       _inviteeAppService = inviteeAppService;
+      _invitationDesignAppService = invitationDesignAppService;
     }
 
     public virtual async Task OnGetAsync()
@@ -34,6 +37,9 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.Invitation
           .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
       ViewModel.InviteeItems.AddRange(
         (await _inviteeAppService.GetLookupListAsync(new LookupRequestDto()))
+          .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
+      ViewModel.DesignItems.AddRange(
+        (await _invitationDesignAppService.GetLookupListAsync(new LookupRequestDto()))
           .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
     }
 

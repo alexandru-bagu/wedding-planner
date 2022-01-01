@@ -1,3 +1,4 @@
+using OOD.WeddingPlanner.InvitationDesigns;
 using OOD.WeddingPlanner.Weddings;
 using OOD.WeddingPlanner.Invitations;
 using OOD.WeddingPlanner.Invitees;
@@ -41,20 +42,21 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
     {
       context.Services.AddAbpDbContext<WeddingPlannerDbContext>(options =>
       {
-              /* Remove "includeAllEntities: true" to create
-               * default repositories only for aggregate roots */
+        /* Remove "includeAllEntities: true" to create
+         * default repositories only for aggregate roots */
         options.AddDefaultRepositories(includeAllEntities: true);
         options.AddRepository<Location, LocationRepository>();
         options.AddRepository<Event, EventRepository>();
         options.AddRepository<Invitee, InviteeRepository>();
         options.AddRepository<Invitation, InvitationRepository>();
         options.AddRepository<Wedding, WeddingRepository>();
+        options.AddRepository<InvitationDesign, InvitationDesignRepository>();
       });
 
       Configure<AbpDbContextOptions>(options =>
       {
-              /* The main point to change your DBMS.
-               * See also WeddingPlannerMigrationsDbContextFactory for EF Core tooling. */
+        /* The main point to change your DBMS.
+         * See also WeddingPlannerMigrationsDbContextFactory for EF Core tooling. */
         options.UseMySQL();
       });
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using OOD.WeddingPlanner.InvitationDesigns;
 using OOD.WeddingPlanner.Invitees;
 using OOD.WeddingPlanner.Weddings;
 using Volo.Abp.Domain.Entities.Auditing;
@@ -13,11 +14,15 @@ namespace OOD.WeddingPlanner.Invitations
 
     public virtual Guid? WeddingId { get; set; }
 
+    public virtual Guid? DesignId { get; set; }
+
     public virtual string Destination { get; set; }
 
     public virtual List<Invitee> Invitees { get; set; } = new List<Invitee>();
 
     public virtual Wedding Wedding { get; set; }
+
+    public virtual InvitationDesign Design { get; set; }
 
     protected Invitation()
     {
