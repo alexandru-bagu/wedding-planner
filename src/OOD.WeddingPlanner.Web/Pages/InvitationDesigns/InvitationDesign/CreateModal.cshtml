@@ -8,10 +8,17 @@
   Layout = null;
 }
 <abp-dynamic-form abp-model="ViewModel" data-ajaxForm="true" asp-page="CreateModal">
-  <abp-modal>
+  <abp-modal size=ExtraLarge>
     <abp-modal-header title="@L["CreateInvitationDesign"].Value"></abp-modal-header>
     <abp-modal-body>
-      <abp-form-content />
+      <abp-row>
+        <abp-column size=_6>
+          <abp-form-content />
+        </abp-column>
+        <abp-column size=_6>
+          <iframe id="preview" class="shadow p-3 mb-5 bg-white rounded"></iframe>
+        </abp-column>
+      </abp-row>
     </abp-modal-body>
     <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
   </abp-modal>

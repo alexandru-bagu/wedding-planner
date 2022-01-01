@@ -107,8 +107,9 @@ namespace OOD.WeddingPlanner.Web
           StandardBundles.Styles.Global, bundle =>
           {
             bundle.AddFiles("/global-styles.css");
+            bundle.AddContributors(new QuillCssBundleContributor());
           });
-        options.StyleBundles.Configure(
+        options.ScriptBundles.Configure(
           StandardBundles.Scripts.Global, bundle =>
           {
             bundle.AddContributors(new QuillJsBundleContributor());
