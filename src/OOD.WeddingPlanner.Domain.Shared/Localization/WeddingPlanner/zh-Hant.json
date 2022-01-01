@@ -63,6 +63,17 @@
     "InvitationDesignBody": "InvitationDesignBody",
     "CreateInvitationDesign": "CreateInvitationDesign",
     "EditInvitationDesign": "EditInvitationDesign",
-    "InvitationDesignDeletionConfirmationMessage": "Are you sure to delete the invitationDesign {0}?"
+    "InvitationDesignDeletionConfirmationMessage": "Are you sure to delete the invitationDesign {0}?",
+    "Permission:Table": "Table",
+    "Menu:Table": "MenuTable",
+    "Table": "Table",
+    "TableEventId": "TableEventId",
+    "TableName": "TableName",
+    "TableSize": "TableSize",
+    "TableX": "TableX",
+    "TableY": "TableY",
+    "CreateTable": "CreateTable",
+    "EditTable": "EditTable",
+    "TableDeletionConfirmationMessage": "Are you sure to delete the table {0}?"
   }
 }

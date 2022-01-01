@@ -13,7 +13,8 @@ namespace OOD.WeddingPlanner.Invitees
       }
 
       return queryable
-          .Include(p => p.Invitation).ThenInclude(p => p.Wedding);
+          .Include(p => p.Invitation).ThenInclude(p => p.Wedding)
+          .Include(p => p.Table);
     }
   }
 }

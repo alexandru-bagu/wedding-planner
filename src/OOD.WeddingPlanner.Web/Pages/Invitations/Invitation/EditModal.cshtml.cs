@@ -46,7 +46,7 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.Invitation
         (await _weddingAppService.GetLookupListAsync(new LookupRequestDto()))
           .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
       ViewModel.InviteeItems.AddRange(
-        (await _inviteeAppService.GetLookupListAsync(new LookupRequestDto()))
+        (await _inviteeAppService.GetLookupListAsync(new LookupInviteeInputDto()))
           .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
       ViewModel.DesignItems.AddRange(
         (await _invitationDesignAppService.GetLookupListAsync(new LookupRequestDto()))

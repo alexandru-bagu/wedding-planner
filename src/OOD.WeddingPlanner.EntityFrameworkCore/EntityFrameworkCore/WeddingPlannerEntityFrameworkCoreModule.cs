@@ -1,3 +1,4 @@
+using OOD.WeddingPlanner.Tables;
 using OOD.WeddingPlanner.InvitationDesigns;
 using OOD.WeddingPlanner.Weddings;
 using OOD.WeddingPlanner.Invitations;
@@ -51,6 +52,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
         options.AddRepository<Invitation, InvitationRepository>();
         options.AddRepository<Wedding, WeddingRepository>();
         options.AddRepository<InvitationDesign, InvitationDesignRepository>();
+                options.AddRepository<Table, TableRepository>();
       });
 
       Configure<AbpDbContextOptions>(options =>

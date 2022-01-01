@@ -2,7 +2,6 @@ using System;
 using OOD.WeddingPlanner.Events.Dtos;
 using Volo.Abp.Application.Services;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Volo.Abp.Application.Dtos;
 
 namespace OOD.WeddingPlanner.Events
@@ -17,6 +16,6 @@ namespace OOD.WeddingPlanner.Events
   {
     Task<EventWithNavigationPropertiesDto> GetWithNavigationByIdAsync(Guid id);
     Task<PagedResultDto<EventWithNavigationPropertiesDto>> GetListWithNavigationAsync(GetEventsInputDto input);
-    Task<PagedResultDto<LookupDto<Guid>>> GetLookupListAsync(LookupRequestDto input);
+    Task<PagedResultDto<LookupDto<Guid>>> GetLookupListAsync(LookupEventsInputDto input);
   }
 }

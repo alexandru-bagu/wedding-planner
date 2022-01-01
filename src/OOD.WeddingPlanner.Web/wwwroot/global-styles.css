@@ -16,3 +16,28 @@
 div select[multiple] {
   height: 140px !important;
 }
+
+.select2 {
+  width: 100% !important;
+}
+
+.select2-selection {
+  overflow: hidden;
+}
+
+.select2-selection__rendered {
+  white-space: normal;
+  word-break: break-all;
+}
+
+.no-word-wrap {
+  white-space: nowrap;
+}
+
+.lh-44 {
+  line-height: 44px;
+}
+
+.m-2, hr.m-2 {
+  margin: 2px !important;
+}

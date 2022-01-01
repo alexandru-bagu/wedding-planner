@@ -67,6 +67,21 @@
     "InvitationDesignBody": "Body",
     "CreateInvitationDesign": "Create design",
     "EditInvitationDesign": "Edit",
-    "InvitationDesignDeletionConfirmationMessage": "Are you sure to delete the invitation design {0}?"
+    "InvitationDesignDeletionConfirmationMessage": "Are you sure to delete the invitation design {0}?",
+    "Permission:Table": "Table",
+    "Menu:Table": "Tables",
+    "Table": "Tables",
+    "TableEventId": "Event",
+    "TableWeddingId": "Wedding",
+    "TableName": "Name",
+    "TableDescription": "Description",
+    "TableSize": "Size",
+    "TableRow": "Row",
+    "TableColumn": "Column",
+    "CreateTable": "Create table",
+    "EditTable": "Edit",
+    "TableDeletionConfirmationMessage": "Are you sure to delete the table {0}?",
+    "AreYouSure?": "Are you sure?",
+    "SuccessfullyUpdated": "Successfully updated"
   }
 }

@@ -31,23 +31,25 @@ namespace OOD.WeddingPlanner.Events
     }
 
     [AllowAnonymous]
-    public async Task<PagedResultDto<LookupDto<Guid>>> GetLookupListAsync(LookupRequestDto input)
+    public async Task<PagedResultDto<LookupDto<Guid>>> GetLookupListAsync(LookupEventsInputDto input)
     {
       await AuthorizationService.AnyPolicy(
         WeddingPlannerPermissions.Event.Default,
         WeddingPlannerPermissions.Wedding.Create,
         WeddingPlannerPermissions.Wedding.Update,
+        WeddingPlannerPermissions.Table.Create,
+        WeddingPlannerPermissions.Table.Update,
         WeddingPlannerPermissions.Location.Create,
         WeddingPlannerPermissions.Location.Update);
-      var count = await _repository.GetCountAsync();
-      var list = await _repository.GetPagedListAsync(input.SkipCount, input.MaxResultCount, nameof(Event.CreationTime));
+      var count = await _repository.GetCountAsync(input.WeddingId);
+      var list = await _repository.GetPagedListAsync(input.WeddingId, input.SkipCount, input.MaxResultCount, nameof(Event.CreationTime));
       return new PagedResultDto<LookupDto<Guid>>(count, ObjectMapper.Map<List<Event>, List<LookupDto<Guid>>>(list));
     }
     
     public async Task<PagedResultDto<EventWithNavigationPropertiesDto>> GetListWithNavigationAsync(GetEventsInputDto input)
     {
-      var count = await _repository.GetCountAsync();
-      var list = await _repository.GetListWithNavigationAsync(input.Sorting, input.SkipCount, input.MaxResultCount);
+      var count = await _repository.GetCountAsync(input.WeddingId);
+      var list = await _repository.GetListWithNavigationAsync(input.WeddingId, input.SkipCount, input.MaxResultCount, input.Sorting);
       return new PagedResultDto<EventWithNavigationPropertiesDto>(count, ObjectMapper.Map<List<EventWithNavigationProperties>, List<EventWithNavigationPropertiesDto>>(list));
     }
   }

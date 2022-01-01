@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@abp/aspnetcore.mvc.ui.theme.basic": "^5.0.0",
+    "ionicons": "2.0.1",
+    "knockout": "^3.5.1",
     "quill-image-drop-module": "^1.0.3",
     "quill-image-resize-module": "^3.0.0",
     "quilljs": "^0.18.1"

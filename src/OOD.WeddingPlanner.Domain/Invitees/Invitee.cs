@@ -1,5 +1,6 @@
 using System;
 using OOD.WeddingPlanner.Invitations;
+using OOD.WeddingPlanner.Tables;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 
@@ -15,6 +16,8 @@ namespace OOD.WeddingPlanner.Invitees
 
     public virtual Guid? InvitationId { get; set; }
 
+    public virtual Guid? TableId { get; set; }
+
     public virtual DateTime? RSVP { get; set; }
 
     public virtual bool? Confirmed { get; set; }
@@ -22,6 +25,8 @@ namespace OOD.WeddingPlanner.Invitees
     public virtual bool Child { get; set; }
 
     public virtual Invitation Invitation { get; set; }
+
+    public virtual Table Table { get; set; }
 
     protected Invitee()
     {

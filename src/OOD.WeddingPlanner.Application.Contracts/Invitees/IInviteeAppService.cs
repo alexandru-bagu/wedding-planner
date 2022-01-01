@@ -17,6 +17,6 @@ namespace OOD.WeddingPlanner.Invitees
   {
     Task<InviteeWithNavigationPropertiesDto> GetWithNavigationByIdAsync(Guid id);
     Task<PagedResultDto<InviteeWithNavigationPropertiesDto>> GetListWithNavigationAsync(GetInviteesInputDto input);
-    Task<PagedResultDto<LookupDto<Guid>>> GetLookupListAsync(LookupRequestDto input);
+    Task<PagedResultDto<LookupDto<Guid>>> GetLookupListAsync(LookupInviteeInputDto input);
   }
 }

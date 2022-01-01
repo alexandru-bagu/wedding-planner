@@ -29,7 +29,7 @@ namespace OOD.WeddingPlanner.Events
       }).SingleAsync();
     }
 
-    public async Task<List<EventWithNavigationProperties>> GetListWithNavigationAsync(string sorting, int skipCount, int maxResultCount)
+    public async Task<List<EventWithNavigationProperties>> GetListWithNavigationAsync(Guid? weddingId, int skipCount, int maxResultCount, string sorting)
     {
       var query = await this.GetQueryableAsync();
       query = query.IncludeDetails();
@@ -39,6 +39,26 @@ namespace OOD.WeddingPlanner.Events
         Wedding = p.Wedding,
         Location = p.Location
       })
+      .WhereIf(weddingId.HasValue, p => p.Event.WeddingId == weddingId)
+      .OrderBy(string.IsNullOrWhiteSpace(sorting) ? $"{nameof(EventWithNavigationProperties.Event)}.{nameof(Event.Name)}" : sorting)
+      .Skip(skipCount).Take(maxResultCount).ToListAsync();
+    }
+
+    public async Task<long> GetCountAsync(Guid? weddingId)
+    {
+      var query = await this.GetQueryableAsync();
+      query = query.IncludeDetails();
+      return await query
+      .WhereIf(weddingId.HasValue, p => p.WeddingId == weddingId)
+      .LongCountAsync();
+    }
+
+    public async Task<List<Event>> GetPagedListAsync(Guid? weddingId, int skipCount, int maxResultCount, string sorting)
+    {
+      var query = await this.GetQueryableAsync();
+      query = query.IncludeDetails();
+      return await query
+      .WhereIf(weddingId.HasValue, p => p.WeddingId == weddingId)
       .OrderBy(string.IsNullOrWhiteSpace(sorting) ? $"{nameof(EventWithNavigationProperties.Event)}.{nameof(Event.Name)}" : sorting)
       .Skip(skipCount).Take(maxResultCount).ToListAsync();
     }

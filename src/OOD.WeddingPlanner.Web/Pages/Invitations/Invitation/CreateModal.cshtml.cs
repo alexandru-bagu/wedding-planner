@@ -6,6 +6,7 @@ using OOD.WeddingPlanner.InvitationDesigns;
 using OOD.WeddingPlanner.Invitations;
 using OOD.WeddingPlanner.Invitations.Dtos;
 using OOD.WeddingPlanner.Invitees;
+using OOD.WeddingPlanner.Invitees.Dtos;
 using OOD.WeddingPlanner.Web.Pages.Invitations.Invitation.ViewModels;
 using OOD.WeddingPlanner.Weddings;
 
@@ -36,7 +37,7 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.Invitation
         (await _weddingAppService.GetLookupListAsync(new LookupRequestDto()))
           .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
       ViewModel.InviteeItems.AddRange(
-        (await _inviteeAppService.GetLookupListAsync(new LookupRequestDto()))
+        (await _inviteeAppService.GetLookupListAsync(new LookupInviteeInputDto()))
           .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
       ViewModel.DesignItems.AddRange(
         (await _invitationDesignAppService.GetLookupListAsync(new LookupRequestDto()))

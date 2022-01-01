@@ -108,11 +108,13 @@ namespace OOD.WeddingPlanner.Web
           {
             bundle.AddFiles("/global-styles.css");
             bundle.AddContributors(new QuillCssBundleContributor());
+            bundle.AddContributors(new IoniconsCssBundleContributor());
           });
         options.ScriptBundles.Configure(
           StandardBundles.Scripts.Global, bundle =>
           {
             bundle.AddContributors(new QuillJsBundleContributor());
+            bundle.AddContributors(new KnockoutJsBundleContributor());
           });
       });
     }

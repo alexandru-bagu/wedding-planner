@@ -19,6 +19,7 @@ using OOD.WeddingPlanner.Invitees;
 using OOD.WeddingPlanner.Invitations;
 using OOD.WeddingPlanner.Weddings;
 using OOD.WeddingPlanner.InvitationDesigns;
+using OOD.WeddingPlanner.Tables;
 
 namespace OOD.WeddingPlanner.EntityFrameworkCore
 {
@@ -64,6 +65,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
     public DbSet<Invitation> Invitations { get; set; }
     public DbSet<Wedding> Weddings { get; set; }
     public DbSet<InvitationDesign> InvitationDesigns { get; set; }
+    public DbSet<Table> Tables { get; set; }
 
     public WeddingPlannerDbContext(DbContextOptions<WeddingPlannerDbContext> options)
         : base(options)
@@ -102,6 +104,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
 
         b.HasOne(p => p.Location).WithMany(p => p.Events);
         b.HasOne(p => p.Wedding).WithMany(p => p.Events);
+        b.HasMany(p => p.Tables).WithOne(p => p.Event);
       });
 
 
@@ -111,6 +114,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
         b.ConfigureByConvention();
 
         b.HasOne(p => p.Invitation).WithMany(p => p.Invitees);
+        b.HasOne(p => p.Table).WithMany(p => p.Invitees);
       });
 
 
@@ -141,6 +145,16 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
         b.ConfigureByConvention();
 
         b.HasMany(p => p.Invitations).WithOne(p => p.Design);
+      });
+
+
+      builder.Entity<Table>(b =>
+      {
+        b.ToTable(WeddingPlannerConsts.DbTablePrefix + "Tables", WeddingPlannerConsts.DbSchema);
+        b.ConfigureByConvention();
+
+        b.HasOne(p => p.Event).WithMany(p => p.Tables);
+        b.HasMany(p => p.Invitees).WithOne(p => p.Table);
       });
     }
   }

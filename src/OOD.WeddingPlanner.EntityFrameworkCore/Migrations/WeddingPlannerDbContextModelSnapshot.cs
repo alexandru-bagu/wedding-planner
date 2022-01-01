@@ -241,6 +241,9 @@ namespace OOD.WeddingPlanner.Migrations
                     b.Property<string>("Surname")
                         .HasColumnType("longtext");
 
+                    b.Property<Guid?>("TableId")
+                        .HasColumnType("char(36)");
+
                     b.Property<Guid?>("TenantId")
                         .HasColumnType("char(36)")
                         .HasColumnName("TenantId");
@@ -248,6 +251,8 @@ namespace OOD.WeddingPlanner.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("InvitationId");
+
+                    b.HasIndex("TableId");
 
                     b.ToTable("AppInvitees", (string)null);
                 });
@@ -306,6 +311,70 @@ namespace OOD.WeddingPlanner.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppLocations", (string)null);
+                });
+
+            modelBuilder.Entity("OOD.WeddingPlanner.Tables.Table", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("Column")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid?>("EventId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Row")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("TenantId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("AppTables", (string)null);
                 });
 
             modelBuilder.Entity("OOD.WeddingPlanner.Weddings.Wedding", b =>
@@ -2312,7 +2381,22 @@ namespace OOD.WeddingPlanner.Migrations
                         .WithMany("Invitees")
                         .HasForeignKey("InvitationId");
 
+                    b.HasOne("OOD.WeddingPlanner.Tables.Table", "Table")
+                        .WithMany("Invitees")
+                        .HasForeignKey("TableId");
+
                     b.Navigation("Invitation");
+
+                    b.Navigation("Table");
+                });
+
+            modelBuilder.Entity("OOD.WeddingPlanner.Tables.Table", b =>
+                {
+                    b.HasOne("OOD.WeddingPlanner.Events.Event", "Event")
+                        .WithMany("Tables")
+                        .HasForeignKey("EventId");
+
+                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
@@ -2592,6 +2676,11 @@ namespace OOD.WeddingPlanner.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("OOD.WeddingPlanner.Events.Event", b =>
+                {
+                    b.Navigation("Tables");
+                });
+
             modelBuilder.Entity("OOD.WeddingPlanner.InvitationDesigns.InvitationDesign", b =>
                 {
                     b.Navigation("Invitations");
@@ -2605,6 +2694,11 @@ namespace OOD.WeddingPlanner.Migrations
             modelBuilder.Entity("OOD.WeddingPlanner.Locations.Location", b =>
                 {
                     b.Navigation("Events");
+                });
+
+            modelBuilder.Entity("OOD.WeddingPlanner.Tables.Table", b =>
+                {
+                    b.Navigation("Invitees");
                 });
 
             modelBuilder.Entity("OOD.WeddingPlanner.Weddings.Wedding", b =>

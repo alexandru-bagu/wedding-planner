@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using OOD.WeddingPlanner.Locations;
+using OOD.WeddingPlanner.Tables;
 using OOD.WeddingPlanner.Weddings;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
@@ -21,6 +23,8 @@ namespace OOD.WeddingPlanner.Events
     public virtual Location Location { get; set; }
 
     public virtual Wedding Wedding { get; set; }
+
+    public virtual List<Table> Tables { get; set; } = new List<Table>();
 
     protected Event()
     {
