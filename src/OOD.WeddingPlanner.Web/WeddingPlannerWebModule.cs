@@ -42,6 +42,8 @@ using Lsw.Abp.AspNetCore.Mvc.UI.Theme.Stisla.Bundling;
 using OOD.WeddingPlanner.Web.Contributors;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Bundling;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace OOD.WeddingPlanner.Web
 {
@@ -130,6 +132,16 @@ namespace OOD.WeddingPlanner.Web
             options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
             options.Audience = "WeddingPlanner";
           });
+      context.Services
+           .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+           .AddCookie(options =>
+           {
+              options.CookieManager = new ChunkingCookieManager();
+
+              options.Cookie.HttpOnly = true;
+              options.Cookie.SameSite = SameSiteMode.None;
+              options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+           });
     }
 
     private void ConfigureAutoMapper()
