@@ -213,11 +213,6 @@ namespace OOD.WeddingPlanner.Web
     {
       var app = context.GetApplicationBuilder();
       var env = context.GetEnvironment();
-    
-      var config =  context.GetConfiguration();
-      var logger = context.ServiceProvider.GetService<ILogger<ApplicationInitializationContext>>();
-      logger.LogInformation(config["ConnectionStrings:Default"]);
-      logger.LogInformation(config.GetConnectionString("Default"));
 
       if (env.IsDevelopment())
       {
