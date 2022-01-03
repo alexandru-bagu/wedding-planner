@@ -1,3 +1,4 @@
 #!/bin/bash
 
-ASPNETCORE_URLS=http://*:$PORT dotnet web/OOD.WeddingPlanner.Web.dll
+cd web
+ASPNETCORE_ENVIRONMENT=Production ASPNETCORE_URLS=http://*:$PORT dotnet OOD.WeddingPlanner.Web.dll

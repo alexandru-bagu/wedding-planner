@@ -13,7 +13,6 @@ RUN dotnet publish -c Release -o /app/build/web src/OOD.WeddingPlanner.Web/OOD.W
 # # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
-ENV ASPNETCORE_ENVIRONMENT=Production
-COPY --from=build-env /app/build .
 COPY container/entrypoint.sh /app
+COPY --from=build-env /app/build .
 ENTRYPOINT /app/entrypoint.sh
