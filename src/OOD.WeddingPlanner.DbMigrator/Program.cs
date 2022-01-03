@@ -14,18 +14,16 @@ namespace OOD.WeddingPlanner.DbMigrator
     static async Task Main(string[] args)
     {
       Log.Logger = new LoggerConfiguration()
-          .MinimumLevel.Information()
-          .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-          .MinimumLevel.Override("Volo.Abp", LogEventLevel.Warning)
+        .MinimumLevel.Information()
+        .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+        .MinimumLevel.Override("Volo.Abp", LogEventLevel.Warning)
+        .MinimumLevel.Override("OOD.WeddingPlanner", LogEventLevel.Debug)
+        .Enrich.FromLogContext()
 #if DEBUG
-                .MinimumLevel.Override("OOD.WeddingPlanner", LogEventLevel.Debug)
-#else
-                .MinimumLevel.Override("OOD.WeddingPlanner", LogEventLevel.Information)
+        .WriteTo.Async(c => c.File("Logs/logs.txt"))
 #endif
-                .Enrich.FromLogContext()
-          .WriteTo.Async(c => c.File("Logs/logs.txt"))
-          .WriteTo.Async(c => c.Console())
-          .CreateLogger();
+        .WriteTo.Async(c => c.Console())
+        .CreateLogger();
 
       await CreateHostBuilder(args).RunConsoleAsync();
     }
