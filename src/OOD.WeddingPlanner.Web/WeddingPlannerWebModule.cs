@@ -41,6 +41,7 @@ using Lsw.Abp.AspNetCore.Mvc.UI.Theme.Stisla;
 using Lsw.Abp.AspNetCore.Mvc.UI.Theme.Stisla.Bundling;
 using OOD.WeddingPlanner.Web.Contributors;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared.Bundling;
+using Microsoft.Extensions.Logging;
 
 namespace OOD.WeddingPlanner.Web
 {
@@ -212,6 +213,11 @@ namespace OOD.WeddingPlanner.Web
     {
       var app = context.GetApplicationBuilder();
       var env = context.GetEnvironment();
+    
+      var config =  context.GetConfiguration();
+      var logger = context.ServiceProvider.GetService<ILogger<ApplicationInitializationContext>>();
+      logger.LogInformation(config["ConnectionStrings:Default"]);
+      logger.LogInformation(config.GetConnectionString("Default"));
 
       if (env.IsDevelopment())
       {

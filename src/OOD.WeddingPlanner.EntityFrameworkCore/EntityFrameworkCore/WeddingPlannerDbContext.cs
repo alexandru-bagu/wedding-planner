@@ -69,12 +69,9 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
     public DbSet<InvitationDesign> InvitationDesigns { get; set; }
     public DbSet<Table> Tables { get; set; }
 
-    public WeddingPlannerDbContext(DbContextOptions<WeddingPlannerDbContext> options, ILogger<WeddingPlannerDbContext> logger, IConfiguration config)
+    public WeddingPlannerDbContext(DbContextOptions<WeddingPlannerDbContext> options)
         : base(options)
     {
-      if(logger != null) {
-        logger.LogInformation(config["ConnectionStrings:Default"]);
-      }
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
