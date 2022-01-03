@@ -15,4 +15,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY container/entrypoint.sh /app
 COPY --from=build-env /app/build .
-#ENTRYPOINT /app/entrypoint.sh
+ENTRYPOINT /app/entrypoint.sh
