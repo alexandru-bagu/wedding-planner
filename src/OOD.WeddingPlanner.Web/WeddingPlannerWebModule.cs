@@ -241,6 +241,11 @@ namespace OOD.WeddingPlanner.Web
       app.UseCorrelationId();
       app.UseStaticFiles();
       app.UseRouting();
+      app.UseCookiePolicy(new CookiePolicyOptions
+      {
+        MinimumSameSitePolicy = SameSiteMode.None,
+        Secure = CookieSecurePolicy.Always,
+      });
       app.UseAuthentication();
       app.UseJwtTokenMiddleware();
 
