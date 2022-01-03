@@ -133,11 +133,13 @@ namespace OOD.WeddingPlanner.Web
             options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
             options.Audience = "WeddingPlanner";
           });
+      Configure<CookieAuthenticationOptions>(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+        {
+            options.Cookie.SameSite = SameSiteMode.Unspecified;
+        });
       Configure<CookieAuthenticationOptions>(IdentityServerConstants.DefaultCookieAuthenticationScheme, options =>
         {
-            options.Cookie.SameSite = SameSiteMode.None;
-            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-            options.Cookie.IsEssential = true;
+            options.Cookie.SameSite = SameSiteMode.Unspecified;
         });
     }
 
@@ -238,6 +240,11 @@ namespace OOD.WeddingPlanner.Web
       app.UseCorrelationId();
       app.UseStaticFiles();
       app.UseRouting();
+      app.UseCookiePolicy(new CookiePolicyOptions
+      {
+        MinimumSameSitePolicy = SameSiteMode.None,
+        Secure = CookieSecurePolicy.Always,
+      });
       app.UseAuthentication();
       app.UseJwtTokenMiddleware();
 
