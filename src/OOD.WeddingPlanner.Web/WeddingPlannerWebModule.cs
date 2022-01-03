@@ -115,6 +115,7 @@ namespace OOD.WeddingPlanner.Web
           {
             bundle.AddContributors(new QuillJsBundleContributor());
             bundle.AddContributors(new KnockoutJsBundleContributor());
+            bundle.AddContributors(new MonacoEditorJsBundleContributor());
           });
       });
     }

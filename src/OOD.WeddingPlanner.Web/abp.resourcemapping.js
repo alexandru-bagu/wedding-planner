@@ -3,6 +3,8 @@ module.exports = {
 
   },
   mappings: {
+    "@node_modules/monaco-editor/**": "@libs/monaco-editor",
+    "@node_modules/popper.js/**": "@libs/popper.js",
     "@node_modules/knockout/**": "@libs/knockout",
     "@node_modules/ionicons/**": "@libs/ionicons",
     "@node_modules/quill/**": "@libs/quill",
