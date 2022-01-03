@@ -20,6 +20,8 @@ using OOD.WeddingPlanner.Invitations;
 using OOD.WeddingPlanner.Weddings;
 using OOD.WeddingPlanner.InvitationDesigns;
 using OOD.WeddingPlanner.Tables;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace OOD.WeddingPlanner.EntityFrameworkCore
 {
@@ -67,10 +69,12 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
     public DbSet<InvitationDesign> InvitationDesigns { get; set; }
     public DbSet<Table> Tables { get; set; }
 
-    public WeddingPlannerDbContext(DbContextOptions<WeddingPlannerDbContext> options)
+    public WeddingPlannerDbContext(DbContextOptions<WeddingPlannerDbContext> options, ILogger<WeddingPlannerDbContext> logger, IConfiguration config)
         : base(options)
     {
-
+      if(logger != null) {
+        logger.LogInformation(config["ConnectionStrings:Default"]);
+      }
     }
 
     protected override void OnModelCreating(ModelBuilder builder)

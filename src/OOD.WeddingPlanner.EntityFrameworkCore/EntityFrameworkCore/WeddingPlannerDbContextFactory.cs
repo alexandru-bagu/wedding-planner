@@ -21,7 +21,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
       var builder = new DbContextOptionsBuilder<WeddingPlannerDbContext>()
           .UseMySql(connectionString, serverVersion);
 
-      return new WeddingPlannerDbContext(builder.Options);
+      return new WeddingPlannerDbContext(builder.Options, null, null);
     }
 
     private static IConfigurationRoot BuildConfiguration()
