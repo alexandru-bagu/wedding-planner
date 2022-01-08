@@ -20,6 +20,7 @@
     <EmbeddedResource Remove="Logs\**" />
     <None Remove="Logs\**" />
     <None Remove="Lsw.Abp.AspNetCore.Mvc.UI.Theme.Stisla" />
+    <None Remove="Pages\Invitations\Invitation\invitation.js" />
   </ItemGroup>
 
   <ItemGroup>
