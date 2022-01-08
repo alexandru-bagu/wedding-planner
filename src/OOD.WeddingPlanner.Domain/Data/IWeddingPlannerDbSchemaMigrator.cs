@@ -2,8 +2,8 @@
 
 namespace OOD.WeddingPlanner.Data
 {
-  public interface IWeddingPlannerDbSchemaMigrator
-  {
-    Task MigrateAsync();
-  }
+    public interface IWeddingPlannerDbSchemaMigrator
+    {
+        Task MigrateAsync();
+    }
 }

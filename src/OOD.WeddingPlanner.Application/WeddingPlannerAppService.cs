@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using OOD.WeddingPlanner.Localization;
+﻿using OOD.WeddingPlanner.Localization;
 using Volo.Abp.Application.Services;
 
 namespace OOD.WeddingPlanner

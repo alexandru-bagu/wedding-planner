@@ -9,21 +9,21 @@ using Volo.Abp.TenantManagement;
 
 namespace OOD.WeddingPlanner
 {
-  [DependsOn(
-      typeof(WeddingPlannerDomainSharedModule),
-      typeof(AbpAccountApplicationContractsModule),
-      typeof(AbpFeatureManagementApplicationContractsModule),
-      typeof(AbpIdentityApplicationContractsModule),
-      typeof(AbpPermissionManagementApplicationContractsModule),
-      typeof(AbpSettingManagementApplicationContractsModule),
-      typeof(AbpTenantManagementApplicationContractsModule),
-      typeof(AbpObjectExtendingModule)
-  )]
-  public class WeddingPlannerApplicationContractsModule : AbpModule
-  {
-    public override void PreConfigureServices(ServiceConfigurationContext context)
+    [DependsOn(
+        typeof(WeddingPlannerDomainSharedModule),
+        typeof(AbpAccountApplicationContractsModule),
+        typeof(AbpFeatureManagementApplicationContractsModule),
+        typeof(AbpIdentityApplicationContractsModule),
+        typeof(AbpPermissionManagementApplicationContractsModule),
+        typeof(AbpSettingManagementApplicationContractsModule),
+        typeof(AbpTenantManagementApplicationContractsModule),
+        typeof(AbpObjectExtendingModule)
+    )]
+    public class WeddingPlannerApplicationContractsModule : AbpModule
     {
-      WeddingPlannerDtoExtensions.Configure();
+        public override void PreConfigureServices(ServiceConfigurationContext context)
+        {
+            WeddingPlannerDtoExtensions.Configure();
+        }
     }
-  }
 }

@@ -3,12 +3,12 @@ using OOD.WeddingPlanner.Weddings;
 
 namespace OOD.WeddingPlanner.Events
 {
-  public class EventWithNavigationProperties
-  {
-    public Event Event { get; set; }
+    public class EventWithNavigationProperties
+    {
+        public Event Event { get; set; }
 
-    public Wedding Wedding { get; set; }
+        public Wedding Wedding { get; set; }
 
-    public Location Location { get; set; }
-  }
+        public Location Location { get; set; }
+    }
 }

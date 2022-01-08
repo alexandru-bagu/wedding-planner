@@ -3,14 +3,14 @@ using Volo.Abp.DependencyInjection;
 
 namespace OOD.WeddingPlanner.Data
 {
-  /* This is used if database provider does't define
-   * IWeddingPlannerDbSchemaMigrator implementation.
-   */
-  public class NullWeddingPlannerDbSchemaMigrator : IWeddingPlannerDbSchemaMigrator, ITransientDependency
-  {
-    public Task MigrateAsync()
+    /* This is used if database provider does't define
+     * IWeddingPlannerDbSchemaMigrator implementation.
+     */
+    public class NullWeddingPlannerDbSchemaMigrator : IWeddingPlannerDbSchemaMigrator, ITransientDependency
     {
-      return Task.CompletedTask;
+        public Task MigrateAsync()
+        {
+            return Task.CompletedTask;
+        }
     }
-  }
 }

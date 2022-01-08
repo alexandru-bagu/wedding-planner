@@ -1,8 +1,6 @@
-﻿using Volo.Abp;
-
-namespace OOD.WeddingPlanner.EntityFrameworkCore
+﻿namespace OOD.WeddingPlanner.EntityFrameworkCore
 {
-    public abstract class WeddingPlannerEntityFrameworkCoreTestBase : WeddingPlannerTestBase<WeddingPlannerEntityFrameworkCoreTestModule> 
+    public abstract class WeddingPlannerEntityFrameworkCoreTestBase : WeddingPlannerTestBase<WeddingPlannerEntityFrameworkCoreTestModule>
     {
 
     }

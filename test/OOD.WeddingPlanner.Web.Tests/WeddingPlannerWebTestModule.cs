@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Globalization;
 using Localization.Resources.AbpUi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
@@ -8,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using OOD.WeddingPlanner.Localization;
 using OOD.WeddingPlanner.Web;
 using OOD.WeddingPlanner.Web.Menus;
+using System.Collections.Generic;
+using System.Globalization;
 using Volo.Abp.AspNetCore.TestBase;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;

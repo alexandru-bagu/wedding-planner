@@ -41,3 +41,29 @@ div select[multiple] {
 .m-2, hr.m-2 {
   margin: 2px !important;
 }
+
+.navbar-nav > a {
+    line-height: 32px;
+}
+.navbar-nav > li {
+    line-height: 26px;
+}
+
+.text-end {
+    text-align: right;
+}
+
+.dataTables_length {
+    padding-top: 0.4em;
+}
+
+.form-select {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}

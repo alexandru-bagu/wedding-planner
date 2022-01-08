@@ -1,6 +1,6 @@
 ﻿namespace OOD.WeddingPlanner
 {
-    public abstract class WeddingPlannerApplicationTestBase : WeddingPlannerTestBase<WeddingPlannerApplicationTestModule> 
+    public abstract class WeddingPlannerApplicationTestBase : WeddingPlannerTestBase<WeddingPlannerApplicationTestModule>
     {
 
     }

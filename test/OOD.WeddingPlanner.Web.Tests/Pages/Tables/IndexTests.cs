@@ -1,8 +1,3 @@
-
-using System.Threading.Tasks;
-using Shouldly;
-using Xunit;
-
 namespace OOD.WeddingPlanner.Pages.Tables
 {
     public class Index_Tests : WeddingPlannerWebTestBase

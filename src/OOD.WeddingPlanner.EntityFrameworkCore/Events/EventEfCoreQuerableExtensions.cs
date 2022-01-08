@@ -1,20 +1,19 @@
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace OOD.WeddingPlanner.Events
 {
-  public static class EventEfCoreQueryableExtensions
-  {
-    public static IQueryable<Event> IncludeDetails(this IQueryable<Event> queryable, bool include = true)
+    public static class EventEfCoreQueryableExtensions
     {
-      if (!include)
-      {
-        return queryable;
-      }
+        public static IQueryable<Event> IncludeDetails(this IQueryable<Event> queryable, bool include = true)
+        {
+            if (!include)
+            {
+                return queryable;
+            }
 
-      return queryable
-          // .Include(x => x.xxx) // TODO: AbpHelper generated
-          ;
+            return queryable
+                // .Include(x => x.xxx) // TODO: AbpHelper generated
+                ;
+        }
     }
-  }
 }

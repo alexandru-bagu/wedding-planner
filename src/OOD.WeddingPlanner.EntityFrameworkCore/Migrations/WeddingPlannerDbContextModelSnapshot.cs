@@ -215,9 +215,6 @@ namespace OOD.WeddingPlanner.Migrations
                         .HasColumnType("datetime(6)")
                         .HasColumnName("DeletionTime");
 
-                    b.Property<string>("GivenName")
-                        .HasColumnType("longtext");
-
                     b.Property<Guid?>("InvitationId")
                         .HasColumnType("char(36)");
 
@@ -234,6 +231,9 @@ namespace OOD.WeddingPlanner.Migrations
                     b.Property<Guid?>("LastModifierId")
                         .HasColumnType("char(36)")
                         .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime?>("RSVP")
                         .HasColumnType("datetime(6)");

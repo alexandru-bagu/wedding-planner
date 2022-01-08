@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "OOD.WeddingPlanner.DbMigrator": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

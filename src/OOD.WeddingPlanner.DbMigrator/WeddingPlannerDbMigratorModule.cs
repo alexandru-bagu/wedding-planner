@@ -5,16 +5,16 @@ using Volo.Abp.Modularity;
 
 namespace OOD.WeddingPlanner.DbMigrator
 {
-  [DependsOn(
-      typeof(AbpAutofacModule),
-      typeof(WeddingPlannerEntityFrameworkCoreModule),
-      typeof(WeddingPlannerApplicationContractsModule)
-      )]
-  public class WeddingPlannerDbMigratorModule : AbpModule
-  {
-    public override void ConfigureServices(ServiceConfigurationContext context)
+    [DependsOn(
+        typeof(AbpAutofacModule),
+        typeof(WeddingPlannerEntityFrameworkCoreModule),
+        typeof(WeddingPlannerApplicationContractsModule)
+        )]
+    public class WeddingPlannerDbMigratorModule : AbpModule
     {
-      Configure<AbpBackgroundJobOptions>(options => options.IsJobExecutionEnabled = false);
+        public override void ConfigureServices(ServiceConfigurationContext context)
+        {
+            Configure<AbpBackgroundJobOptions>(options => options.IsJobExecutionEnabled = false);
+        }
     }
-  }
 }

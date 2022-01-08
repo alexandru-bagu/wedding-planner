@@ -6,14 +6,14 @@ using Volo.Abp.Application.Services;
 
 namespace OOD.WeddingPlanner.Weddings
 {
-  public interface IWeddingAppService :
-      ICrudAppService<
-          WeddingDto,
-          Guid,
-          GetWeddingsInputDto,
-          CreateUpdateWeddingDto,
-          CreateUpdateWeddingDto>
-  {
-    Task<PagedResultDto<LookupDto<Guid>>> GetLookupListAsync(LookupRequestDto input);
-  }
+    public interface IWeddingAppService :
+        ICrudAppService<
+            WeddingDto,
+            Guid,
+            GetWeddingsInputDto,
+            CreateUpdateWeddingDto,
+            CreateUpdateWeddingDto>
+    {
+        Task<PagedResultDto<LookupDto<Guid>>> GetLookupListAsync(LookupRequestDto input);
+    }
 }
