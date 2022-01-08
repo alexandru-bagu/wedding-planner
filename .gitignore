@@ -267,3 +267,4 @@ WeddingPlanner.db-wal
 WeddingPlanner.db-shm
 
 .vscode/
+.DS_Store
