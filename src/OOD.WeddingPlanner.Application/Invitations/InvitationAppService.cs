@@ -12,6 +12,7 @@ using Volo.Abp.Uow;
 
 namespace OOD.WeddingPlanner.Invitations
 {
+    [Authorize]
     public class InvitationAppService : CrudAppService<Invitation, InvitationDto, Guid, GetInvitationsInputDto, CreateUpdateInvitationDto, CreateUpdateInvitationDto>,
         IInvitationAppService
     {
@@ -30,6 +31,7 @@ namespace OOD.WeddingPlanner.Invitations
             _inviteeRepository = inviteeRepository;
         }
 
+        [Authorize(WeddingPlannerPermissions.Invitation.Default)]
         public async Task<InvitationWithNavigationPropertiesDto> GetWithNavigationByIdAsync(Guid id)
         {
             return ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(
@@ -57,6 +59,7 @@ namespace OOD.WeddingPlanner.Invitations
             return query;
         }
 
+        [Authorize(WeddingPlannerPermissions.Invitation.Default)]
         public async Task<PagedResultDto<InvitationWithNavigationPropertiesDto>> GetListWithNavigationAsync(GetInvitationsInputDto input)
         {
             var count = await _repository.GetCountAsync(input.WeddingId);
@@ -65,6 +68,7 @@ namespace OOD.WeddingPlanner.Invitations
         }
 
         [UnitOfWork]
+        [Authorize(WeddingPlannerPermissions.Invitation.Create)]
         public override async Task<InvitationDto> CreateAsync(CreateUpdateInvitationDto input)
         {
             var invitation = await base.CreateAsync(input);
@@ -80,6 +84,7 @@ namespace OOD.WeddingPlanner.Invitations
         }
 
         [UnitOfWork]
+        [Authorize(WeddingPlannerPermissions.Invitation.Update)]
         public override async Task<InvitationDto> UpdateAsync(Guid id, CreateUpdateInvitationDto input)
         {
             var invitation = await base.UpdateAsync(id, input);

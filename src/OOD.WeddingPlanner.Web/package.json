@@ -8,6 +8,7 @@
     "knockout": "^3.5.1",
     "monaco-editor": "^0.31.1",
     "popper.js": "^1.16.1",
+    "qrcodejs": "^1.0.0",
     "quill-image-drop-module": "^1.0.3",
     "quill-image-resize-module": "^3.0.0",
     "quilljs": "^0.18.1"

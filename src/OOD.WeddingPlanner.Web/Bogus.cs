@@ -11,7 +11,7 @@ namespace OOD.WeddingPlanner.Web
     {
         public static Invitation Invitation()
         {
-            var invitationDesign = new InvitationDesign(Guid.NewGuid(), null, "Bogus Invitation Design", "Bogus Invitation Design Body");
+            var invitationDesign = new InvitationDesign(Guid.NewGuid(), null, "Bogus Invitation Design", "Bogus Invitation Design Body", "cm", 21.0, 29.7, 96);
             var wedding = new Wedding(Guid.NewGuid(), null, "Bogus Groom", "Bogus Bride", "Bogus Wedding", "Bogus Contact Information");
             var invitees = new List<Invitee>();
             var invitation = new Invitation(Guid.NewGuid(), null, wedding.Id, "Bogus Invitation")

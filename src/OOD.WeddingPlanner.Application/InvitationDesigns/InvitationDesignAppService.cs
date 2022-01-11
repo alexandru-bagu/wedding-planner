@@ -10,6 +10,7 @@ using Volo.Abp.Application.Services;
 
 namespace OOD.WeddingPlanner.InvitationDesigns
 {
+    [Authorize]
     public class InvitationDesignAppService : CrudAppService<InvitationDesign, InvitationDesignDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateInvitationDesignDto, CreateUpdateInvitationDesignDto>,
         IInvitationDesignAppService
     {

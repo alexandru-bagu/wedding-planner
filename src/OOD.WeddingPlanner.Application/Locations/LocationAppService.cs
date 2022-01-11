@@ -9,6 +9,7 @@ using Volo.Abp.Application.Services;
 
 namespace OOD.WeddingPlanner.Locations
 {
+    [Authorize]
     public class LocationAppService : CrudAppService<Location, LocationDto, Guid, GetLocationsInputDto, CreateUpdateLocationDto, CreateUpdateLocationDto>,
         ILocationAppService
     {

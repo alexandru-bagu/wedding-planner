@@ -9,5 +9,13 @@ namespace OOD.WeddingPlanner.InvitationDesigns.Dtos
         public string Name { get; set; }
 
         public string Body { get; set; }
+
+        public string MeasurementUnit { get; set; }
+
+        public double? PaperWidth { get; set; }
+
+        public double? PaperHeight { get; set; }
+
+        public double? PaperDpi { get; set; }
     }
 }

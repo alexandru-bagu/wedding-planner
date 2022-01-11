@@ -1,0 +1,30 @@
+@page
+@using OOD.WeddingPlanner.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal;
+@inject IHtmlLocalizer<WeddingPlannerResource> L
+@model OOD.WeddingPlanner.Web.Pages.InvitationDesigns.EditModalModel
+@{
+    Layout = null;
+}
+<abp-dynamic-form abp-model="ViewModel" data-ajaxForm="true" asp-page="EditModal">
+    <abp-modal size=ExtraLarge>
+        <abp-modal-header title="@L["EditInvitationDesign"].Value"></abp-modal-header>
+        <abp-modal-body>
+            <abp-input asp-for="Id" />
+            <abp-tabs tab-style="Pill">
+                <abp-tab title="Settings">
+                    <abp-form-content />
+                </abp-tab>
+                <abp-tab title="Body">
+                    <label asp-for="ViewModel.Body"></label>
+                    <textarea asp-for="ViewModel.Body"></textarea>
+                </abp-tab>
+                <abp-tab title="Preview">
+                    <iframe id="preview" class="shadow p-3 mb-5 bg-white rounded vh60"></iframe>
+                </abp-tab>
+            </abp-tabs>
+        </abp-modal-body>
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+</abp-dynamic-form>

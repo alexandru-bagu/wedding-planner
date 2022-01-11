@@ -12,15 +12,15 @@
 <abp-script src="/Pages/Index.js" />
 }
 <div class="container">
-  <div class="p-5 text-center">
-    <h1>Welcome to the Wedding Planner</h1>
+    <div class="p-5 text-center">
+        <h1>Welcome to the Wedding Planner</h1>
 
-    <p class="lead px-lg-5 mx-lg-5">@L["LongWelcomeMessage"]</p>
+        <p class="lead px-lg-5 mx-lg-5">@L["LongWelcomeMessage"]</p>
 
-    @if (!CurrentUser.IsAuthenticated)
-    {
-      <a abp-button="Primary" href="~/Account/Login"><i class="fa fa-sign-in"></i> @L["Login"]</a>
-    }
+        @if (!CurrentUser.IsAuthenticated)
+        {
+            <a abp-button="Primary" href="~/Account/Login"><i class="fa fa-sign-in"></i> @L["Login"]</a>
+        }
 
-  </div>
+    </div>
 </div>

@@ -1,5 +1,5 @@
 {
-  "culture": "en",
+    "culture": "en",
     "texts": {
         "WeddingPlanner": "Wedding Planner",
         "Menu:Home": "Home",
@@ -83,6 +83,10 @@
         "TableDeletionConfirmationMessage": "Are you sure to delete the table {0}?",
         "AreYouSure?": "Are you sure?",
         "SuccessfullyUpdated": "Successfully updated",
-        "SeeAdvancedFilters": "See advanced filters"
+        "SeeAdvancedFilters": "See advanced filters",
+        "InvitationDesignMeasurementUnit": "Measurement Unit",
+        "InvitationDesignPaperWidth": "Paper Width",
+        "InvitationDesignPaperHeight": "Paper Height",
+        "InvitationDesignPaperDpi": "Paper Dpi"
     }
 }

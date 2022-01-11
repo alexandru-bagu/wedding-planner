@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using OOD.WeddingPlanner.Permissions;
 using OOD.WeddingPlanner.Tables.Dtos;
 using System;
@@ -8,6 +9,7 @@ using Volo.Abp.Application.Services;
 
 namespace OOD.WeddingPlanner.Tables
 {
+    [Authorize]
     public class TableAppService : CrudAppService<Table, TableDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateTableDto, CreateUpdateTableDto>,
         ITableAppService
     {
@@ -24,12 +26,14 @@ namespace OOD.WeddingPlanner.Tables
             _repository = repository;
         }
 
+        [Authorize(WeddingPlannerPermissions.Table.Default)]
         public async Task<TableWithNavigationPropertiesDto> GetWithNavigationByIdAsync(Guid id)
         {
             return ObjectMapper.Map<TableWithNavigationProperties, TableWithNavigationPropertiesDto>(
               await _repository.GetWithNavigationByIdAsync(id));
         }
 
+        [Authorize(WeddingPlannerPermissions.Table.Default)]
         public async Task<PagedResultDto<TableWithNavigationPropertiesDto>> GetListWithNavigationAsync(GetTablesInputDto input)
         {
             var count = await _repository.GetCountAsync(input.EventId);

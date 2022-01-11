@@ -1,4 +1,6 @@
+using OOD.WeddingPlanner.Invitees.Dtos;
 using System;
+using System.Collections.Generic;
 using Volo.Abp.Application.Dtos;
 
 namespace OOD.WeddingPlanner.Invitations.Dtos
@@ -11,5 +13,7 @@ namespace OOD.WeddingPlanner.Invitations.Dtos
         public Guid? DesignId { get; set; }
 
         public string Destination { get; set; }
+
+        public List<InviteeDto> Invitees { get; set; }
     }
 }

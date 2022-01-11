@@ -35,6 +35,8 @@ using Volo.Abp.TenantManagement.Web;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
+using WkHtmlToPdfDotNet;
+using WkHtmlToPdfDotNet.Contracts;
 
 namespace OOD.WeddingPlanner.Web
 {
@@ -83,6 +85,8 @@ namespace OOD.WeddingPlanner.Web
             ConfigureNavigationServices();
             ConfigureAutoApiControllers();
             ConfigureSwaggerServices(context.Services);
+
+            context.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
         }
 
         private void ConfigureUrls(IConfiguration configuration)
@@ -108,7 +112,7 @@ namespace OOD.WeddingPlanner.Web
                     bundle.AddContributors(new QuillJsBundleContributor());
                     bundle.AddContributors(new KnockoutJsBundleContributor());
                     bundle.AddContributors(new MonacoEditorJsBundleContributor());
-
+                    bundle.AddContributors(new QrCodeJsBundleContributor());
                     bundle.AddContributors(new GlobalJsBundleContributor());
                 });
             });

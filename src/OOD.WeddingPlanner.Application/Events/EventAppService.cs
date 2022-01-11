@@ -9,6 +9,7 @@ using Volo.Abp.Application.Services;
 
 namespace OOD.WeddingPlanner.Events
 {
+    [Authorize]
     public class EventAppService : CrudAppService<Event, EventDto, Guid, GetEventsInputDto, CreateUpdateEventDto, CreateUpdateEventDto>,
         IEventAppService
     {
@@ -24,6 +25,7 @@ namespace OOD.WeddingPlanner.Events
             _repository = repository;
         }
 
+        [Authorize(WeddingPlannerPermissions.Event.Default)]
         public async Task<EventWithNavigationPropertiesDto> GetWithNavigationByIdAsync(Guid id)
         {
             return ObjectMapper.Map<EventWithNavigationProperties, EventWithNavigationPropertiesDto>(
@@ -46,6 +48,7 @@ namespace OOD.WeddingPlanner.Events
             return new PagedResultDto<LookupDto<Guid>>(count, ObjectMapper.Map<List<Event>, List<LookupDto<Guid>>>(list));
         }
 
+        [Authorize(WeddingPlannerPermissions.Event.Default)]
         public async Task<PagedResultDto<EventWithNavigationPropertiesDto>> GetListWithNavigationAsync(GetEventsInputDto input)
         {
             var count = await _repository.GetCountAsync(input.WeddingId);

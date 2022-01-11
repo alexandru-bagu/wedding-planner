@@ -24,7 +24,8 @@ namespace OOD.WeddingPlanner.Invitations
             return await query.Select(p => new InvitationWithNavigationProperties()
             {
                 Invitation = p,
-                Wedding = p.Wedding
+                Wedding = p.Wedding,
+                Design = p.Design
             }).SingleAsync();
         }
 

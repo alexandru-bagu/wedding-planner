@@ -9,6 +9,7 @@ using Volo.Abp.Application.Services;
 
 namespace OOD.WeddingPlanner.Weddings
 {
+    [Authorize]
     public class WeddingAppService : CrudAppService<Wedding, WeddingDto, Guid, GetWeddingsInputDto, CreateUpdateWeddingDto, CreateUpdateWeddingDto>,
         IWeddingAppService
     {

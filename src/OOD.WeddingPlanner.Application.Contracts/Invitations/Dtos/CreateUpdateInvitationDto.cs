@@ -7,6 +7,8 @@ namespace OOD.WeddingPlanner.Invitations.Dtos
     {
         public Guid? WeddingId { get; set; }
 
+        public Guid? DesignId { get; set; }
+
         public string Destination { get; set; }
 
         public List<Guid> InviteeIds { get; set; } = new List<Guid>();

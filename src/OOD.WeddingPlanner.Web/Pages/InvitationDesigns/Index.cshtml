@@ -1,0 +1,50 @@
+@page
+@using OOD.WeddingPlanner.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using OOD.WeddingPlanner.Web.Pages.InvitationDesigns
+@using OOD.WeddingPlanner.Localization
+@using OOD.WeddingPlanner.Web.Menus
+@model IndexModel
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<WeddingPlannerResource> L
+@inject IAuthorizationService Authorization
+@{
+    PageLayout.Content.Title = L["InvitationDesign"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:InvitationDesign"].Value);
+    PageLayout.Content.MenuItemName = WeddingPlannerMenus.InvitationDesign;
+}
+
+@section scripts
+{
+<abp-script src="/Pages/InvitationDesigns/index.js" />
+}
+@section styles
+{
+<abp-style src="/Pages/InvitationDesigns/index.css" />
+}
+<script>
+    window.bogusInvitation = @Html.Raw(Json.Serialize(Model.BogusInvitation));
+</script>
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["InvitationDesign"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-right">
+                @if (await Authorization.IsGrantedAsync(WeddingPlannerPermissions.InvitationDesign.Create))
+                {
+                    <abp-button id="NewInvitationDesignButton"
+                            text="@L["CreateInvitationDesign"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="InvitationDesignTable" class="nowrap" />
+    </abp-card-body>
+</abp-card>

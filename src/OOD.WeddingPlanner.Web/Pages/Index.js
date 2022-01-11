@@ -1,3 +1,3 @@
 $(function () {
-  abp.log.debug('Index.js initialized!');
+    //abp.log.debug('Index.js initialized!');
 });

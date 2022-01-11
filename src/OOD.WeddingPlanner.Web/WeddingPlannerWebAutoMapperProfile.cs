@@ -5,13 +5,13 @@ using OOD.WeddingPlanner.Invitations.Dtos;
 using OOD.WeddingPlanner.Invitees.Dtos;
 using OOD.WeddingPlanner.Locations.Dtos;
 using OOD.WeddingPlanner.Tables.Dtos;
-using OOD.WeddingPlanner.Web.Pages.Events.Event.ViewModels;
-using OOD.WeddingPlanner.Web.Pages.InvitationDesigns.InvitationDesign.ViewModels;
-using OOD.WeddingPlanner.Web.Pages.Invitations.Invitation.ViewModels;
-using OOD.WeddingPlanner.Web.Pages.Invitees.Invitee.ViewModels;
-using OOD.WeddingPlanner.Web.Pages.Locations.Location.ViewModels;
-using OOD.WeddingPlanner.Web.Pages.Tables.Table.ViewModels;
-using OOD.WeddingPlanner.Web.Pages.Weddings.Wedding.ViewModels;
+using OOD.WeddingPlanner.Web.Pages.Events.ViewModels;
+using OOD.WeddingPlanner.Web.Pages.InvitationDesigns.ViewModels;
+using OOD.WeddingPlanner.Web.Pages.Invitations.ViewModels;
+using OOD.WeddingPlanner.Web.Pages.Invitees.ViewModels;
+using OOD.WeddingPlanner.Web.Pages.Locations.ViewModels;
+using OOD.WeddingPlanner.Web.Pages.Tables.ViewModels;
+using OOD.WeddingPlanner.Web.Pages.Weddings.ViewModels;
 using OOD.WeddingPlanner.Weddings.Dtos;
 
 namespace OOD.WeddingPlanner.Web

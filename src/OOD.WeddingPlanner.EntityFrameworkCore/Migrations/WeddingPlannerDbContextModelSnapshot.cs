@@ -119,8 +119,20 @@ namespace OOD.WeddingPlanner.Migrations
                         .HasColumnType("char(36)")
                         .HasColumnName("LastModifierId");
 
+                    b.Property<string>("MeasurementUnit")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
+
+                    b.Property<double?>("PaperDpi")
+                        .HasColumnType("double");
+
+                    b.Property<double?>("PaperHeight")
+                        .HasColumnType("double");
+
+                    b.Property<double?>("PaperWidth")
+                        .HasColumnType("double");
 
                     b.Property<Guid?>("TenantId")
                         .HasColumnType("char(36)")

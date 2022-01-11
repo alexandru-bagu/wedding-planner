@@ -10,6 +10,7 @@ using Volo.Abp.Application.Services;
 
 namespace OOD.WeddingPlanner.Invitees
 {
+    [Authorize]
     public class InviteeAppService : CrudAppService<Invitee, InviteeDto, Guid, GetInviteesInputDto, CreateUpdateInviteeDto, CreateUpdateInviteeDto>,
         IInviteeAppService
     {
@@ -45,6 +46,7 @@ namespace OOD.WeddingPlanner.Invitees
             return query.Select(p => p.Invitee);
         }
 
+        [Authorize(WeddingPlannerPermissions.Invitee.Default)]
         public async Task<InviteeWithNavigationPropertiesDto> GetWithNavigationByIdAsync(Guid id)
         {
             return ObjectMapper.Map<InviteeWithNavigationProperties, InviteeWithNavigationPropertiesDto>(
@@ -63,6 +65,7 @@ namespace OOD.WeddingPlanner.Invitees
             return new PagedResultDto<LookupDto<Guid>>(count, ObjectMapper.Map<List<Invitee>, List<LookupDto<Guid>>>(list));
         }
 
+        [Authorize(WeddingPlannerPermissions.Invitee.Default)]
         public async Task<PagedResultDto<InviteeWithNavigationPropertiesDto>> GetListWithNavigationAsync(GetInviteesInputDto input)
         {
             var count = await _repository.GetCountAsync(input.Filter, input.InvitationId, input.TableId, input.WeddingId, input.Name, input.Surname, input.Confirmed);

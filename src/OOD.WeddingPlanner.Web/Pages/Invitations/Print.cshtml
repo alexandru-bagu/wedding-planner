@@ -1,0 +1,21 @@
+﻿@page "/Print/{id}"
+@using Microsoft.AspNetCore.Authorization
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@model OOD.WeddingPlanner.Web.Pages.Invitations.PrintModel
+@{
+    Layout = null;
+    var body = Model.InvitationData.Design.Body;
+    Model.InvitationData.Design.Body = null;
+    DefaultContractResolver contractResolver = new DefaultContractResolver
+    {
+        NamingStrategy = new CamelCaseNamingStrategy
+        {
+            OverrideSpecifiedNames = false
+        }
+    };
+    string json = JsonConvert.SerializeObject(Model.InvitationData, new JsonSerializerSettings { ContractResolver = contractResolver });
+    var data = "var invitation = " + json;
+    body = body.Replace("/*INVITATION DATA*/", data);
+}
+@Html.Raw(body)
