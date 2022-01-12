@@ -119,7 +119,37 @@ $(function () {
         createModal.open();
     });
 
+    function delay(s) {
+        return new Promise((r) => setTimeout(r, s));;
+    }
+
+    $('#DownloadInvitationButton').click(async function (e) {
+        abp.notify.info(l('Invitations build is enqueued.'));
+        const { id } = await abp.ajax({ url: '/download/begin', data: getFilter() });
+        var status = null;
+        while (status == null || !status.total) {
+            status = await abp.ajax({ url: '/download/status/' + id, method: 'get' });
+            await delay(1000);
+        }
+        abp.notify.info(l('Invitations are being built; progress: 0%'));
+        var prev = status.complete;
+        while (status.total != status.complete) {
+            status = await abp.ajax({ url: '/download/status/' + id, method: 'get' });
+            if (prev !== status.complete) {
+                prev = status.complete;
+                var progress = parseInt(status.complete / status.total * 10000) / 100;
+                abp.notify.info(l('Invitations are being built; progress: ' + progress + '%'));
+            }
+            await delay(1000);
+        }
+        abp.notify.info(l('Invitations are built!'));
+        var a = $('<a href="/download/' + id + '"></a>');
+        a.appendTo(document.body);
+        a[0].click();
+        a.remove();
+    });
+
     $('input, select').on('blur change', function () {
         dataTable.ajax.reload();
-    }); 
+    });
 });

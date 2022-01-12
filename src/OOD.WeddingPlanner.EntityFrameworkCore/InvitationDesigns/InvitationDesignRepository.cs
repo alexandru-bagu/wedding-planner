@@ -7,8 +7,9 @@ namespace OOD.WeddingPlanner.InvitationDesigns
 {
     public class InvitationDesignRepository : EfCoreRepository<WeddingPlannerDbContext, InvitationDesign, Guid>, IInvitationDesignRepository
     {
-        public InvitationDesignRepository(IDbContextProvider<WeddingPlannerDbContext> dbContextProvider) : base(dbContextProvider)
+        public InvitationDesignRepository(IDbContextProvider<WeddingPlannerDbContext> dbContextProvider, IServiceProvider serviceProvider) : base(dbContextProvider)
         {
+            ServiceProvider = serviceProvider;
         }
     }
 }

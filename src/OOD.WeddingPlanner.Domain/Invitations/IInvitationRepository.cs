@@ -7,9 +7,9 @@ namespace OOD.WeddingPlanner.Invitations
 {
     public interface IInvitationRepository : IRepository<Invitation, Guid>
     {
-        Task<long> GetCountAsync(Guid? weddingId, string destination);
-        Task<List<Invitation>> GetPagedListAsync(Guid? weddingId, string destination, int skipCount, int maxResultCount, string sorting);
         Task<InvitationWithNavigationProperties> GetWithNavigationByIdAsync(Guid id);
-        Task<List<InvitationWithNavigationProperties>> GetListWithNavigationAsync(Guid? weddingId, string destination, string sorting, int skipCount, int maxResultCount);
+        Task<long> GetCountAsync(Guid? weddingId = null, string destination = null);
+        Task<List<Invitation>> GetListAsync(Guid? weddingId = null, string destination = null, string sorting = null, int skipCount = 0, int maxResultCount = int.MaxValue);
+        Task<List<InvitationWithNavigationProperties>> GetListWithNavigationAsync(Guid? weddingId = null, string destination = null, string sorting = null, int skipCount = 0, int maxResultCount = int.MaxValue);
     }
 }

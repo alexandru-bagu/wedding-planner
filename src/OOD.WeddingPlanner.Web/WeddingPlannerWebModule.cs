@@ -12,7 +12,9 @@ using OOD.WeddingPlanner.EntityFrameworkCore;
 using OOD.WeddingPlanner.Localization;
 using OOD.WeddingPlanner.MultiTenancy;
 using OOD.WeddingPlanner.Web.Contributors;
+using OOD.WeddingPlanner.Web.Download;
 using OOD.WeddingPlanner.Web.Menus;
+using OOD.WeddingPlanner.Web.Services;
 using System;
 using System.IO;
 using Volo.Abp;
@@ -87,6 +89,7 @@ namespace OOD.WeddingPlanner.Web
             ConfigureSwaggerServices(context.Services);
 
             context.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+            context.Services.AddHostedService<InvitationDownloadBuilderService>();
         }
 
         private void ConfigureUrls(IConfiguration configuration)

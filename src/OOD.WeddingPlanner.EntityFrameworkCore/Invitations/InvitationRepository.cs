@@ -12,8 +12,9 @@ namespace OOD.WeddingPlanner.Invitations
 {
     public class InvitationRepository : EfCoreRepository<WeddingPlannerDbContext, Invitation, Guid>, IInvitationRepository
     {
-        public InvitationRepository(IDbContextProvider<WeddingPlannerDbContext> dbContextProvider) : base(dbContextProvider)
+        public InvitationRepository(IDbContextProvider<WeddingPlannerDbContext> dbContextProvider, IServiceProvider serviceProvider) : base(dbContextProvider)
         {
+            ServiceProvider = serviceProvider;
         }
 
         public async Task<InvitationWithNavigationProperties> GetWithNavigationByIdAsync(Guid id)
@@ -53,14 +54,15 @@ namespace OOD.WeddingPlanner.Invitations
             return await query.LongCountAsync();
         }
 
-        public async Task<List<Invitation>> GetPagedListAsync(Guid? weddingId, string destination, int skipCount, int maxResultCount, string sorting)
+        public async Task<List<Invitation>> GetListAsync(Guid? weddingId, string destination, string sorting, int skipCount, int maxResultCount)
         {
             var query = await GetQueryableAsync();
             query = query.WhereIf(weddingId.HasValue, p => p.WeddingId == weddingId);
             query = query.WhereIf(!string.IsNullOrWhiteSpace(destination), p => p.Destination.Contains(destination));
-            return await query
-            .OrderBy(string.IsNullOrWhiteSpace(sorting) ? $"{nameof(InvitationWithNavigationProperties.Invitation)}.{nameof(Invitation.Destination)}" : sorting)
-            .Skip(skipCount).Take(maxResultCount).ToListAsync();
+            query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? $"{nameof(Invitation.Destination)}" : sorting);
+            query = query.Skip(skipCount).Take(maxResultCount);
+            var result = await query.ToListAsync();
+            return result;
         }
     }
 }
