@@ -1,0 +1,24 @@
+﻿@page "/{id}"
+@using Microsoft.AspNetCore.Authorization
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@model OOD.WeddingPlanner.Web.Pages.Invitations.ViewModel
+@using Volo.Abp.AspNetCore.Mvc.UI.Theming
+@inject IThemeManager ThemeManager
+@{
+    Layout = ThemeManager.CurrentTheme.GetLayout(StandardLayouts.Empty);
+}
+
+@section scripts
+{
+<abp-script src="/Pages/Invitations/view.js" />
+<script>
+    var invitaton = @Json.Serialize(Model.InvitationData);
+</script>
+}
+@section styles
+{
+<abp-style src="/empty-layout.css" />
+}
+
+Hello

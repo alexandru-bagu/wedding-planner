@@ -87,6 +87,7 @@
         "InvitationDesignMeasurementUnit": "Measurement Unit",
         "InvitationDesignPaperWidth": "Paper Width",
         "InvitationDesignPaperHeight": "Paper Height",
-        "InvitationDesignPaperDpi": "Paper Dpi"
+        "InvitationDesignPaperDpi": "Paper Dpi",
+        "DownloadInvitations":  "Download invitation"
     }
 }

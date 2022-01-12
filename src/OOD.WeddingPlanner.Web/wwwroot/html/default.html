@@ -1,17 +1,19 @@
 <!doctype html>
-<html lang="en" data-bind="style: { width: view.width, height: view.height, border: view.border }">
+<html lang="en" data-bind="style: { width: width, height: height, border: border }">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/libs/bootstrap/css/bootstrap.min.css">
     <title data-bind="text: invitation.destination"></title>
   </head>
-  <body data-bind="style: { width: view.width, height: view.height }">
+  <body data-bind="style: { width: width, height: height }">
       <h1 data-bind="text: invitation.destination"></h1>
+      <img data-bind="attr: { src: qrCode }" />
       <script src="/libs/jquery/jquery.js"></script>
       <script src="/libs/bootstrap/js/bootstrap.bundle.js"></script>
-      <script src="/themes/stisla/assets/modules/popper.js"></script>
+      <script src="/libs/popper.js/dist/umd/popper.min.js"></script>
       <script src="/libs/knockout/build/output/knockout-latest.js"></script>
+      <script src="/libs/qrcodejs/qrcode.min.js"></script>
       <script>/*INVITATION DATA*/</script>
       <script src="/Pages/InvitationDesigns/invitation.js"></script>
   </body>

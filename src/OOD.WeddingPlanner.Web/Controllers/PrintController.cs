@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OOD.WeddingPlanner.InvitationDesigns;
 using OOD.WeddingPlanner.Invitations;
+using OOD.WeddingPlanner.Invitations.Dtos;
 using OOD.WeddingPlanner.Permissions;
 using System;
 using System.Threading.Tasks;
@@ -53,6 +54,16 @@ namespace OOD.WeddingPlanner.Web.Controllers
                 }
             };
             return File(HtmlConverter.Convert(doc), "application/pdf", "");
+        }
+
+        [HttpPost]
+        [Route("/download/{id}")]
+        [Authorize(WeddingPlannerPermissions.Invitation.Default)]
+        public async Task<IActionResult> Download(GetInvitationsInputDto input)
+        {
+            //start download process
+            //return queryiable id
+            return Json(new { });
         }
     }
 }

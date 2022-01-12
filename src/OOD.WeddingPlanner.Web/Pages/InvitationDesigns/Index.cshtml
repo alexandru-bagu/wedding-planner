@@ -25,7 +25,7 @@
 <abp-style src="/Pages/InvitationDesigns/index.css" />
 }
 <script>
-    window.bogusInvitation = @Html.Raw(Json.Serialize(Model.BogusInvitation));
+    window.bogusInvitation = @Json.Serialize(Model.BogusInvitation);
 </script>
 <abp-card>
     <abp-card-header>

@@ -35,11 +35,20 @@
                 @if (await Authorization.IsGrantedAsync(WeddingPlannerPermissions.Invitation.Create))
                 {
                     <abp-button id="NewInvitationButton" text="@L["CreateInvitation"].Value" icon="plus" button-type="Primary" />
+                    <abp-button id="DownloadInvitationButton" text="@L["DownloadInvitations"].Value" icon="download " button-type="Primary" />
                 }
             </abp-column>
         </abp-row>
     </abp-card-header>
     <abp-card-body>
+        <abp-row>
+            <abp-column size="_3">
+                <abp-select asp-for="WeddingIdFilter" label="@L["InvitationWeddingId"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="DestinationFilter" label="@L["InvitationDestination"].Value" />
+            </abp-column>
+        </abp-row>
         <abp-table striped-rows="true" id="InvitationTable" class="nowrap" />
     </abp-card-body>
 </abp-card>

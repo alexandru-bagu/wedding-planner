@@ -14,6 +14,14 @@ $(function () {
         modalClass: "select2modal"
     });
 
+    var getFilter = function () {
+        return {
+            filter: $("#FilterText").val(),
+            destination: $("#DestinationFilter").val(),
+            weddingId: $("#WeddingIdFilter").val()
+        };
+    };
+
     var dataTable = $('#InvitationTable').DataTable(abp.libs.datatables.normalizeConfiguration({
         processing: true,
         serverSide: true,
@@ -22,7 +30,7 @@ $(function () {
         autoWidth: false,
         scrollCollapse: true,
         order: [[0, "asc"]],
-        ajax: abp.libs.datatables.createAjax(service.getListWithNavigation),
+        ajax: abp.libs.datatables.createAjax(service.getListWithNavigation, getFilter),
         columnDefs: [
             {
                 width: "100px",
@@ -30,7 +38,7 @@ $(function () {
                     items:
                         [
                             {
-                                text: l('Preview'),
+                                text: l('Preview Print'),
                                 action: function (data) {
                                     var a = $('<a href="' + abp.appPath + "Print/" + data.record.invitation.id + '" target="_blank"></a>');
                                     a.appendTo(document.body);
@@ -44,6 +52,16 @@ $(function () {
                                     var form = $('#download-invitation');
                                     form.attr('action', abp.appPath + "Print/" + data.record.invitation.id);
                                     form[0].submit();
+                                }
+                            },
+                            {
+                                text: l('View'),
+                                action: function (data) {
+                                    var a = $('<a href="' + abp.appPath + data.record.invitation.id + '" target="_blank"></a>');
+                                    debugger;
+                                    a.appendTo(document.body);
+                                    a[0].click();
+                                    a.remove();
                                 }
                             },
                             {
@@ -100,4 +118,8 @@ $(function () {
         e.preventDefault();
         createModal.open();
     });
+
+    $('input, select').on('blur change', function () {
+        dataTable.ajax.reload();
+    }); 
 });

@@ -47,23 +47,24 @@ namespace OOD.WeddingPlanner.Invitations
               WeddingPlannerPermissions.Wedding.Update,
               WeddingPlannerPermissions.Invitee.Create,
               WeddingPlannerPermissions.Invitee.Update);
-            var count = await _repository.GetCountAsync(input.WeddingId);
-            var list = await _repository.GetPagedListAsync(input.WeddingId, input.SkipCount, input.MaxResultCount, nameof(Invitation.CreationTime));
+            var count = await _repository.GetCountAsync(input.WeddingId, input.Destination);
+            var list = await _repository.GetPagedListAsync(input.WeddingId, input.Destination, input.SkipCount, input.MaxResultCount, nameof(Invitation.CreationTime));
             return new PagedResultDto<LookupDto<Guid>>(count, ObjectMapper.Map<List<Invitation>, List<LookupDto<Guid>>>(list));
         }
 
         protected override async Task<IQueryable<Invitation>> CreateFilteredQueryAsync(GetInvitationsInputDto input)
         {
             var query = await base.CreateFilteredQueryAsync(input);
-            query = query.WhereIf(input.WeddingId.HasValue, p => p.WeddingId == input.WeddingId);
+            query = query.WhereIf(input.WeddingId.HasValue, p => p.WeddingId == input.WeddingId);   
+            query = query.WhereIf(!string.IsNullOrWhiteSpace(input.Destination), p => p.Destination.Contains(input.Destination));
             return query;
         }
 
         [Authorize(WeddingPlannerPermissions.Invitation.Default)]
         public async Task<PagedResultDto<InvitationWithNavigationPropertiesDto>> GetListWithNavigationAsync(GetInvitationsInputDto input)
         {
-            var count = await _repository.GetCountAsync(input.WeddingId);
-            var list = await _repository.GetListWithNavigationAsync(input.WeddingId, input.Sorting, input.SkipCount, input.MaxResultCount);
+            var count = await _repository.GetCountAsync(input.WeddingId, input.Destination);
+            var list = await _repository.GetListWithNavigationAsync(input.WeddingId, input.Destination, input.Sorting, input.SkipCount, input.MaxResultCount);
             return new PagedResultDto<InvitationWithNavigationPropertiesDto>(count, ObjectMapper.Map<List<InvitationWithNavigationProperties>, List<InvitationWithNavigationPropertiesDto>>(list));
         }
 

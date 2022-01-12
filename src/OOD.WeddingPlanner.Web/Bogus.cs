@@ -9,7 +9,7 @@ namespace OOD.WeddingPlanner.Web
 {
     public class Bogus
     {
-        public static Invitation Invitation()
+        public static InvitationWithNavigationProperties InvitationWithNavigationProperties()
         {
             var invitationDesign = new InvitationDesign(Guid.NewGuid(), null, "Bogus Invitation Design", "Bogus Invitation Design Body", "cm", 21.0, 29.7, 96);
             var wedding = new Wedding(Guid.NewGuid(), null, "Bogus Groom", "Bogus Bride", "Bogus Wedding", "Bogus Contact Information");
@@ -28,7 +28,12 @@ namespace OOD.WeddingPlanner.Web
                     i == 0 ? null : i == 1 ? false : i == 2 ? true : null,
                     i == 0 ? true : false));
             }
-            return invitation;
+            return new InvitationWithNavigationProperties()
+            {
+                Invitation = invitation,
+                Design = invitationDesign,
+                Wedding = wedding
+            };
         }
     }
 }

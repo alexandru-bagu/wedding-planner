@@ -6,6 +6,8 @@ namespace OOD.WeddingPlanner.Invitations.Dtos
     {
         public Guid? WeddingId { get; set; }
 
+        public string Destination { get; set; }
+
         public LookupInvitationsInputDto()
         {
         }

@@ -1,16 +1,47 @@
 ﻿$(function () {
-    var design = invitation.design;
+    function ViewModel(data) {
+        var vm = this;
+        vm.invitation = data.invitation;
+        vm.invitees = vm.invitation.invitees;
+        vm.design = data.design;
+        vm.wedding = data.wedding;
 
-    function View(unit, width, height, dpi, debug) {
-        var ratio = 1;
-        if (unit === 'mm') ratio = 25.4;
-        if (unit === 'cm') ratio = 2.54;
+        setPaperConstraints();
+        generateQRCode();
 
-        var view = this;
-        view.width = width *  dpi / ratio;
-        view.height = height * dpi / ratio;
-        view.border = debug ? '1px solid silver' : '';
+        function setPaperConstraints() {
+            var unit = vm.design.measurementUnit,
+                width = vm.design.paperWidth,
+                height = vm.design.paperHeight,
+                dpi = vm.design.paperDpi,
+                debug = data.debug;
+            var ratio = 1;
+            if (unit === 'mm') ratio = 25.4;
+            if (unit === 'cm') ratio = 2.54;
+
+            vm.width = width * dpi / ratio;
+            vm.height = height * dpi / ratio;
+            vm.border = debug ? '1px solid silver' : '';
+        }
+
+        function generateQRCode() {
+            var div = document.createElement("div");
+            div.style.visibility = 'collapse';
+            document.body.appendChild(div);
+            new QRCode(div, {
+                text: location.protocol + "//" + location.host + "/" + vm.invitation.id,
+                width: 256,
+                height: 256,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            var canvas = $(div).find('canvas')[0];
+            vm.qrCode = canvas.toDataURL();
+            setTimeout(function () { document.removeChild(div); });
+        }
     }
-    invitation.view = new View(design.measurementUnit, design.paperWidth, design.paperHeight, design.paperDpi, invitation.debug);
-    ko.applyBindings(invitation, document.body.parentElement);
+
+    var view = new ViewModel(invitation);
+    ko.applyBindings(view, document.body.parentElement);
 });

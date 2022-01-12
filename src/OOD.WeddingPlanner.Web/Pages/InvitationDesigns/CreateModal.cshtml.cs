@@ -24,7 +24,13 @@ namespace OOD.WeddingPlanner.Web.Pages.InvitationDesigns
 
         public virtual async Task OnGetAsync()
         {
-            ViewModel = new CreateEditInvitationDesignViewModel();
+            ViewModel = new CreateEditInvitationDesignViewModel()
+            {
+                MeasurementUnit = "cm",
+                PaperWidth = 21,
+                PaperHeight = 29.7,
+                PaperDpi = 96
+            };
 
             var serviceProvider = HttpContext.RequestServices;
             var environment = serviceProvider.GetRequiredService<IWebHostEnvironment>();

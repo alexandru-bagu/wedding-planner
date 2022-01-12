@@ -29,11 +29,12 @@ namespace OOD.WeddingPlanner.Invitations
             }).SingleAsync();
         }
 
-        public async Task<List<InvitationWithNavigationProperties>> GetListWithNavigationAsync(Guid? weddingId, string sorting, int skipCount, int maxResultCount)
+        public async Task<List<InvitationWithNavigationProperties>> GetListWithNavigationAsync(Guid? weddingId, string destination, string sorting, int skipCount, int maxResultCount)
         {
             var query = await GetQueryableAsync();
             query = query.IncludeDetails();
             query = query.WhereIf(weddingId.HasValue, p => p.WeddingId == weddingId);
+            query = query.WhereIf(!string.IsNullOrWhiteSpace(destination), p => p.Destination.Contains(destination));
             return await query.Select(p => new InvitationWithNavigationProperties()
             {
                 Invitation = p,
@@ -44,17 +45,19 @@ namespace OOD.WeddingPlanner.Invitations
             .Skip(skipCount).Take(maxResultCount).ToListAsync();
         }
 
-        public async Task<long> GetCountAsync(Guid? weddingId)
+        public async Task<long> GetCountAsync(Guid? weddingId, string destination)
         {
             var query = await GetQueryableAsync();
             query = query.WhereIf(weddingId.HasValue, p => p.WeddingId == weddingId);
+            query = query.WhereIf(!string.IsNullOrWhiteSpace(destination), p => p.Destination.Contains(destination));
             return await query.LongCountAsync();
         }
 
-        public async Task<List<Invitation>> GetPagedListAsync(Guid? weddingId, int skipCount, int maxResultCount, string sorting)
+        public async Task<List<Invitation>> GetPagedListAsync(Guid? weddingId, string destination, int skipCount, int maxResultCount, string sorting)
         {
             var query = await GetQueryableAsync();
             query = query.WhereIf(weddingId.HasValue, p => p.WeddingId == weddingId);
+            query = query.WhereIf(!string.IsNullOrWhiteSpace(destination), p => p.Destination.Contains(destination));
             return await query
             .OrderBy(string.IsNullOrWhiteSpace(sorting) ? $"{nameof(InvitationWithNavigationProperties.Invitation)}.{nameof(Invitation.Destination)}" : sorting)
             .Skip(skipCount).Take(maxResultCount).ToListAsync();
