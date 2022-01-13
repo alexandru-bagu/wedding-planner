@@ -16,3 +16,4 @@ services:
       - db-volume:/var/lib/mysql
 volumes:
   db-volume:
+    external: true
