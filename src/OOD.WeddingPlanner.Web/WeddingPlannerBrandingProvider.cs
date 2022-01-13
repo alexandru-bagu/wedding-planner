@@ -6,6 +6,6 @@ namespace OOD.WeddingPlanner.Web
     [Dependency(ReplaceServices = true)]
     public class WeddingPlannerBrandingProvider : DefaultBrandingProvider
     {
-        public override string AppName => "Wedding Planner";
+        public override string AppName => "WDING.ORG";
     }
 }

@@ -10,6 +10,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
+using Volo.Abp.TenantManagement.Localization;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
 
@@ -45,6 +46,7 @@ namespace OOD.WeddingPlanner
                 options.Resources
                     .Add<WeddingPlannerResource>("en")
                     .AddBaseTypes(typeof(AbpValidationResource))
+                    .AddBaseTypes(typeof(AbpTenantManagementResource))
                     .AddVirtualJson("/Localization/WeddingPlanner");
 
                 options.DefaultResourceType = typeof(WeddingPlannerResource);

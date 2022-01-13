@@ -24,6 +24,8 @@ namespace OOD.WeddingPlanner.Web.Menus
             var administration = context.Menu.GetAdministration();
             var l = context.GetLocalizer<WeddingPlannerResource>();
 
+            context.Menu.TryRemoveMenuItem("Stisla.Dashboard");
+
             context.Menu.Items.Insert(
                 0,
                 new ApplicationMenuItem(
