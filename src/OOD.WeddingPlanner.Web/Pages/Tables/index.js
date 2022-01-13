@@ -53,7 +53,7 @@ $(async function () {
         var invitee = this;
         invitee.id = invt.id;
         invitee.surname = invt.surname;
-        invitee.givenName = invt.givenName;
+        invitee.name = invt.name;
         invitee.tableId = ko.observable(invt.tableId);
         invitee.tableId.subscribe(async function () {
             var dbInvitee = await inviteeService.get(invitee.id);
@@ -73,7 +73,7 @@ $(async function () {
         guest.invitees = ko.computed(function () {
             var arrayFilter = vm.allInvitees().filter(function (p) { return !p.tableId() || p.id === guest.invitee(); });
             return arrayFilter.map(function (value) {
-                value.displayName = (value.surname || '') + ' ' + (value.givenName || '');
+                value.displayName = (value.surname || '') + ' ' + (value.name || '');
                 return new Lookup(value);
             });
         });
