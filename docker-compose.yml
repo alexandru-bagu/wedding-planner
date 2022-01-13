@@ -13,7 +13,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: passw0rd
     volumes:
-      - db-volume:/var/lib/mysql
+      - wding-db-volume:/var/lib/mysql
 volumes:
-  db-volume:
+  wding-db-volume:
     external: true
