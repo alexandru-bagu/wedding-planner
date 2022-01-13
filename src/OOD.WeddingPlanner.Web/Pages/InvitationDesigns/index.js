@@ -70,7 +70,7 @@ $(function () {
                 }
             },
             {
-                title: l('InvitationDesignDpi'),
+                title: l('InvitationDesignPaperDpi'),
                 data: "paperDpi"
             }
         ]
