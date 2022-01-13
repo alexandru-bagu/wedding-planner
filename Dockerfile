@@ -1,11 +1,9 @@
 # syntax=docker/dockerfile:1
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 
-RUN apt -y update
-RUN apt -y install git
-
-COPY .git /app/.git
+RUN apt -y update && apt -y install git
 WORKDIR /app
+COPY .git /app/.git
 RUN git checkout .
 RUN dotnet restore OOD.WeddingPlanner.sln
 RUN dotnet publish -c Release -o /app/build/web src/OOD.WeddingPlanner.Web/OOD.WeddingPlanner.Web.csproj
