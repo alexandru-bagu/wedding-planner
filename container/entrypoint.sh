@@ -1,4 +1,11 @@
 #!/bin/bash
 
-cd web
-ASPNETCORE_ENVIRONMENT=Production ASPNETCORE_URLS=http://*:$PORT dotnet OOD.WeddingPlanner.Web.dll
+export ASPNETCORE_ENVIRONMENT=Production 
+
+pushd dbmigrator
+  dotnet OOD.WeddingPlanner.DbMigrator.dll
+popd
+
+pushd web
+  ASPNETCORE_URLS=http://*:5000 dotnet OOD.WeddingPlanner.Web.dll
+popd

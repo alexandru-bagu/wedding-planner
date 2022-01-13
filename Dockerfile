@@ -9,6 +9,7 @@ WORKDIR /app
 RUN git checkout .
 RUN dotnet restore
 RUN dotnet publish -c Release -o /app/build/web src/OOD.WeddingPlanner.Web/OOD.WeddingPlanner.Web.csproj
+RUN dotnet publish -c Release -o /app/build/dbmigrator src/OOD.WeddingPlanner.DbMigrator/OOD.WeddingPlanner.DbMigrator.csproj
 
 # # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
