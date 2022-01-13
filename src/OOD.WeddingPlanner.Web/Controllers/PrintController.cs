@@ -32,12 +32,28 @@ namespace OOD.WeddingPlanner.Web.Controllers
         [HttpPost]
         [Route("/print/{id}")]
         [Authorize(WeddingPlannerPermissions.Invitation.Default)]
-        public async Task<IActionResult> Print(Guid id)
+        public async Task<IActionResult> PostPrint(Guid id)
         {
             var invitation = await Repository.GetAsync(id);
             var design = await DesignRepository.GetAsync(invitation.DesignId.Value);
             var content = PrintInvitation(id, design, HttpContext.Request.Scheme + "://" + HttpContext.Request.Host, HtmlConverter);
             return File(content, "application/pdf", $"{id}.pdf");
+        }
+
+        [HttpGet]
+        [Route("/print-invitation/{id}")]
+        public async Task<IActionResult> GetPrint(Guid id)
+        {
+            var invitationData = ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(await Repository.GetWithNavigationByIdAsync(id));
+            return View("Invitation/Print", invitationData);
+        }
+
+        [HttpGet]
+        [Route("/v/{id}")]
+        public async Task<IActionResult> GetView(Guid id)
+        {
+            var invitationData = ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(await Repository.GetWithNavigationByIdAsync(id));
+            return View("Invitation/View", invitationData);
         }
 
         public static byte[] PrintInvitation(Guid id, InvitationDesign design, string baseUrl, IConverter converter)
@@ -58,7 +74,7 @@ namespace OOD.WeddingPlanner.Web.Controllers
                     {
                         PagesCount = true,
                         WebSettings = { DefaultEncoding = "utf-8" },
-                        Page = baseUrl  + "/Print/" + id
+                        Page = baseUrl  + "/print-invitation/" + id
                     }
                 }
             };

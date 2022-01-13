@@ -1,8 +1,7 @@
-﻿@page "/{id}"
-@using Microsoft.AspNetCore.Authorization
+﻿@using Microsoft.AspNetCore.Authorization
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
-@model OOD.WeddingPlanner.Web.Pages.Invitations.ViewModel
+@model OOD.WeddingPlanner.Invitations.Dtos.InvitationWithNavigationPropertiesDto
 @using Volo.Abp.AspNetCore.Mvc.UI.Theming
 @inject IThemeManager ThemeManager
 @{
@@ -13,7 +12,7 @@
 {
 <abp-script src="/Pages/Invitations/view.js" />
 <script>
-    var invitaton = @Json.Serialize(Model.InvitationData);
+    var invitaton = @Json.Serialize(Model);
 </script>
 }
 @section styles
