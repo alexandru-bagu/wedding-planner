@@ -3,9 +3,11 @@
 export ASPNETCORE_ENVIRONMENT=Production 
 
 pushd dbmigrator
-  dotnet OOD.WeddingPlanner.DbMigrator.dll
+  while ! dotnet OOD.WeddingPlanner.DbMigrator.dll; do
+    sleep 1;
+  done
 popd
 
 pushd web
-  ASPNETCORE_URLS=http://*:5000 dotnet OOD.WeddingPlanner.Web.dll
+  ASPNETCORE_URLS=http://*:44380 dotnet OOD.WeddingPlanner.Web.dll
 popd
