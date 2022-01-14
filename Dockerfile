@@ -13,6 +13,6 @@ RUN dotnet publish -c Release -o /app/build/dbmigrator src/OOD.WeddingPlanner.Db
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY container/entrypoint.sh /app
-COPY --from=build-env /app/build .
 RUN apt-get update -qq && apt-get -y install libgdiplus libc6-dev
+COPY --from=build-env /app/build .
 ENTRYPOINT /app/entrypoint.sh
