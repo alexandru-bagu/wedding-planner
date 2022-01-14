@@ -5,6 +5,8 @@ services:
     restart: unless-stopped
     ports:
       - "44380:44380"
+    extra_hosts:
+      wding.org: 127.0.0.1
     depends_on:
       - database
   database:
