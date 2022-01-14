@@ -9,6 +9,8 @@ using OOD.WeddingPlanner.Web.Services;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.Data;
+using Volo.Abp.MultiTenancy;
 using WkHtmlToPdfDotNet;
 using WkHtmlToPdfDotNet.Contracts;
 
@@ -20,13 +22,15 @@ namespace OOD.WeddingPlanner.Web.Controllers
         public IInvitationDesignRepository DesignRepository { get; }
         public IConverter HtmlConverter { get; }
         public IInvitationDownloadManager InvitationDownloadManager { get; }
+        public IDataFilter DataFilter { get; }
 
-        public PrintController(IInvitationRepository repository, IInvitationDesignRepository designRepository, IConverter htmlConverter, IInvitationDownloadManager invitationDownloadManager)
+        public PrintController(IInvitationRepository repository, IInvitationDesignRepository designRepository, IConverter htmlConverter, IInvitationDownloadManager invitationDownloadManager, IDataFilter dataFilter)
         {
             Repository = repository;
             DesignRepository = designRepository;
             HtmlConverter = htmlConverter;
             InvitationDownloadManager = invitationDownloadManager;
+            DataFilter = dataFilter;
         }
 
         [HttpPost]
@@ -44,16 +48,22 @@ namespace OOD.WeddingPlanner.Web.Controllers
         [Route("/print-invitation/{id}")]
         public async Task<IActionResult> GetPrint(Guid id)
         {
-            var invitationData = ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(await Repository.GetWithNavigationByIdAsync(id));
-            return View("Invitation/Print", invitationData);
+            using (DataFilter.Disable<IMultiTenant>())
+            {
+                var invitationData = ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(await Repository.GetWithNavigationByIdAsync(id));
+                return View("Invitation/Print", invitationData);
+            }
         }
 
         [HttpGet]
         [Route("/v/{id}")]
         public async Task<IActionResult> GetView(Guid id)
         {
-            var invitationData = ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(await Repository.GetWithNavigationByIdAsync(id));
-            return View("Invitation/View", invitationData);
+            using (DataFilter.Disable<IMultiTenant>())
+            {
+                var invitationData = ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(await Repository.GetWithNavigationByIdAsync(id));
+                return View("Invitation/View", invitationData);
+            }
         }
 
         public static byte[] PrintInvitation(Guid id, InvitationDesign design, string baseUrl, IConverter converter)
