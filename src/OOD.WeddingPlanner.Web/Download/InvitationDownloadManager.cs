@@ -46,14 +46,14 @@ namespace OOD.WeddingPlanner.Web.Download
             }
         }
 
-        public async Task<Guid> Begin(GetInvitationsInputDto input)
+        public async Task<Guid> Begin(GetInvitationsInputDto input, Guid? tenantId = null)
         {
             await Initialize();
             Guid id = Guid.NewGuid();
             var builder = new InvitationDownloadBuilder(id, 
                 ServiceProvider.GetService<ILogger<InvitationDownloadBuilder>>(), 
                 ServiceProvider.GetService<IHttpContextAccessor>().HttpContext, 
-                input, Path.Combine(_rootDir, id.ToString()));
+                input, Path.Combine(_rootDir, id.ToString()), tenantId);
             _builders.TryAdd(builder.Id, builder);
             InvitationDownloadBuilderService.Enqueue(builder);
             return builder.Id;

@@ -8,7 +8,7 @@ namespace OOD.WeddingPlanner.Web.Services
 {
     public interface IInvitationDownloadManager
     {
-        Task<Guid> Begin(GetInvitationsInputDto input);
+        Task<Guid> Begin(GetInvitationsInputDto input, Guid? tenantId = null);
         Task<DownloadStatus> Status(Guid id);
         Task<Stream> Download(Guid id);
         Task Cancel(Guid id);

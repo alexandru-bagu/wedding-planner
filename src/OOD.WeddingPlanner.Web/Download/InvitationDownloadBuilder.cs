@@ -8,10 +8,13 @@ using OOD.WeddingPlanner.Web.Controllers;
 using PdfSharp.Pdf;
 using PdfSharp.Pdf.IO;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp.Data;
+using Volo.Abp.MultiTenancy;
 using WkHtmlToPdfDotNet.Contracts;
 
 namespace OOD.WeddingPlanner.Web.Download
@@ -30,10 +33,11 @@ namespace OOD.WeddingPlanner.Web.Download
         private string _resultPath;
         private ILogger<InvitationDownloadBuilder> _logger;
         private string _path;
+        private readonly Guid? _tenantId;
         private GetInvitationsInputDto _input;
         private string _baseUrl;
 
-        public InvitationDownloadBuilder(Guid id, ILogger<InvitationDownloadBuilder> logger, HttpContext httpContext, GetInvitationsInputDto input, string path)
+        public InvitationDownloadBuilder(Guid id, ILogger<InvitationDownloadBuilder> logger, HttpContext httpContext, GetInvitationsInputDto input, string path, Guid? tenantId)
         {
             Id = id;
             CancellationTokenSource = new CancellationTokenSource();
@@ -41,6 +45,7 @@ namespace OOD.WeddingPlanner.Web.Download
             Canceled = false;
             _logger = logger;
             _path = path;
+            _tenantId = tenantId;
             _input = input;
             _baseUrl = httpContext.Request.Scheme + "://" + httpContext.Request.Host;
             if (!Directory.Exists(_path)) Directory.CreateDirectory(_path);
@@ -53,47 +58,50 @@ namespace OOD.WeddingPlanner.Web.Download
             try
             {
                 var invitationRepository = serviceProvider.GetService<IInvitationRepository>();
-                var invitationDesignRepository = serviceProvider.GetService<IInvitationDesignRepository>();
-                var converter = serviceProvider.GetService<IConverter>();
-                var logger = serviceProvider.GetService<ILogger<InvitationDownloadBuilder>>();
-
-                var invitations = await invitationRepository.GetListAsync(_input.WeddingId, _input.Destination);
-                if (invitations.Count > 0)
+                var currentTenant = serviceProvider.GetService<ICurrentTenant>();
+                using (currentTenant.Change(_tenantId))
                 {
-                    Total = invitations.Count * 2 - 1;
-                    foreach (var invitation in invitations)
+                    var invitationDesignRepository = serviceProvider.GetService<IInvitationDesignRepository>();
+                    var converter = serviceProvider.GetService<IConverter>();
+                    var logger = serviceProvider.GetService<ILogger<InvitationDownloadBuilder>>();
+                    var invitations = await invitationRepository.GetListAsync(_input.WeddingId, _input.Destination);
+                    if (invitations.Count > 0)
                     {
-                        if (CancellationTokenSource.Token.IsCancellationRequested) break;
-                        var design = await invitationDesignRepository.GetAsync(invitation.DesignId.Value);
-                        var response = PrintController.PrintInvitation(invitation.Id, design, _baseUrl, converter, logger);
-                        using (var oStream = new FileStream(Path.Combine(_path, $"{invitation.Id}.pdf"), FileMode.Create))
-                            await oStream.WriteAsync(response, 0, response.Length);
-                        Complete++;
-                    }
-                    if (CancellationTokenSource.Token.IsCancellationRequested) return;
-                    var fi = invitations.First();
-                    var target = Path.Combine(_path, $"{Id}.pdf");
-                    var tmp_target = Path.Combine(_path, $"{Id}.tmp.pdf");
-                    File.Move(Path.Combine(_path, $"{fi.Id}.pdf"), target);
-                    foreach (var invitation in invitations.Skip(1))
-                    {
-                        if (CancellationTokenSource.Token.IsCancellationRequested) return;
-                        using (var src1 = PdfReader.Open(target, PdfDocumentOpenMode.Import))
-                        using (var src2 = PdfReader.Open(Path.Combine(_path, $"{invitation.Id}.pdf"), PdfDocumentOpenMode.Import))
-                        using (var @out = new PdfDocument())
+                        Total = invitations.Count * 2 - 1;
+                        foreach (var invitation in invitations)
                         {
-                            for (int i = 0; i < src1.PageCount; i++)
-                                @out.AddPage(src1.Pages[i]);
-                            for (int i = 0; i < src2.PageCount; i++)
-                                @out.AddPage(src2.Pages[i]);
-
-                            @out.Save(tmp_target);
-                            File.Delete(target);
-                            File.Move(tmp_target, target);
+                            if (CancellationTokenSource.Token.IsCancellationRequested) break;
+                            var design = await invitationDesignRepository.GetAsync(invitation.DesignId.Value);
+                            var response = PrintController.PrintInvitation(invitation.Id, design, _baseUrl, converter, logger);
+                            using (var oStream = new FileStream(Path.Combine(_path, $"{invitation.Id}.pdf"), FileMode.Create))
+                                await oStream.WriteAsync(response, 0, response.Length);
                             Complete++;
                         }
+                        if (CancellationTokenSource.Token.IsCancellationRequested) return;
+                        var fi = invitations.First();
+                        var target = Path.Combine(_path, $"{Id}.pdf");
+                        var tmp_target = Path.Combine(_path, $"{Id}.tmp.pdf");
+                        File.Move(Path.Combine(_path, $"{fi.Id}.pdf"), target);
+                        foreach (var invitation in invitations.Skip(1))
+                        {
+                            if (CancellationTokenSource.Token.IsCancellationRequested) return;
+                            using (var src1 = PdfReader.Open(target, PdfDocumentOpenMode.Import))
+                            using (var src2 = PdfReader.Open(Path.Combine(_path, $"{invitation.Id}.pdf"), PdfDocumentOpenMode.Import))
+                            using (var @out = new PdfDocument())
+                            {
+                                for (int i = 0; i < src1.PageCount; i++)
+                                    @out.AddPage(src1.Pages[i]);
+                                for (int i = 0; i < src2.PageCount; i++)
+                                    @out.AddPage(src2.Pages[i]);
+
+                                @out.Save(tmp_target);
+                                File.Delete(target);
+                                File.Move(tmp_target, target);
+                                Complete++;
+                            }
+                        }
+                        _resultPath = target;
                     }
-                    _resultPath = target;
                 }
             }
             catch (Exception ex)

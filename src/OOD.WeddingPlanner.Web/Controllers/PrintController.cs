@@ -19,16 +19,14 @@ namespace OOD.WeddingPlanner.Web.Controllers
 {
     public class PrintController : AbpController
     {
-        public ILogger<PrintController> Logger { get; }
         public IInvitationRepository Repository { get; }
         public IInvitationDesignRepository DesignRepository { get; }
         public IConverter HtmlConverter { get; }
         public IInvitationDownloadManager InvitationDownloadManager { get; }
         public IDataFilter DataFilter { get; }
 
-        public PrintController(ILogger<PrintController> logger, IInvitationRepository repository, IInvitationDesignRepository designRepository, IConverter htmlConverter, IInvitationDownloadManager invitationDownloadManager, IDataFilter dataFilter)
+        public PrintController(IInvitationRepository repository, IInvitationDesignRepository designRepository, IConverter htmlConverter, IInvitationDownloadManager invitationDownloadManager, IDataFilter dataFilter)
         {
-            Logger = logger;
             Repository = repository;
             DesignRepository = designRepository;
             HtmlConverter = htmlConverter;
@@ -101,7 +99,7 @@ namespace OOD.WeddingPlanner.Web.Controllers
         [Authorize(WeddingPlannerPermissions.Invitation.Default)]
         public async Task<IActionResult> DownloadBegin(GetInvitationsInputDto input)
         {
-            var id = await InvitationDownloadManager.Begin(input);
+            var id = await InvitationDownloadManager.Begin(input, CurrentTenant.Id);
             return Json(new { id });
         }
 

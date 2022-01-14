@@ -9,5 +9,5 @@ pushd dbmigrator
 popd
 
 pushd web
-  ASPNETCORE_URLS=http://*:44380,http://*:80 dotnet OOD.WeddingPlanner.Web.dll
+  ASPNETCORE_URLS="http://*:44380;http://*:80" dotnet OOD.WeddingPlanner.Web.dll
 popd
