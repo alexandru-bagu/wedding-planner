@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using OOD.WeddingPlanner.InvitationDesigns;
 using OOD.WeddingPlanner.Invitations;
 using OOD.WeddingPlanner.Invitations.Dtos;
@@ -18,14 +19,16 @@ namespace OOD.WeddingPlanner.Web.Controllers
 {
     public class PrintController : AbpController
     {
+        public ILogger<PrintController> Logger { get; }
         public IInvitationRepository Repository { get; }
         public IInvitationDesignRepository DesignRepository { get; }
         public IConverter HtmlConverter { get; }
         public IInvitationDownloadManager InvitationDownloadManager { get; }
         public IDataFilter DataFilter { get; }
 
-        public PrintController(IInvitationRepository repository, IInvitationDesignRepository designRepository, IConverter htmlConverter, IInvitationDownloadManager invitationDownloadManager, IDataFilter dataFilter)
+        public PrintController(ILogger<PrintController> logger, IInvitationRepository repository, IInvitationDesignRepository designRepository, IConverter htmlConverter, IInvitationDownloadManager invitationDownloadManager, IDataFilter dataFilter)
         {
+            Logger = logger;
             Repository = repository;
             DesignRepository = designRepository;
             HtmlConverter = htmlConverter;
@@ -40,7 +43,7 @@ namespace OOD.WeddingPlanner.Web.Controllers
         {
             var invitation = await Repository.GetAsync(id);
             var design = await DesignRepository.GetAsync(invitation.DesignId.Value);
-            var content = PrintInvitation(id, design, HttpContext.Request.Scheme + "://" + HttpContext.Request.Host, HtmlConverter);
+            var content = PrintInvitation(id, design, HttpContext.Request.Scheme + "://" + HttpContext.Request.Host, HtmlConverter, Logger);
             return File(content, "application/pdf", $"{id}.pdf");
         }
 
@@ -66,8 +69,9 @@ namespace OOD.WeddingPlanner.Web.Controllers
             }
         }
 
-        public static byte[] PrintInvitation(Guid id, InvitationDesign design, string baseUrl, IConverter converter)
+        public static byte[] PrintInvitation(Guid id, InvitationDesign design, string baseUrl, IConverter converter, ILogger logger)
         {
+            var url = baseUrl + "/print-invitation/" + id;
             var doc = new HtmlToPdfDocument()
             {
                 GlobalSettings =
@@ -84,10 +88,11 @@ namespace OOD.WeddingPlanner.Web.Controllers
                     {
                         PagesCount = true,
                         WebSettings = { DefaultEncoding = "utf-8" },
-                        Page = baseUrl  + "/print-invitation/" + id
+                        Page = url
                     }
                 }
             };
+            logger.LogInformation($"Printing invitation by url {url}");
             return converter.Convert(doc);
         }
 

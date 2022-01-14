@@ -55,6 +55,7 @@ namespace OOD.WeddingPlanner.Web.Download
                 var invitationRepository = serviceProvider.GetService<IInvitationRepository>();
                 var invitationDesignRepository = serviceProvider.GetService<IInvitationDesignRepository>();
                 var converter = serviceProvider.GetService<IConverter>();
+                var logger = serviceProvider.GetService<ILogger<InvitationDownloadBuilder>>();
 
                 var invitations = await invitationRepository.GetListAsync(_input.WeddingId, _input.Destination);
                 if (invitations.Count > 0)
@@ -64,7 +65,7 @@ namespace OOD.WeddingPlanner.Web.Download
                     {
                         if (CancellationTokenSource.Token.IsCancellationRequested) break;
                         var design = await invitationDesignRepository.GetAsync(invitation.DesignId.Value);
-                        var response = PrintController.PrintInvitation(invitation.Id, design, _baseUrl, converter);
+                        var response = PrintController.PrintInvitation(invitation.Id, design, _baseUrl, converter, logger);
                         using (var oStream = new FileStream(Path.Combine(_path, $"{invitation.Id}.pdf"), FileMode.Create))
                             await oStream.WriteAsync(response, 0, response.Length);
                         Complete++;
