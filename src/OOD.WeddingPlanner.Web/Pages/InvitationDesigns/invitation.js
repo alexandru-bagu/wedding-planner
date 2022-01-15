@@ -37,7 +37,7 @@
       div.style.visibility = 'collapse';
       document.body.appendChild(div);
       new QRCode(div, {
-        text: location.protocol + "//" + location.host + "/" + vm.invitation.id + "/" + (tenant_name ?? ''),
+        text: location.protocol + "//" + location.host + "/" + vm.invitation.id + "/" + (tenant_name || ''),
         width: 256,
         height: 256,
         colorDark: "#000000",
