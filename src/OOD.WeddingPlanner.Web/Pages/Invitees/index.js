@@ -89,6 +89,10 @@ $(function () {
                 data: "invitee.child"
             },
             {
+                title: l('InviteeMale'),
+                data: "invitee.male"
+            },
+            {
                 title: l('Invitation'),
                 render: function (_, type, record) {
                     if (record.invitation)

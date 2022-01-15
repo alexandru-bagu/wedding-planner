@@ -22,18 +22,18 @@ namespace OOD.WeddingPlanner.Web.Contributors
             var absoluteLoaderFilePath = Path.Combine(environment.WebRootPath, loaderFilePath);
             if (!File.Exists(absoluteLoaderFilePath))
             {
-                File.WriteAllText(absoluteLoaderFilePath, @$"(function(){{
-  var monacoLoader = document.createElement('script');
-  monacoLoader.setAttribute('src','/libs/monaco-editor/min/vs/loader.js');
-  document.body.appendChild(monacoLoader);
+                File.WriteAllText(absoluteLoaderFilePath, @$"$(function(){{
+    var monacoLoader = document.createElement('script');
+    monacoLoader.setAttribute('src','/libs/monaco-editor/min/vs/loader.js');
+    document.body.appendChild(monacoLoader);
 
-  var interval = setInterval(function(){{
-    if(window.require && window.require.config) {{
-      window.require.config({{ paths: {{ vs: '/libs/monaco-editor/min/vs' }} }});
-      clearInterval(interval);
-    }}
-  }}, 100);
-}})();");
+    var interval = setInterval(function(){{
+        if(window.require && window.require.config) {{
+            window.require.config({{ paths: {{ vs: '/libs/monaco-editor/min/vs' }} }});
+            clearInterval(interval);
+        }}
+    }}, 100);
+}})");
             }
             context.Files.Add('/' + loaderFilePath.TrimStart('\\', '/').Replace('\\', '/'));
             return Task.CompletedTask;

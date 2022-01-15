@@ -1,0 +1,31 @@
+﻿#map {
+    height: 20vh;
+    min-height: 300px;
+}
+
+[id="disabled-tab"] {
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid #dee2e6 !important;
+    padding-bottom: 9px !important;
+    cursor: default;
+}
+[id="disabled-tab"] {
+    color: black !important;
+}
+
+.invitee-line {
+    line-height: 40px;
+}
+.invitee-line * {
+    display: inline-block;
+}
+
+.event-line * {
+    line-height: 20px;
+    display: inline-block;
+}
+.event-line .btn {
+    margin-top: -10px;
+}

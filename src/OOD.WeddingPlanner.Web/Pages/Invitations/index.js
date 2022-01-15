@@ -40,7 +40,7 @@ $(function () {
                             {
                                 text: l('Preview Print'),
                                 action: function (data) {
-                                    var a = $('<a href="' + abp.appPath + "Print-Invitation/" + data.record.invitation.id + '" target="_blank"></a>');
+                                    var a = $('<a href="' + abp.appPath + "Invitation/Print/" + data.record.invitation.id + '/' + (abp.currentTenant.name ?? "") + '" target="_blank"></a>');
                                     a.appendTo(document.body);
                                     a[0].click();
                                     a.remove();
@@ -50,14 +50,14 @@ $(function () {
                                 text: l('Print'),
                                 action: function (data) {
                                     var form = $('#download-invitation');
-                                    form.attr('action', abp.appPath + "Print/" + data.record.invitation.id);
+                                    form.attr('action', abp.appPath + "Invitation/Print/" + data.record.invitation.id);
                                     form[0].submit();
                                 }
                             },
                             {
                                 text: l('View'),
                                 action: function (data) {
-                                    var a = $('<a href="' + abp.appPath + 'v/' + data.record.invitation.id + '" target="_blank"></a>');
+                                    var a = $('<a href="' + abp.appPath + data.record.invitation.id + '/' + (abp.currentTenant.name ?? "")+ '" target="_blank"></a>');
                                     a.appendTo(document.body);
                                     a[0].click();
                                     a.remove();

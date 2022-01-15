@@ -16,5 +16,9 @@ namespace OOD.WeddingPlanner.Invitees.Dtos
         public DateTime? RSVP { get; set; }
 
         public bool? Confirmed { get; set; }
+
+        public bool Male { get; set; }
+
+        public int Order { get; set; }
     }
 }

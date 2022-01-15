@@ -37,19 +37,19 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees
             var dto = await _service.GetWithNavigationByIdAsync(Id);
             ViewModel = ObjectMapper.Map<InviteeDto, CreateEditInviteeViewModel>(dto.Invitee);
             ViewModel.BooleanItems.AddRange(new[] {
-        new SelectListItem("", ""),
-        new SelectListItem("No", "False"),
-        new SelectListItem("Yes", "True"),
-      });
+                new SelectListItem("", ""),
+                new SelectListItem(L["No"].Value, "False"),
+                new SelectListItem(L["Yes"].Value, "True"),
+            });
             ViewModel.WeddingItems.AddRange(new[] {
-        new SelectListItem("", "")
-      });
+                new SelectListItem("", "")
+            });
             ViewModel.WeddingItems.AddRange(
               (await _weddingAppService.GetLookupListAsync(new LookupRequestDto()))
-                .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
+                .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString()) { Selected = dto.Invitation?.WeddingId == p.Id }));
             ViewModel.InvitationItems.AddRange(new[] {
-        new SelectListItem("", "")
-      });
+                new SelectListItem("", "")
+            });
             if (dto.Wedding != null)
                 ViewModel.InvitationItems.AddRange(
                   (await _invitationAppService.GetLookupListAsync(new LookupInvitationsInputDto() { WeddingId = dto.Wedding.Id }))

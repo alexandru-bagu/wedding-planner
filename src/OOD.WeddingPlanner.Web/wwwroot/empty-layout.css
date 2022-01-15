@@ -9,3 +9,9 @@
 .main-sidebar {
     display: none;
 }
+
+div.main-content {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 20px;
+}

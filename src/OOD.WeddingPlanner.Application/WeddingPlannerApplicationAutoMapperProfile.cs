@@ -49,7 +49,7 @@ namespace OOD.WeddingPlanner
             CreateMap<Invitee, LookupDto<Guid>>()
               .ForMember(p => p.DisplayName, p => p.MapFrom(q => $"{q.Surname} {q.Name}"));
             CreateMap<Location, LookupDto<Guid>>()
-              .ForMember(p => p.DisplayName, p => p.MapFrom(q => q.Name));
+              .ForMember(p => p.DisplayName, p => p.MapFrom(q => $"{q.Name} - {q.Hall}"));
             CreateMap<Wedding, LookupDto<Guid>>()
               .ForMember(p => p.DisplayName, p => p.MapFrom(q => q.Name));
             CreateMap<InvitationDesign, LookupDto<Guid>>()

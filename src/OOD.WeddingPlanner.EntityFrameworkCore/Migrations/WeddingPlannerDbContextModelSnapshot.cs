@@ -244,8 +244,14 @@ namespace OOD.WeddingPlanner.Migrations
                         .HasColumnType("char(36)")
                         .HasColumnName("LastModifierId");
 
+                    b.Property<bool>("Male")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("RSVP")
                         .HasColumnType("datetime(6)");
@@ -274,6 +280,9 @@ namespace OOD.WeddingPlanner.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("CreationTime");
@@ -291,6 +300,9 @@ namespace OOD.WeddingPlanner.Migrations
                         .HasColumnName("DeletionTime");
 
                     b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Hall")
                         .HasColumnType("longtext");
 
                     b.Property<bool>("IsDeleted")
@@ -314,6 +326,9 @@ namespace OOD.WeddingPlanner.Migrations
                         .HasColumnType("double");
 
                     b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ParkingGoogleLink")
                         .HasColumnType("longtext");
 
                     b.Property<Guid?>("TenantId")
@@ -417,6 +432,9 @@ namespace OOD.WeddingPlanner.Migrations
                         .HasColumnName("DeletionTime");
 
                     b.Property<string>("GroomName")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("InvitationNote")
                         .HasColumnType("longtext");
 
                     b.Property<bool>("IsDeleted")

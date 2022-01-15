@@ -24,21 +24,29 @@
             vm.border = debug ? '1px solid silver' : '';
         }
 
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
         function generateQRCode() {
+            var tenant_name = getCookie("tenant_name");
             var div = document.createElement("div");
+            div.id = 'qr-code';
             div.style.visibility = 'collapse';
             document.body.appendChild(div);
             new QRCode(div, {
-                text: location.protocol + "//" + location.host + "/v/" + vm.invitation.id,
+                text: location.protocol + "//" + location.host + "/" + vm.invitation.id + "/" + (tenant_name ?? ''),
                 width: 256,
                 height: 256,
                 colorDark: "#000000",
                 colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
+                correctLevel: QRCode.CorrectLevel.M
             });
             var canvas = $(div).find('canvas')[0];
             vm.qrCode = canvas.toDataURL();
-            setTimeout(function () { document.removeChild(div); });
+            setTimeout(function () { $('#qr-code').remove(); });
         }
     }
 

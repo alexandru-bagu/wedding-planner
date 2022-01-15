@@ -88,6 +88,14 @@
         "InvitationDesignPaperWidth": "Paper Width",
         "InvitationDesignPaperHeight": "Paper Height",
         "InvitationDesignPaperDpi": "Paper Dpi",
-        "DownloadInvitations": "Download invitation"
+        "DownloadInvitations": "Download invitation",
+        "WeddingInvitationNote": "Invitation Note",
+        "LocationHall": "Hall",
+        "LocationAddress": "Address",
+        "GetDirections": "Get directions",
+        "LocationParkingGoogleLink": "Google Maps link to parking area",
+        "InviteeMale": "Is male?",
+        "InviteeOrder": "Invitation order",
+        "PleaseConfirmInvitees": "Please confirm the persons that will join our wedding event."
     }
 }

@@ -28,6 +28,15 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees.ViewModels
         [SelectItems(nameof(BooleanItems))]
         public bool? Child { get; set; }
 
+        [Required]
+        [Display(Name = "InviteeMale")]
+        [SelectItems(nameof(BooleanItems))]
+        public bool? Male { get; set; }
+
+        [Required]
+        [Display(Name = "InviteeOrder")]
+        public int Order { get; set; }
+
         [Display(Name = "Wedding")]
         [SelectItems(nameof(WeddingItems))]
         public Guid? WeddingId { get; set; }

@@ -59,8 +59,11 @@ namespace OOD.WeddingPlanner.Web.Download
             {
                 var invitationRepository = serviceProvider.GetService<IInvitationRepository>();
                 var currentTenant = serviceProvider.GetService<ICurrentTenant>();
+                var tenantStore = serviceProvider.GetService<ITenantStore>();
                 using (currentTenant.Change(_tenantId))
                 {
+                    TenantConfiguration tenant = null;
+                    if (_tenantId != null) tenant = await tenantStore.FindAsync(_tenantId.Value);
                     var invitationDesignRepository = serviceProvider.GetService<IInvitationDesignRepository>();
                     var converter = serviceProvider.GetService<IConverter>();
                     var logger = serviceProvider.GetService<ILogger<InvitationDownloadBuilder>>();
@@ -72,7 +75,7 @@ namespace OOD.WeddingPlanner.Web.Download
                         {
                             if (CancellationTokenSource.Token.IsCancellationRequested) break;
                             var design = await invitationDesignRepository.GetAsync(invitation.DesignId.Value);
-                            var response = PrintController.PrintInvitation(invitation.Id, design, _baseUrl, converter, logger);
+                            var response = PrintController.PrintInvitation(invitation.Id, tenant.Name, design, _baseUrl, converter, logger);
                             using (var oStream = new FileStream(Path.Combine(_path, $"{invitation.Id}.pdf"), FileMode.Create))
                                 await oStream.WriteAsync(response, 0, response.Length);
                             Complete++;
@@ -106,6 +109,7 @@ namespace OOD.WeddingPlanner.Web.Download
             }
             catch (Exception ex)
             {
+                Canceled = true;
                 CancellationTokenSource.Cancel();
                 _logger.LogError(ex, "buildInvitation");
             }

@@ -94,6 +94,14 @@
         "Print": "Printează",
         "View": "Previzualizează",
         "Welcome to the Wedding Planner": "Bine ai venit la planificatorul de nuntă",
-        "Tenant": "Chiriaș"
+        "Tenant": "Chiriaș",
+        "WeddingInvitationNote": "Notițe invitație",
+        "LocationHall": "Sală",
+        "LocationAddress": "Adresă",
+        "GetDirections": "Obțineți direcții",
+        "LocationParkingGoogleLink": "Link Google Maps către zona de parcare",
+        "InviteeMale": "Este bărbat?",
+        "InviteeOrder": "Ordine în invitație",
+        "PleaseConfirmInvitees": "Vă rugăm să confirmați persoanele care vor fi cu noi la evenimentul nunții."
     }
 }

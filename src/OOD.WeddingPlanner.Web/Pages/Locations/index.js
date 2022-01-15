@@ -62,13 +62,21 @@ $(function () {
                 data: "description"
             },
             {
-                title: l('LocationLongitude'),
-                data: "longitude"
+                title: l('LocationHall'),
+                data: "hall"
+            },
+            {
+                title: l('LocationAddress'),
+                data: "address"
             },
             {
                 title: l('LocationLatitude'),
                 data: "latitude"
             },
+            {
+                title: l('LocationLongitude'),
+                data: "longitude"
+            }
         ]
     }));
 

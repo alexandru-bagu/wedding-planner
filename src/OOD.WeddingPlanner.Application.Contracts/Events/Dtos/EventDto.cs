@@ -1,3 +1,4 @@
+using OOD.WeddingPlanner.Locations.Dtos;
 using System;
 using Volo.Abp.Application.Dtos;
 
@@ -13,5 +14,7 @@ namespace OOD.WeddingPlanner.Events.Dtos
         public string Name { get; set; }
 
         public DateTime Time { get; set; }
+
+        public LocationDto Location { get; set; }
     }
 }

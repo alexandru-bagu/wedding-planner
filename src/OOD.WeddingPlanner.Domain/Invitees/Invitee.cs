@@ -24,6 +24,10 @@ namespace OOD.WeddingPlanner.Invitees
 
         public virtual bool Child { get; set; }
 
+        public virtual bool Male { get; set; }
+
+        public virtual int Order { get; set; }
+
         public virtual Invitation Invitation { get; set; }
 
         public virtual Table Table { get; set; }

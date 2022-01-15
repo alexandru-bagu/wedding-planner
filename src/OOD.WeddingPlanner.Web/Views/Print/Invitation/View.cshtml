@@ -1,8 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @using Newtonsoft.Json
+@using Microsoft.AspNetCore.Mvc.Localization
+@using OOD.WeddingPlanner.Localization
 @using Newtonsoft.Json.Serialization
 @model OOD.WeddingPlanner.Invitations.Dtos.InvitationWithNavigationPropertiesDto
 @using Volo.Abp.AspNetCore.Mvc.UI.Theming
+@inject IHtmlLocalizer<WeddingPlannerResource> L
 @inject IThemeManager ThemeManager
 @{
     Layout = ThemeManager.CurrentTheme.GetLayout(StandardLayouts.Empty);
@@ -11,13 +14,125 @@
 @section scripts
 {
 <abp-script src="/Pages/Invitations/view.js" />
+<abp-script src="/libs/leaflet/dist/leaflet.js" />
+<abp-script src="/libs/leaflet-providers/leaflet-providers.js" />
 <script>
-    var invitaton = @Json.Serialize(Model);
+    var model = @Json.Serialize(Model);
 </script>
 }
 @section styles
 {
 <abp-style src="/empty-layout.css" />
+<abp-style src="/invitation.css" />
+<abp-style src="/libs/leaflet/dist/leaflet.css" />
 }
 
-Hello
+<abp-card>
+    <abp-container>
+        <abp-row>
+            <abp-column class="text-center">
+                <h2>@Model.Wedding.GroomName & @Model.Wedding.BrideName</h2>
+            </abp-column>
+        </abp-row>
+        <hr />
+        <abp-row>
+            <abp-column class="text-center">
+                <h4>@Html.Raw(Model.Wedding.InvitationNote)</h4>
+            </abp-column>
+        </abp-row>
+        <hr />
+        <abp-row>
+            <abp-column>
+                <abp-container>
+                    <abp-tabs>
+                        <abp-tab title=@L["Invitees"].Value name="disabled" active=false>
+                            <span>@L["PleaseConfirmInvitees"]</span>
+                        </abp-tab>
+                    </abp-tabs>
+                    <div class="form-row align-items-center">
+                        @foreach (var invitee in Model.Invitation.Invitees)
+                        {
+                            <div class="col-auto">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            @{
+                                                if (invitee.Child)
+                                                {
+                                                    <i class="fa fa-user"></i>
+                                                }
+                                                else if (invitee.Male)
+                                                {
+                                                    <i class="fa fa-male"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fa fa-female"></i>
+                                                }
+                                            }
+                                        </span>
+                                    </div>
+                                    <span class="form-control">
+                                        @invitee.Name @invitee.Surname
+                                    </span>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="rsvp-@invitee.Id" id="rsvp-@invitee.Id-1" value="false" data-invitee-id="@invitee.Id" data-rsvp @Html.Raw((invitee.Confirmed == false) ? "checked" : "")>
+                                                <label class="form-check-label" for="rsvp-@invitee.Id-1">@L["No"]</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="rsvp-@invitee.Id" id="rsvp-@invitee.Id-2" value="true" data-invitee-id="@invitee.Id" data-rsvp  @Html.Raw((invitee.Confirmed == true) ? "checked" : "")>
+                                                <label class="form-check-label" for="rsvp-@invitee.Id-2">@L["Yes"]</label>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </abp-container>
+            </abp-column>
+        </abp-row>
+        <abp-row>
+            <abp-column>
+                <abp-container>
+                    <abp-row>
+                        <abp-column data-events>
+                            <abp-tabs>
+                                @{
+                                    bool active = true;
+                                }
+                                <abp-tab title=@L["Events"].Value name="disabled" active=false></abp-tab>
+                                @foreach (var evt in Model.Wedding.Events)
+                                {
+                                    <abp-tab title=@evt.Name active=active>
+                                        <abp-container data-event-id=@evt.Id>
+                                            <abp-row>
+                                                <abp-column size-lg=_6>
+                                                    <div class="event-line"><h5>@evt.Location.Name</h5> <a href="@(!string.IsNullOrEmpty(evt.Location.ParkingGoogleLink) ? evt.Location.ParkingGoogleLink : $"http://maps.google.com/?q={evt.Location.Name}&sll={evt.Location.Latitude},{evt.Location.Longitude}")" class="btn btn-primary" target="_blank">@L["GetDirections"]</a></div>
+                                                    <span>@evt.Location.Hall</span> <br />
+                                                    <span>@evt.Location.Address</span>
+                                                </abp-column>
+                                                <abp-column size-lg=_6>
+                                                    <span>@evt.Time.ToLongTimeString()</span> <br />
+                                                    <span>@evt.Time.ToLongDateString()</span>
+                                                </abp-column>
+                                            </abp-row>
+                                        </abp-container>
+                                    </abp-tab>
+                                    active = false;
+                                }
+                            </abp-tabs>
+                        </abp-column>
+                    </abp-row>
+                    <abp-row>
+                        <abp-column>
+                            <div id="map"></div>
+                        </abp-column>
+                    </abp-row>
+                </abp-container>
+            </abp-column>
+        </abp-row>
+    </abp-container>
+</abp-card>

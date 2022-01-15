@@ -6,6 +6,8 @@
     "@abp/aspnetcore.mvc.ui.theme.basic": "^5.0.0",
     "ionicons": "2.0.1",
     "knockout": "^3.5.1",
+    "leaflet": "^1.7.1",
+    "leaflet-providers": "^1.13.0",
     "monaco-editor": "^0.31.1",
     "popper.js": "^1.16.1",
     "qrcodejs": "^1.0.0",

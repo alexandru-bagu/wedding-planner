@@ -12,15 +12,17 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees
         [SelectItems(nameof(ConfirmFilterItems))]
         public bool? ConfirmedFilter { get; set; }
 
-        public List<SelectListItem> ConfirmFilterItems { get; set; } =
-            new List<SelectListItem>
-            {
-                new SelectListItem("", ""),
-                new SelectListItem("Yes", "true"),
-                new SelectListItem("No", "false"),
-            };
+        public List<SelectListItem> ConfirmFilterItems { get; set; }
+
         public virtual async Task OnGetAsync()
         {
+            ConfirmFilterItems =
+               new List<SelectListItem>
+               {
+                new SelectListItem("", ""),
+                new SelectListItem(L["No"].Value, "False"),
+                new SelectListItem(L["Yes"].Value, "True"),
+               };
             await Task.CompletedTask;
         }
     }

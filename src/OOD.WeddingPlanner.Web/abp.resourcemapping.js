@@ -3,6 +3,8 @@ module.exports = {
 
     },
     mappings: {
+        "@node_modules/leaflet/**": "@libs/leaflet",
+        "@node_modules/leaflet-providers/**": "@libs/leaflet-providers",
         "@node_modules/qrcodejs/**": "@libs/qrcodejs",
         "@node_modules/monaco-editor/**": "@libs/monaco-editor",
         "@node_modules/popper.js/**": "@libs/popper.js",

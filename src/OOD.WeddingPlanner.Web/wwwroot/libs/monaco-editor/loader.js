@@ -1,4 +1,4 @@
-(function(){
+$(function(){
   var monacoLoader = document.createElement('script');
   monacoLoader.setAttribute('src','/libs/monaco-editor/min/vs/loader.js');
   document.body.appendChild(monacoLoader);
@@ -9,4 +9,4 @@
       clearInterval(interval);
     }
   }, 100);
-})();
+})

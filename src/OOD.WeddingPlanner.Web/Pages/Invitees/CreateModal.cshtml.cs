@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Localization;
 using OOD.WeddingPlanner.Invitees;
 using OOD.WeddingPlanner.Invitees.Dtos;
+using OOD.WeddingPlanner.Localization;
 using OOD.WeddingPlanner.Web.Pages.Invitees.ViewModels;
 using OOD.WeddingPlanner.Weddings;
 using System.Linq;
@@ -28,8 +30,8 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees
             ViewModel = new CreateEditInviteeViewModel();
             ViewModel.BooleanItems.AddRange(new[] {
         new SelectListItem("", ""),
-        new SelectListItem("No", "False"),
-        new SelectListItem("Yes", "True"),
+        new SelectListItem(L["No"].Value, "False"),
+        new SelectListItem(L["Yes"].Value, "True"),
       });
             ViewModel.InvitationItems.AddRange(new[] {
         new SelectListItem("", "")

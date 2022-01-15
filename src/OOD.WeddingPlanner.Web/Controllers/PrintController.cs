@@ -23,53 +23,67 @@ namespace OOD.WeddingPlanner.Web.Controllers
         public IInvitationDesignRepository DesignRepository { get; }
         public IConverter HtmlConverter { get; }
         public IInvitationDownloadManager InvitationDownloadManager { get; }
-        public IDataFilter DataFilter { get; }
+        public ITenantStore TenantStore { get; }
 
-        public PrintController(IInvitationRepository repository, IInvitationDesignRepository designRepository, IConverter htmlConverter, IInvitationDownloadManager invitationDownloadManager, IDataFilter dataFilter)
+        public PrintController(IInvitationRepository repository, IInvitationDesignRepository designRepository, IConverter htmlConverter,
+            IInvitationDownloadManager invitationDownloadManager, ITenantStore tenantStore)
         {
             Repository = repository;
             DesignRepository = designRepository;
             HtmlConverter = htmlConverter;
             InvitationDownloadManager = invitationDownloadManager;
-            DataFilter = dataFilter;
+            TenantStore = tenantStore;
+        }
+
+        private async Task<Guid?> GetTenantId(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return null;
+            var tenant = await TenantStore.FindAsync(name);
+            return tenant.Id;
         }
 
         [HttpPost]
-        [Route("/print/{id}")]
+        [Route("Invitation/Print/{id}")]
         [Authorize(WeddingPlannerPermissions.Invitation.Default)]
         public async Task<IActionResult> PostPrint(Guid id)
         {
             var invitation = await Repository.GetAsync(id);
             var design = await DesignRepository.GetAsync(invitation.DesignId.Value);
-            var content = PrintInvitation(id, design, HttpContext.Request.Scheme + "://" + HttpContext.Request.Host, HtmlConverter, Logger);
+            var content = PrintInvitation(id, CurrentTenant.Name, design, HttpContext.Request.Scheme + "://" + HttpContext.Request.Host, HtmlConverter, Logger);
             return File(content, "application/pdf", $"{id}.pdf");
         }
 
         [HttpGet]
-        [Route("/print-invitation/{id}")]
-        public async Task<IActionResult> GetPrint(Guid id)
+        [AllowAnonymous]
+        [Route("/Invitation/Print/{id}/{tenant_name?}")]
+        public async Task<IActionResult> GetPrint(Guid id, string tenant_name = null)
         {
-            using (DataFilter.Disable<IMultiTenant>())
+            var tenantId = await GetTenantId(tenant_name);
+            using (CurrentTenant.Change(tenantId))
             {
+                HttpContext.Response.Cookies.Append("tenant_name", tenant_name ?? "");
                 var invitationData = ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(await Repository.GetWithNavigationByIdAsync(id));
                 return View("Invitation/Print", invitationData);
             }
         }
 
         [HttpGet]
-        [Route("/v/{id}")]
-        public async Task<IActionResult> GetView(Guid id)
+        [AllowAnonymous]
+        [Route("/{id}/{tenant_name?}")]
+        public async Task<IActionResult> GetView(Guid id, string tenant_name = null)
         {
-            using (DataFilter.Disable<IMultiTenant>())
+            var tenantId = await GetTenantId(tenant_name);
+            using (CurrentTenant.Change(tenantId))
             {
-                var invitationData = ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(await Repository.GetWithNavigationByIdAsync(id));
+                HttpContext.Response.Cookies.Append("tenant_name", tenant_name ?? "");
+                var invitationData = ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(await Repository.GetWithFullNavigationByIdAsync(id));
                 return View("Invitation/View", invitationData);
             }
         }
 
-        public static byte[] PrintInvitation(Guid id, InvitationDesign design, string baseUrl, IConverter converter, ILogger logger)
+        public static byte[] PrintInvitation(Guid id, string tenant_name, InvitationDesign design, string baseUrl, IConverter converter, ILogger logger)
         {
-            var url = baseUrl + "/print-invitation/" + id;
+            var url = baseUrl + $"/Invitation/Print/{id}/{tenant_name}";
             var doc = new HtmlToPdfDocument()
             {
                 GlobalSettings =

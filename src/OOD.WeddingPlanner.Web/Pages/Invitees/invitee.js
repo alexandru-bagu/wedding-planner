@@ -10,7 +10,9 @@ abp.modals.inviteeModal = function () {
             var service = oOD.weddingPlanner.invitations.invitation;
             var wedding = modal.find('[name="ViewModel.WeddingId"]');
             var invitation = modal.find('[name="ViewModel.InvitationId"]');
+            invitation.data('value', invitation.val());
             wedding.change(async function (evt) {
+                var value = invitation.data('value');
                 invitation.empty();
                 if (wedding.val()) {
                     var lookup = await service.getLookupList({ weddingId: wedding.val() });
@@ -20,6 +22,7 @@ abp.modals.inviteeModal = function () {
                     });
                     data.splice(0, 0, { text: '-----', id: '' });
                     invitation.select2({ data });
+                    invitation.val(value).trigger('change');
                 }
             }).trigger('change');
 

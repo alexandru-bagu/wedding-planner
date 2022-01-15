@@ -14,9 +14,15 @@ namespace OOD.WeddingPlanner.Locations
 
         public virtual string Description { get; set; }
 
-        public virtual double Longitude { get; set; }
+        public virtual string Hall { get; set; }
+
+        public virtual string Address { get; set; }
+
+        public virtual string ParkingGoogleLink { get; set; }
 
         public virtual double Latitude { get; set; }
+
+        public virtual double Longitude { get; set; }
 
         public virtual List<Event> Events { get; set; } = new List<Event>();
 

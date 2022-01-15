@@ -30,6 +30,24 @@ namespace OOD.WeddingPlanner.Invitations
             }).SingleAsync();
         }
 
+        public async Task<InvitationWithNavigationProperties> GetWithFullNavigationByIdAsync(Guid id)
+        {
+            var query = await GetQueryableAsync();
+            query = query.Include(p => p.Invitees)
+                .Include(p => p.Wedding).ThenInclude(p => p.Events).ThenInclude(p => p.Location)
+                .Include(p => p.Design);
+            query = query.Where(p => p.Id == id);
+            var result = await query.Select(p => new InvitationWithNavigationProperties()
+            {
+                Invitation = p,
+                Wedding = p.Wedding,
+                Design = p.Design
+            }).SingleAsync();
+            result.Wedding.Events = result.Wedding.Events.OrderBy(p => p.Time).ToList();
+            result.Invitation.Invitees = result.Invitation.Invitees.OrderBy(p => p.Order).ToList();
+            return result;
+        }
+
         public async Task<List<InvitationWithNavigationProperties>> GetListWithNavigationAsync(Guid? weddingId, string destination, string sorting, int skipCount, int maxResultCount)
         {
             var query = await GetQueryableAsync();
