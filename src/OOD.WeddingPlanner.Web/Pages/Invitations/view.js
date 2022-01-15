@@ -35,10 +35,11 @@
         accessToken: 'pk.eyJ1IjoiYWxleGFuZHJ1LWJhZ3UiLCJhIjoiY2t5ZXg4NXN5MWRqbDJ1bjAydjU4MWNpNCJ9.MNTm1-zd2fCY1NlPDByjvA'
     }).addTo(map);
 
+    updateLocation(model.wedding.events[0]);
     for (var i = 0; i < model.wedding.events.length; i++) {
         var evt = model.wedding.events[i];
         var when = new Date(evt.time);
-        if (model.wedding.events.length == 1 || new Date() >= when) {
+        if (new Date() >= when) {
             var container = $('[data-events]').find('[data-event-id="' + evt.id + '"]');
             var tabpanel = container.closest('[role="tabpanel"]');
             var aria_labelled_by = tabpanel.attr('aria-labelledby');
