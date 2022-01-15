@@ -17,9 +17,9 @@ namespace OOD.WeddingPlanner.Web
                 .MinimumLevel.Information()
 #endif
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-#if !DEBUG
+//#if !DEBUG
                 .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
-#endif
+//#endif
                 .Enrich.FromLogContext()
 #if DEBUG
                 .WriteTo.Async(c => c.File("Logs/logs.txt"))

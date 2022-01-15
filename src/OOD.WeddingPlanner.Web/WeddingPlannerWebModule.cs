@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using OOD.WeddingPlanner.EntityFrameworkCore;
 using OOD.WeddingPlanner.Localization;
@@ -219,48 +220,59 @@ namespace OOD.WeddingPlanner.Web
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
-            var app = context.GetApplicationBuilder();
-            var env = context.GetEnvironment();
+          var app = context.GetApplicationBuilder();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+          ConfigureConverter(app);
 
-            app.UseAbpRequestLocalization();
+          var env = context.GetEnvironment();
 
-            if (!env.IsDevelopment())
-            {
-                app.UseErrorPage();
-            }
+          if (env.IsDevelopment())
+          {
+            app.UseDeveloperExceptionPage();
+          }
 
-            app.UseCorrelationId();
-            app.UseStaticFiles();
-            app.UseRouting();
-            app.UseCookiePolicy(new CookiePolicyOptions
-            {
-                MinimumSameSitePolicy = SameSiteMode.None,
-                Secure = CookieSecurePolicy.Always,
-            });
-            app.UseAuthentication();
-            app.UseJwtTokenMiddleware();
+          app.UseAbpRequestLocalization();
 
-            if (MultiTenancyConsts.IsEnabled)
-            {
-                app.UseMultiTenancy();
-            }
+          if (!env.IsDevelopment())
+          {
+            app.UseErrorPage();
+          }
 
-            app.UseUnitOfWork();
-            app.UseIdentityServer();
-            app.UseAuthorization();
-            app.UseSwagger();
-            app.UseAbpSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "WeddingPlanner API");
-            });
-            app.UseAuditing();
-            app.UseAbpSerilogEnrichers();
-            app.UseConfiguredEndpoints();
+          app.UseCorrelationId();
+          app.UseStaticFiles();
+          app.UseRouting();
+          app.UseCookiePolicy(new CookiePolicyOptions
+          {
+            MinimumSameSitePolicy = SameSiteMode.None,
+            Secure = CookieSecurePolicy.Always,
+          });
+          app.UseAuthentication();
+          app.UseJwtTokenMiddleware();
+
+          if (MultiTenancyConsts.IsEnabled)
+          {
+            app.UseMultiTenancy();
+          }
+
+          app.UseUnitOfWork();
+          app.UseIdentityServer();
+          app.UseAuthorization();
+          app.UseSwagger();
+          app.UseAbpSwaggerUI(options =>
+          {
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "WeddingPlanner API");
+          });
+          app.UseAuditing();
+          app.UseAbpSerilogEnrichers();
+          app.UseConfiguredEndpoints();
+        }
+
+        private void ConfigureConverter(IApplicationBuilder app)
+        {
+            var converter = app.ApplicationServices.GetService<IConverter>();
+            var logger = app.ApplicationServices.GetService<ILogger<IConverter>>();
+            converter.Warning += (sender, e) => logger.LogWarning(e.Message);
+            converter.Error += (sender, e) => logger.LogError(e.Message);
         }
     }
 }
