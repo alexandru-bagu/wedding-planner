@@ -268,3 +268,6 @@ WeddingPlanner.db-shm
 
 .vscode/
 .DS_Store
+
+Logs
+tempkey.jwk
