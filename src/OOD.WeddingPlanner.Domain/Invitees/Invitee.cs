@@ -26,6 +26,8 @@ namespace OOD.WeddingPlanner.Invitees
 
         public virtual bool Male { get; set; }
 
+        public virtual bool PlusOne { get; set; }
+
         public virtual int Order { get; set; }
 
         public virtual Invitation Invitation { get; set; }
@@ -40,20 +42,24 @@ namespace OOD.WeddingPlanner.Invitees
             Guid id,
             Guid? tenantId,
             string surname,
-            string givenName,
+            string name,
             Guid? invitationId,
             DateTime? rsvp,
             bool? confirmed,
-            bool child
+            bool child,
+            bool male,
+            bool plusOne
         ) : base(id)
         {
             TenantId = tenantId;
             Surname = surname;
-            Name = givenName;
+            Name = name;
             InvitationId = invitationId;
             RSVP = rsvp;
             Confirmed = confirmed;
             Child = child;
+            Male = male;
+            PlusOne = plusOne;
         }
     }
 }

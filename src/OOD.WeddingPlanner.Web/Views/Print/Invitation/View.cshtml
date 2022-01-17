@@ -1,10 +1,12 @@
-﻿@using Microsoft.AspNetCore.Authorization
+﻿@using Lsw.Abp.AspNetCore.Mvc.UI.Theme.Stisla.Themes.Stisla.Components.Toolbar.LanguageSwitch
+@using Microsoft.AspNetCore.Authorization
 @using Newtonsoft.Json
 @using Microsoft.AspNetCore.Mvc.Localization
 @using OOD.WeddingPlanner.Localization
 @using Newtonsoft.Json.Serialization
-@model OOD.WeddingPlanner.Invitations.Dtos.InvitationWithNavigationPropertiesDto
+@using OOD.WeddingPlanner.Web.Pages.Invitees.ViewModels
 @using Volo.Abp.AspNetCore.Mvc.UI.Theming
+@model OOD.WeddingPlanner.Web.Models.ViewInvitationModel
 @inject IHtmlLocalizer<WeddingPlannerResource> L
 @inject IThemeManager ThemeManager
 @{
@@ -18,6 +20,9 @@
 <abp-script src="/libs/leaflet-providers/leaflet-providers.js" />
 <script>
     var model = @Json.Serialize(Model);
+    $(function(){
+        abp.currentTenant.name = '@(Context.Items["TenantName"])';
+    });
 </script>
 }
 @section styles
@@ -29,6 +34,11 @@
 
 <abp-card>
     <abp-container>
+        <abp-row class="language-row">
+            <abp-column>
+                @await Component.InvokeAsync(typeof(LanguageSwitchViewComponent))
+            </abp-column>
+        </abp-row>
         <abp-row>
             <abp-column class="text-center">
                 <h2>@Model.Wedding.GroomName & @Model.Wedding.BrideName</h2>
@@ -82,11 +92,36 @@
                                                 <label class="form-check-label" for="rsvp-@invitee.Id-1">@L["No"]</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="rsvp-@invitee.Id" id="rsvp-@invitee.Id-2" value="true" data-invitee-id="@invitee.Id" data-rsvp  @Html.Raw((invitee.Confirmed == true) ? "checked" : "")>
+                                                <input class="form-check-input" type="radio" name="rsvp-@invitee.Id" id="rsvp-@invitee.Id-2" value="true" data-invitee-id="@invitee.Id" data-rsvp @Html.Raw((invitee.Confirmed == true) ? "checked" : "")>
                                                 <label class="form-check-label" for="rsvp-@invitee.Id-2">@L["Yes"]</label>
                                             </div>
                                         </span>
                                     </div>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.Invitation.PlusOne && !Model.Invitation.Invitees.Any(p => p.PlusOne))
+                        {
+                            <div class="modal fade" id="add-plus-one-modal" tabindex="-1" aria-labelledby="addPlusOneModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="addPlusOneModalLabel">@L["AddPlusOne"]</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <abp-dynamic-form abp-model=PlusOne data-type="plus-one-form"></abp-dynamic-form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <span type="button" class="btn btn-secondary" data-bs-dismiss="modal">@L["Close"]</span>
+                                            <span type="button" class="btn btn-primary" data-type="save">@L["Save"]</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="input-group mb-3">
+                                    <span class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-plus-one-modal">@L["AddPlusOne"]</span>
                                 </div>
                             </div>
                         }

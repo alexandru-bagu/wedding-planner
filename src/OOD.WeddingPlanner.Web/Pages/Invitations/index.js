@@ -102,6 +102,10 @@ $(function () {
                 title: l('InvitationDesign'),
                 data: "design.name"
             },
+            {
+                title: l('InvitationPlusOne'),
+                data: "invitation.plusOne"
+            },
         ]
     }));
 

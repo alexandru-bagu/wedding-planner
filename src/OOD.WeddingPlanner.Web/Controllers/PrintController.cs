@@ -1,13 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OOD.WeddingPlanner.InvitationDesigns;
 using OOD.WeddingPlanner.Invitations;
 using OOD.WeddingPlanner.Invitations.Dtos;
 using OOD.WeddingPlanner.Permissions;
 using OOD.WeddingPlanner.Web.Download;
+using OOD.WeddingPlanner.Web.Models;
+using OOD.WeddingPlanner.Web.Providers;
 using OOD.WeddingPlanner.Web.Services;
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Data;
@@ -77,7 +82,12 @@ namespace OOD.WeddingPlanner.Web.Controllers
             {
                 HttpContext.Response.Cookies.Append("tenant_name", tenant_name ?? "");
                 var invitationData = ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(await Repository.GetWithFullNavigationByIdAsync(id));
-                return View("Invitation/View", invitationData);
+                var viewModel = ObjectMapper.Map<InvitationWithNavigationPropertiesDto, ViewInvitationModel>(invitationData);
+                await viewModel.PrepareAsync(HttpContext.RequestServices);
+                if (HttpContext.Items.TryGetValue(UserPreferenceDefaultRequestCultureProvider.UserLanguagePreference, out _))
+                    return Redirect($"/{id}/{tenant_name}?culture={invitationData.Design.DefaultCulture}");
+                HttpContext.Items["TenantName"] = tenant_name;
+                return View("Invitation/View", viewModel);
             }
         }
 
@@ -88,7 +98,7 @@ namespace OOD.WeddingPlanner.Web.Controllers
             {
                 GlobalSettings =
                 {
-                    
+
                     ColorMode = ColorMode.Color,
                     Orientation = Orientation.Portrait,
                     PaperSize =  new PechkinPaperSize(design.PaperWidth + design.MeasurementUnit, design.PaperHeight + design.MeasurementUnit),

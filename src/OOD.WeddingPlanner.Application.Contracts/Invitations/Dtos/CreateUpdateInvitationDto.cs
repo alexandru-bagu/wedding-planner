@@ -11,6 +11,8 @@ namespace OOD.WeddingPlanner.Invitations.Dtos
 
         public string Destination { get; set; }
 
+        public bool PlusOne { get; set; }
+
         public List<Guid> InviteeIds { get; set; } = new List<Guid>();
     }
 }

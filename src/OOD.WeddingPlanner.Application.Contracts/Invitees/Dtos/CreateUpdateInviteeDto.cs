@@ -19,6 +19,8 @@ namespace OOD.WeddingPlanner.Invitees.Dtos
 
         public bool Male { get; set; }
 
+        public bool PlusOne { get; set; }
+
         public int Order { get; set; }
     }
 }

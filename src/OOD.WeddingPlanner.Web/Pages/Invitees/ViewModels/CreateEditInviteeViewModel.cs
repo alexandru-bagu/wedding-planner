@@ -34,6 +34,11 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees.ViewModels
         public bool? Male { get; set; }
 
         [Required]
+        [Display(Name = "InviteePlusOne")]
+        [SelectItems(nameof(BooleanItems))]
+        public bool? PlusOne { get; set; }
+
+        [Required]
         [Display(Name = "InviteeOrder")]
         public int Order { get; set; }
 

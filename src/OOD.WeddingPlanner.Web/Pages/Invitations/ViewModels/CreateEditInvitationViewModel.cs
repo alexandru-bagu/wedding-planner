@@ -23,6 +23,11 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.ViewModels
         public string Destination { get; set; }
 
         [Required]
+        [Display(Name = "InvitationPlusOne")]
+        [SelectItems(nameof(BooleanItems))]
+        public bool PlusOne { get; set; }
+
+        [Required]
         [Display(Name = "Invitee")]
         [SelectItems(nameof(InviteeItems))]
         public List<Guid> InviteeIds { get; set; }
@@ -30,5 +35,6 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.ViewModels
         public List<SelectListItem> WeddingItems { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> InviteeItems { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> DesignItems { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> BooleanItems { get; set; } = new List<SelectListItem>();
     }
 }

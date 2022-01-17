@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OOD.WeddingPlanner.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -11,9 +12,10 @@ using Volo.Abp.EntityFrameworkCore;
 namespace OOD.WeddingPlanner.Migrations
 {
     [DbContext(typeof(WeddingPlannerDbContext))]
-    partial class WeddingPlannerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220117200043_Add default culture")]
+    partial class Adddefaultculture
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,9 +189,6 @@ namespace OOD.WeddingPlanner.Migrations
                         .HasColumnType("char(36)")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<bool>("PlusOne")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<Guid?>("TenantId")
                         .HasColumnType("char(36)")
                         .HasColumnName("TenantId");
@@ -258,9 +257,6 @@ namespace OOD.WeddingPlanner.Migrations
 
                     b.Property<int>("Order")
                         .HasColumnType("int");
-
-                    b.Property<bool>("PlusOne")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime?>("RSVP")
                         .HasColumnType("datetime(6)");

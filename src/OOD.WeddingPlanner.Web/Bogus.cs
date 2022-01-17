@@ -26,7 +26,9 @@ namespace OOD.WeddingPlanner.Web
                 invitees.Add(new Invitee(Guid.NewGuid(), null, "Bogus Surname", "Bogus Name " + i, invitation.Id,
                     i == 0 ? DateTime.Now : i == 1 ? null : i == 2 ? DateTime.Now.AddDays(-3) : null,
                     i == 0 ? null : i == 1 ? false : i == 2 ? true : null,
-                    i == 0 ? true : false));
+                    i == 0 ? true : false,
+                    i == 1 ? true : false,
+                    i == 2 ? true : false));
             }
             return new InvitationWithNavigationProperties()
             {

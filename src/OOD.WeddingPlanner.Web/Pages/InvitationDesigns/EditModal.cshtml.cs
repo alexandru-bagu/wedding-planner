@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
 using OOD.WeddingPlanner.InvitationDesigns;
 using OOD.WeddingPlanner.InvitationDesigns.Dtos;
 using OOD.WeddingPlanner.Web.Pages.InvitationDesigns.ViewModels;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Volo.Abp.Localization;
 
 namespace OOD.WeddingPlanner.Web.Pages.InvitationDesigns
 {
@@ -18,10 +21,12 @@ namespace OOD.WeddingPlanner.Web.Pages.InvitationDesigns
         public CreateEditInvitationDesignViewModel ViewModel { get; set; }
 
         private readonly IInvitationDesignAppService _service;
+        private readonly IOptions<AbpLocalizationOptions> _localizationOptions;
 
-        public EditModalModel(IInvitationDesignAppService service)
+        public EditModalModel(IInvitationDesignAppService service, IOptions<AbpLocalizationOptions> localizationOptions)
         {
             _service = service;
+            _localizationOptions = localizationOptions;
         }
 
         public virtual async Task OnGetAsync()
@@ -34,6 +39,8 @@ namespace OOD.WeddingPlanner.Web.Pages.InvitationDesigns
                 new SelectListItem("Centimeter", "cm"),
                 new SelectListItem("Inch", "in"),
             });
+
+            ViewModel.CultureList.AddRange(_localizationOptions.Value.Languages.Select(p => new SelectListItem() { Value = p.CultureName, Text = p.DisplayName, Selected = dto.DefaultCulture == p.CultureName }));
         }
 
         public virtual async Task<IActionResult> OnPostAsync()

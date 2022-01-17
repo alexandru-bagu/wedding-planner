@@ -11,6 +11,7 @@
     padding-bottom: 9px !important;
     cursor: default;
 }
+
 [id="disabled-tab"] {
     color: black !important;
 }
@@ -18,14 +19,41 @@
 .invitee-line {
     line-height: 40px;
 }
-.invitee-line * {
-    display: inline-block;
-}
+
+    .invitee-line * {
+        display: inline-block;
+    }
 
 .event-line * {
     line-height: 20px;
     display: inline-block;
 }
+
 .event-line .btn {
     margin-top: -10px;
 }
+
+.language-row {
+    text-align: right;
+}
+
+    .language-row .col {
+        position: relative;
+    }
+
+    .language-row li::marker {
+        content: '';
+    }
+
+    .language-row a {
+        margin: 0 !important;
+        padding: 0;
+    }
+
+    .language-row .dropdown-menu.dropdown-menu-right.show {
+        inset: auto !important;
+        right: 0px !important;
+        top: 0px !important;
+        max-width: 60px;
+        min-width: 60px;
+    }

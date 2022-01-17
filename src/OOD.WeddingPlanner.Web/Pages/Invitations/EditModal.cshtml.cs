@@ -51,6 +51,10 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations
             ViewModel.DesignItems.AddRange(
               (await _invitationDesignAppService.GetLookupListAsync(new LookupRequestDto()))
                 .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
+            ViewModel.BooleanItems.AddRange(new[] {
+                new SelectListItem(L["No"].Value, "False"),
+                new SelectListItem(L["Yes"].Value, "True"),
+            });
         }
 
         public virtual async Task<IActionResult> OnPostAsync()

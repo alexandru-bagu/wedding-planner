@@ -12,6 +12,8 @@ namespace OOD.WeddingPlanner.Invitations.Dtos
 
         public Guid? DesignId { get; set; }
 
+        public bool PlusOne { get; set; }
+
         public string Destination { get; set; }
 
         public List<InviteeDto> Invitees { get; set; }

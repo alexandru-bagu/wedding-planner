@@ -14,6 +14,8 @@ namespace OOD.WeddingPlanner.InvitationDesigns
 
         public virtual string Body { get; set; }
 
+        public virtual string DefaultCulture { get; set; }
+
         public virtual string MeasurementUnit { get; set; }
 
         public virtual double? PaperWidth { get; set; }

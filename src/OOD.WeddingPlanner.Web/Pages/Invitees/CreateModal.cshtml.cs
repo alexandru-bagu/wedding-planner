@@ -29,16 +29,16 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees
         {
             ViewModel = new CreateEditInviteeViewModel();
             ViewModel.BooleanItems.AddRange(new[] {
-        new SelectListItem("", ""),
-        new SelectListItem(L["No"].Value, "False"),
-        new SelectListItem(L["Yes"].Value, "True"),
-      });
+                new SelectListItem("", ""),
+                new SelectListItem(L["No"].Value, "False"),
+                new SelectListItem(L["Yes"].Value, "True"),
+            });
             ViewModel.InvitationItems.AddRange(new[] {
-        new SelectListItem("", "")
-      });
+                new SelectListItem("", "")
+            });
             ViewModel.WeddingItems.AddRange(new[] {
-        new SelectListItem("", "")
-      });
+                new SelectListItem("", "")
+            });
             ViewModel.WeddingItems.AddRange(
               (await _weddingAppService.GetLookupListAsync(new LookupRequestDto()))
                 .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));

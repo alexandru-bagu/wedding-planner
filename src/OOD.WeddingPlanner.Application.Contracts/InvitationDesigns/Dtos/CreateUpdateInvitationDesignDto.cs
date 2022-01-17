@@ -9,6 +9,8 @@ namespace OOD.WeddingPlanner.InvitationDesigns.Dtos
 
         public string Body { get; set; }
 
+        public string DefaultCulture { get; set; }
+
         public string MeasurementUnit { get; set; }
 
         public double? PaperWidth { get; set; }

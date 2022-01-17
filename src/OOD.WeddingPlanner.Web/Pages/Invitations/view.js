@@ -1,6 +1,9 @@
 ﻿$(function () {
     var l = abp.localization.getResource('WeddingPlanner');
+    var map = L.map('map');
+    var markerLayer = L.layerGroup().addTo(map);
 
+    $('#add-plus-one-modal').detach().appendTo(document.body);
     $.each($('[id="disabled-tab"]'), function (_, el) {
         el.dataset.bsToggle = null;
         el.href = '#';
@@ -15,6 +18,7 @@
         await abp.ajax({ url: abp.appPath + 'RSVP/' + el.data('invitee-id') + '/' + (abp.currentTenant.name ?? ""), data: JSON.stringify(el.val()) });
         abp.notify.info(l('SuccessfullyUpdated'));
     });
+
     $(document).on('click keypress', '[data-events] li a', function (evt) {
         var $tab = $(evt.target);
         var area_id = $tab.attr('aria-controls');
@@ -28,8 +32,36 @@
         });
     });
 
-    var map = L.map('map');
-    var markerLayer = L.layerGroup().addTo(map);
+    $('#add-plus-one-modal').find('[data-type="save"]').on('click', async function (evt) {
+        function getFormData($form) {
+            var indexed_array = {};
+            $.map($form.serializeArray(), function (n, i) { indexed_array[n['name']] = n['value']; });
+            return indexed_array;
+        }
+
+        evt.preventDefault();
+        evt.stopPropagation();
+
+        var form = $('#add-plus-one-modal').find('[data-type="plus-one-form"]');
+        var validation = form.validate();
+        if (!validation.errorList.length) {
+            var obj = getFormData(form);
+            var data = { name: obj['PlusOne.Name'], surname: obj['PlusOne.Surname'] };
+            abp.ui.block({
+                elm: '#add-plus-one-modal',
+                busy: true
+            });
+            try {
+                await abp.ajax({ url: abp.appPath + 'PlusOne/' + model.invitation.id + '/' + (abp.currentTenant.name ?? ""), data: JSON.stringify(data) });
+                abp.notify.info(l('SuccessfullyUpdated'));
+                setTimeout(function () { location.reload(); }, 1000);
+            } catch {
+                abp.notify.info(l('UpdateFailed'));
+                abp.ui.unblock('[data-type="plus-one-form"]');
+            }
+        }
+    });
+
     L.tileLayer.provider('MapBox', {
         id: 'mapbox/streets-v11',
         accessToken: 'pk.eyJ1IjoiYWxleGFuZHJ1LWJhZ3UiLCJhIjoiY2t5ZXg4NXN5MWRqbDJ1bjAydjU4MWNpNCJ9.MNTm1-zd2fCY1NlPDByjvA'

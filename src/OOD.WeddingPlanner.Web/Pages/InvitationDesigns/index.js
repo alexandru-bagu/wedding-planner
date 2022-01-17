@@ -58,6 +58,10 @@ $(function () {
                 data: "name"
             },
             {
+                title: l('InvitationDesignDefaultCulture'),
+                data: "defaultCulture"
+            },
+            {
                 title: l('InvitationDesignPaperWidth'),
                 render: function (_, type, record) {
                     return record.paperWidth + " " + record.measurementUnit;

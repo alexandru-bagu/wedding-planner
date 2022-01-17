@@ -11,6 +11,11 @@ namespace OOD.WeddingPlanner.Web.Pages.InvitationDesigns.ViewModels
         [Required]
         public string Name { get; set; }
 
+        [Display(Name = "InvitationDesignDefaultCulture")]
+        [SelectItems(nameof(CultureList))]
+        [Required]
+        public string DefaultCulture { get; set; }
+
         [Required]
         [SelectItems(nameof(MeasurementUnits))]
         [Display(Name = "InvitationDesignMeasurementUnit")]
@@ -35,5 +40,6 @@ namespace OOD.WeddingPlanner.Web.Pages.InvitationDesigns.ViewModels
         public string Body { get; set; }
 
         public List<SelectListItem> MeasurementUnits { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> CultureList { get; set; } = new List<SelectListItem>();
     }
 }

@@ -96,6 +96,11 @@
         "LocationParkingGoogleLink": "Google Maps link to parking area",
         "InviteeMale": "Is male?",
         "InviteeOrder": "Invitation order",
-        "PleaseConfirmInvitees": "Please confirm the persons that will join our wedding event."
+        "PleaseConfirmInvitees": "Please confirm the persons that will join our wedding event.",
+        "InvitationDesignDefaultCulture": "Default language",
+        "InvitationPlusOne": "Plus one allowed",
+        "InviteePlusOne": "Plus one",
+        "AddPlusOne": "Add your plus one",
+        "UpdateFailed": "Update failed"
     }
 }

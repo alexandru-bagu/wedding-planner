@@ -21,6 +21,7 @@
         "Permission:Event": "Eveniment",
         "Menu:Event": "Evenimente",
         "Event": "Eveniment",
+        "Events": "Evenimente",
         "EventLocationId": "Locație",
         "EventWeddingId": "Nuntă",
         "EventName": "Nume",
@@ -31,6 +32,7 @@
         "Permission:Invitee": "Invitat",
         "Menu:Invitee": "Invitați",
         "Invitee": "Invitat",
+        "Invitees": "Invitați",
         "InviteeSurname": "Nume",
         "InviteeName": "Prenume",
         "InviteeInvitationId": "Invitație",
@@ -102,6 +104,11 @@
         "LocationParkingGoogleLink": "Link Google Maps către zona de parcare",
         "InviteeMale": "Este bărbat?",
         "InviteeOrder": "Ordine în invitație",
-        "PleaseConfirmInvitees": "Vă rugăm să confirmați persoanele care vor fi cu noi la evenimentul nunții."
+        "PleaseConfirmInvitees": "Vă rugăm să confirmați persoanele care vor fi cu noi la evenimentul nunții.",
+        "InvitationDesignDefaultCulture": "Limbă implicită",
+        "InvitationPlusOne": "Plus unul permis",
+        "InviteePlusOne": "Plus unul",
+        "AddPlusOne": "Adaugă plus-unul tău",
+        "UpdateFailed": "Modificarea nu a reușit"
     }
 }
