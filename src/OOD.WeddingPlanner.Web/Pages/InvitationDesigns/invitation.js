@@ -18,7 +18,7 @@
       var ratio = 1;
       if (unit === 'mm') ratio = 25.4;
       if (unit === 'cm') ratio = 2.54;
-
+      ratio *= 0.801;
       vm.width = width * dpi / ratio;
       vm.height = height * dpi / ratio;
       vm.border = debug ? '1px solid silver' : '';

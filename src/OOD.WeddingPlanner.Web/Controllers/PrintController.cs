@@ -98,7 +98,6 @@ namespace OOD.WeddingPlanner.Web.Controllers
             {
                 GlobalSettings =
                 {
-
                     ColorMode = ColorMode.Color,
                     Orientation = Orientation.Portrait,
                     PaperSize =  new PechkinPaperSize(design.PaperWidth + design.MeasurementUnit, design.PaperHeight + design.MeasurementUnit),
