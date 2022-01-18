@@ -288,6 +288,9 @@ namespace OOD.WeddingPlanner.Web
             var logger = app.ApplicationServices.GetService<ILogger<IConverter>>();
             converter.Warning += (sender, e) => logger.LogWarning(e.Message);
             converter.Error += (sender, e) => logger.LogError(e.Message);
+            converter.PhaseChanged += (sender, e) => logger.LogInformation($"Converter phase: [{e.CurrentPhase}/{e.PhaseCount}] {e.Description}");
+            converter.ProgressChanged += (sender, e) => logger.LogInformation($"Converter progress: {e.Description}");
+            converter.Finished += (sender, e) => logger.LogInformation($"Converter finished. Success: {e.Success}");
         }
     }
 }
