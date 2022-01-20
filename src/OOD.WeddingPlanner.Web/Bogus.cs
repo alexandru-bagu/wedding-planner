@@ -17,7 +17,9 @@ namespace OOD.WeddingPlanner.Web
             var wedding = new Wedding(Guid.NewGuid(), null, "Bogus Groom", "Bogus Bride", "Bogus Wedding", "Bogus Contact Information");
             var location = new Location(Guid.NewGuid(), null, "Bogus Location", "Bogus Description", 46, 23);
             wedding.Events  = new List<Event>() { 
-              new Event(Guid.NewGuid(), null, location.Id, wedding.Id, "Bogus Event", DateTime.Now)
+              new Event(Guid.NewGuid(), null, location.Id, wedding.Id, "Bogus Event", DateTime.Now) {
+                Location = location
+              }
             };
             var invitees = new List<Invitee>();
             var invitation = new Invitation(Guid.NewGuid(), null, wedding.Id, "Bogus Invitation")
