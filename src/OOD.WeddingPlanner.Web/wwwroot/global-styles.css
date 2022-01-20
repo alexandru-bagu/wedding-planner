@@ -10,9 +10,15 @@
 
 
 
-*:not(.fa):not(.fas) {
-    font-family: 'Crimson' !important;
+*:not(.fa):not(.fas):not() {
+    font-family: 'Crimson'  !important;
     font-weight: 100;
+}
+
+.monaco-editor *:not(.fa):not(.fas) {
+  font-weight: normal;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe WPC,Segoe UI,HelveticaNeue-Light,system-ui,Ubuntu,Droid Sans,sans-serif !important;
+  --monaco-monospace-font: "SF Mono",Monaco,Menlo,Consolas,"Ubuntu Mono","Liberation Mono","DejaVu Sans Mono","Courier New",monospace !important;
 }
 
 .main-sidebar .sidebar-menu li a span {
