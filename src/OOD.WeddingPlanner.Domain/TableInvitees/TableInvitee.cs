@@ -1,12 +1,12 @@
 using OOD.WeddingPlanner.Invitees;
 using OOD.WeddingPlanner.Tables;
 using System;
-using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.MultiTenancy;
 
 namespace OOD.WeddingPlanner.TableInvitees
 {
-    public class TableInvitee : FullAuditedEntity<Guid>, IMultiTenant
+    public class TableInvitee : Entity<Guid>, IMultiTenant
     {
         public virtual Guid? TenantId { get; set; }
         public virtual Guid? TableId { get; set; }

@@ -12,7 +12,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace OOD.WeddingPlanner.Migrations
 {
     [DbContext(typeof(WeddingPlannerDbContext))]
-    [Migration("20220121201223_add unique table invitee")]
+    [Migration("20220121231239_add unique table invitee")]
     partial class adduniquetableinvitee
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -357,38 +357,8 @@ namespace OOD.WeddingPlanner.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("char(36)")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("char(36)")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("DeletionTime");
-
                     b.Property<Guid?>("InviteeId")
                         .HasColumnType("char(36)");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint(1)")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("char(36)")
-                        .HasColumnName("LastModifierId");
 
                     b.Property<Guid?>("TableId")
                         .HasColumnType("char(36)");
@@ -400,6 +370,8 @@ namespace OOD.WeddingPlanner.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("InviteeId");
+
+                    b.HasIndex("TableId");
 
                     b.HasIndex("TableId", "InviteeId")
                         .IsUnique();
