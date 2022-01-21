@@ -67,7 +67,7 @@ namespace OOD.WeddingPlanner.Web.Controllers
             using (CurrentTenant.Change(tenantId))
             {
                 HttpContext.Response.Cookies.Append("tenant_name", tenant_name ?? "");
-                var invitationData = ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(await Repository.GetWithNavigationByIdAsync(id));
+                var invitationData = ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(await Repository.GetWithFullNavigationByIdAsync(id));
                 return View("Invitation/Print", invitationData);
             }
         }
