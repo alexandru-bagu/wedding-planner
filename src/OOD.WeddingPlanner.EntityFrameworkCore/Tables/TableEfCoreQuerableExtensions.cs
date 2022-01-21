@@ -14,7 +14,7 @@ namespace OOD.WeddingPlanner.Tables
 
             return queryable
                 .Include(p => p.Event)
-                .Include(p => p.Invitees);
+                .Include(p => p.TableAssignments);
         }
     }
 }

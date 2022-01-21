@@ -25,7 +25,6 @@ namespace OOD.WeddingPlanner.Invitees
                 Invitee = p,
                 Invitation = p.Invitation,
                 Wedding = p.Invitation == null ? null : p.Invitation.Wedding,
-                Table = p.Table
             });
         }
 
@@ -36,40 +35,38 @@ namespace OOD.WeddingPlanner.Invitees
             return await query.SingleAsync();
         }
 
-        public async Task<List<InviteeWithNavigationProperties>> GetListWithNavigationAsync(string filter, Guid? invitationId, Guid? tableId, Guid? weddingId, string name, string surname, bool? confirmed, string sorting, int skipCount, int maxResultCount)
+        public async Task<List<InviteeWithNavigationProperties>> GetListWithNavigationAsync(string filter, Guid? invitationId, Guid? weddingId, string name, string surname, bool? confirmed, string sorting, int skipCount, int maxResultCount)
         {
             var query = await GetQueryableWithNavigation();
 
-            return await applyFilters(query, filter, invitationId, tableId, weddingId, name, surname, confirmed)
+            return await applyFilters(query, filter, invitationId, weddingId, name, surname, confirmed)
             .OrderBy(string.IsNullOrWhiteSpace(sorting) ? $"{nameof(InviteeWithNavigationProperties.Invitee)}.{nameof(Invitee.Surname)}" : sorting)
             .Skip(skipCount).Take(maxResultCount).ToListAsync();
         }
 
-        public async Task<long> GetCountAsync(string filter, Guid? invitationId, Guid? tableId, Guid? weddingId, string name, string surname, bool? confirmed)
+        public async Task<long> GetCountAsync(string filter, Guid? invitationId, Guid? weddingId, string name, string surname, bool? confirmed)
         {
             var query = await GetQueryableWithNavigation();
-            return await applyFilters(query, filter, invitationId, tableId, weddingId, name, surname, confirmed)
+            return await applyFilters(query, filter, invitationId, weddingId, name, surname, confirmed)
             .LongCountAsync();
         }
 
-        public async Task<List<Invitee>> GetPagedListAsync(string filter, Guid? invitationId, Guid? tableId, Guid? weddingId, string name, string surname, bool? confirmed, int skipCount, int maxResultCount, string sorting)
+        public async Task<List<Invitee>> GetPagedListAsync(string filter, Guid? invitationId, Guid? weddingId, string name, string surname, bool? confirmed, int skipCount, int maxResultCount, string sorting)
         {
             var query = await GetQueryableWithNavigation();
-            return await applyFilters(query, filter, invitationId, tableId, weddingId, name, surname, confirmed)
+            return await applyFilters(query, filter, invitationId, weddingId, name, surname, confirmed)
             .Select(p => p.Invitee)
             .OrderBy(string.IsNullOrWhiteSpace(sorting) ? $"{nameof(Invitee.Surname)}" : sorting)
             .Skip(skipCount).Take(maxResultCount).ToListAsync();
         }
 
-        protected IQueryable<InviteeWithNavigationProperties> applyFilters(IQueryable<InviteeWithNavigationProperties> query, string filter = null, Guid? invitationId = null, Guid? tableId = null, Guid? weddingId = null, string name = null, string surname = null, bool? confirmed = null)
+        protected IQueryable<InviteeWithNavigationProperties> applyFilters(IQueryable<InviteeWithNavigationProperties> query, string filter = null, Guid? invitationId = null, Guid? weddingId = null, string name = null, string surname = null, bool? confirmed = null)
         {
             query = query.WhereIf(invitationId.HasValue, p => p.Invitee.InvitationId == invitationId);
-            query = query.WhereIf(tableId.HasValue, p => p.Invitee.TableId == tableId);
             query = query.WhereIf(weddingId.HasValue, p => p.Invitation.WeddingId == weddingId);
             query = query.WhereIf(!string.IsNullOrWhiteSpace(filter),
                 p => p.Invitee.Name.Contains(filter) || p.Invitee.Surname.Contains(filter) ||
-                p.Table.Name.Contains(filter) || p.Wedding.Name.Contains(filter) ||
-                p.Invitation.Destination.Contains(filter));
+                p.Wedding.Name.Contains(filter) || p.Invitation.Destination.Contains(filter));
             query = query.WhereIf(!string.IsNullOrWhiteSpace(name),
                 p => p.Invitee.Name.Contains(name));
             query = query.WhereIf(!string.IsNullOrWhiteSpace(surname),

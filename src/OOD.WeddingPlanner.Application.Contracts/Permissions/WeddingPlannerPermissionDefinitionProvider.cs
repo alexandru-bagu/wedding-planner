@@ -46,6 +46,11 @@ namespace OOD.WeddingPlanner.Permissions
             tablePermission.AddChild(WeddingPlannerPermissions.Table.Create, L("Permission:Create"));
             tablePermission.AddChild(WeddingPlannerPermissions.Table.Update, L("Permission:Update"));
             tablePermission.AddChild(WeddingPlannerPermissions.Table.Delete, L("Permission:Delete"));
+
+            var tableInviteePermission = myGroup.AddPermission(WeddingPlannerPermissions.TableInvitee.Default, L("Permission:TableInvitee"));
+            tableInviteePermission.AddChild(WeddingPlannerPermissions.TableInvitee.Create, L("Permission:Create"));
+            tableInviteePermission.AddChild(WeddingPlannerPermissions.TableInvitee.Update, L("Permission:Update"));
+            tableInviteePermission.AddChild(WeddingPlannerPermissions.TableInvitee.Delete, L("Permission:Delete"));
         }
 
         private static LocalizableString L(string name)

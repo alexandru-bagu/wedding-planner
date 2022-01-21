@@ -7,7 +7,5 @@ namespace OOD.WeddingPlanner.Invitees.Dtos
         public Guid? InvitationId { get; set; }
 
         public Guid? WeddingId { get; set; }
-
-        public Guid? TableId { get; set; }
     }
 }

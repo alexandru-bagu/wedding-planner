@@ -6,6 +6,8 @@ $(async function () {
     var weddingService = oOD.weddingPlanner.weddings.wedding;
     var eventService = oOD.weddingPlanner.events.event;
     var inviteeService = oOD.weddingPlanner.invitees.invitee;
+    var tableInviteeService = oOD.weddingPlanner.tableInvitees.tableInvitee;
+
     var createModal = new abp.ModalManager({
         viewUrl: abp.appPath + 'Tables/CreateModal',
         scriptUrl: "/Pages/Tables/table.js",
@@ -54,21 +56,14 @@ $(async function () {
         invitee.id = invt.id;
         invitee.surname = invt.surname;
         invitee.name = invt.name;
-        invitee.tableId = ko.observable(invt.tableId);
-        invitee.tableId.subscribe(async function () {
-            var dbInvitee = await inviteeService.get(invitee.id);
-            if (dbInvitee.tableId !== invitee.tableId()) {
-                dbInvitee.tableId = invitee.tableId();
-                await inviteeService.update(invitee.id, dbInvitee);
-                abp.notify.info(l('SuccessfullyUpdated'));
-            }
-        });
+        invitee.tableId = ko.observable();
     }
 
     function Guest(table) {
         var guest = this;
         guest.number = ko.observable();
         guest.invitee = ko.observable();
+        guest.pushUpdates = false;
 
         guest.invitees = ko.computed(function () {
             var arrayFilter = vm.allInvitees().filter(function (p) { return !p.tableId() || p.id === guest.invitee(); });
@@ -84,9 +79,21 @@ $(async function () {
                 if (inv) inv.tableId(null);
             }
             if (current) {
-                var inv = vm.allInvitees()
-                    .filter(function (p) { return p.id == current })[0];
+                var inv = vm.allInvitees().filter(function (p) { return p.id == current })[0];
                 if (inv) inv.tableId(table.id);
+            }
+            if (guest.pushUpdates) {
+                if (previous) {
+                    var tblInv = await tableInviteeService.getList({ tableId: table.id, inviteeId: previous });
+                    if (tblInv.items) {
+                        await tableInviteeService.delete(tblInv.items[0].id);
+                        abp.notify.info(l("SuccessfullyUpdated"));
+                    }
+                }
+                if (current) {
+                    await tableInviteeService.create({ tableId: table.id, inviteeId: current });
+                    abp.notify.info(l("SuccessfullyUpdated"));
+                }
             }
         });
     }
@@ -127,11 +134,12 @@ $(async function () {
         for (var i = 0; i < tbl.table.size; i++) {
             var guest = new Guest(table);
             guest.number(i + 1);
-            if (tbl.invitees.length > i) {
-                var invitee = tbl.invitees[i];
-                guest.invitee(invitee.id);
+            if (tbl.assignments.length > i) {
+                var assignment = tbl.assignments[i];
+                guest.invitee(assignment.inviteeId);
             }
             table.guests.push(guest);
+            guest.pushUpdates = true;
         }
     }
 
@@ -145,17 +153,24 @@ $(async function () {
         vm.allInvitees = ko.observableArray();
 
         vm.event.subscribe(async function () {
+            var invitees = await inviteeService.getList({ weddingId: vm.wedding() });
+            invitees.items.splice(0, 0, { surname: "---------" });
+            vm.allInvitees(invitees.items.map(function (value) { return new Invitee(value); }));
+
             var tables = await service.getListWithNavigation({ eventId: vm.event(), sorting: 'table.creationTime ASC' });
             vm.tables(tables.items.map(function (value) { return new Table(value); }));
         });
 
         vm.wedding.subscribe(async function () {
-            var invitees = await inviteeService.getList({ weddingId: vm.wedding() });
-            invitees.items.splice(0, 0, { surname: "---------" });
-            vm.allInvitees(invitees.items.map(function (value) { return new Invitee(value); }));
-
-            var events = await eventService.getLookupList({ weddingId: vm.wedding() });
-            vm.events(events.items.map(function (value) { return new Lookup(value); }));
+            vm.tables([]);
+            setTimeout(async function () {
+                vm.allInvitees([]);
+                var events = await eventService.getLookupList({ weddingId: vm.wedding() });
+                if (!events.items.length) {
+                    events.items.push({ id: '00000000-0000-0000-0000-000000000001', displayName: '-----' });
+                }
+                vm.events(events.items.map(function (value) { return new Lookup(value); }));
+            });
         });
 
         vm.init = async function () {
@@ -185,7 +200,7 @@ $(async function () {
 
     $('#NewTableButton').click(function (e) {
         e.preventDefault();
-        createModal.open();
+        createModal.open({ weddingId: vm.wedding(), eventId: vm.event() });
     });
 
 

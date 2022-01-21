@@ -20,6 +20,8 @@ namespace OOD.WeddingPlanner.Invitations
 
         public virtual bool PlusOne { get; set; }
 
+        public virtual string UniqueCode { get; set; }
+
         public virtual List<Invitee> Invitees { get; set; } = new List<Invitee>();
 
         public virtual Wedding Wedding { get; set; }

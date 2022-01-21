@@ -20,6 +20,7 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using OOD.WeddingPlanner.TableInvitees;
 
 namespace OOD.WeddingPlanner.EntityFrameworkCore
 {
@@ -66,6 +67,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
         public DbSet<Wedding> Weddings { get; set; }
         public DbSet<InvitationDesign> InvitationDesigns { get; set; }
         public DbSet<Table> Tables { get; set; }
+        public DbSet<TableInvitee> TableInvitees { get; set; }
 
         public WeddingPlannerDbContext(DbContextOptions<WeddingPlannerDbContext> options)
             : base(options)
@@ -113,7 +115,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
                 b.ConfigureByConvention();
 
                 b.HasOne(p => p.Invitation).WithMany(p => p.Invitees);
-                b.HasOne(p => p.Table).WithMany(p => p.Invitees);
+                b.HasMany(p => p.TableAssignments).WithOne(p => p.Invitee);
             });
 
 
@@ -125,6 +127,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
                 b.HasMany(p => p.Invitees).WithOne(p => p.Invitation);
                 b.HasOne(p => p.Wedding).WithMany(p => p.Invitations);
                 b.HasOne(p => p.Design).WithMany(p => p.Invitations);
+                b.HasIndex(p => p.UniqueCode).IsUnique();
             });
 
 
@@ -153,7 +156,19 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
                 b.ConfigureByConvention();
 
                 b.HasOne(p => p.Event).WithMany(p => p.Tables);
-                b.HasMany(p => p.Invitees).WithOne(p => p.Table);
+                b.HasMany(p => p.TableAssignments).WithOne(p => p.Table);
+            });
+
+
+            builder.Entity<TableInvitee>(b =>
+            {
+                b.ToTable(WeddingPlannerConsts.DbTablePrefix + "TableInvitees", WeddingPlannerConsts.DbSchema);
+                b.ConfigureByConvention();
+
+                b.HasOne(p => p.Invitee).WithMany(p => p.TableAssignments);
+                b.HasOne(p => p.Table).WithMany(p => p.TableAssignments);
+                b.HasIndex(p => new { p.TableId, p.InviteeId }).IsUnique();
+                b.HasIndex(p => new { p.TableId });
             });
         }
     }

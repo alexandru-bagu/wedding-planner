@@ -3,6 +3,10 @@ module.exports = {
 
     },
     mappings: {
+        "./Library/jquery-validation-globalize/**": "@libs/jquery-validation-globalize",
+        "@node_modules/cldr-data/**": "@libs/cldr-data",
+        "@node_modules/cldrjs/**": "@libs/cldrjs",
+        "@node_modules/globalize/**": "@libs/globalize",
         "@node_modules/leaflet/**": "@libs/leaflet",
         "@node_modules/leaflet-providers/**": "@libs/leaflet-providers",
         "@node_modules/qrcodejs/**": "@libs/qrcodejs",

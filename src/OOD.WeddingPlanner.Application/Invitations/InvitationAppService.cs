@@ -5,6 +5,8 @@ using OOD.WeddingPlanner.Permissions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -55,7 +57,7 @@ namespace OOD.WeddingPlanner.Invitations
         protected override async Task<IQueryable<Invitation>> CreateFilteredQueryAsync(GetInvitationsInputDto input)
         {
             var query = await base.CreateFilteredQueryAsync(input);
-            query = query.WhereIf(input.WeddingId.HasValue, p => p.WeddingId == input.WeddingId);   
+            query = query.WhereIf(input.WeddingId.HasValue, p => p.WeddingId == input.WeddingId);
             query = query.WhereIf(!string.IsNullOrWhiteSpace(input.Destination), p => p.Destination.Contains(input.Destination));
             return query;
         }
@@ -72,7 +74,18 @@ namespace OOD.WeddingPlanner.Invitations
         [Authorize(WeddingPlannerPermissions.Invitation.Create)]
         public override async Task<InvitationDto> CreateAsync(CreateUpdateInvitationDto input)
         {
+            var unique = "";
+            while (unique == "")
+            {
+                var hash = Sha256(Guid.NewGuid().ToString());
+                int len = 3;
+                do { unique = hash.Substring(0, ++len); }
+                while (len < hash.Length && await _repository.UniqueCodeUsedAsync(unique));
+            }
+            (input as IUniqueCoded).UniqueCode = unique;
             var invitation = await base.CreateAsync(input);
+            invitation.UniqueCode = unique;
+
             List<Invitee> inviteeList = new List<Invitee>();
             foreach (var inviteeId in input.InviteeIds)
             {
@@ -82,6 +95,20 @@ namespace OOD.WeddingPlanner.Invitations
             }
             await _inviteeRepository.UpdateManyAsync(inviteeList, true);
             return invitation;
+        }
+
+
+        static string Sha256(string rawData)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                    builder.Append(bytes[i].ToString("x2"));
+                return builder.ToString();
+            }
         }
 
         [UnitOfWork]

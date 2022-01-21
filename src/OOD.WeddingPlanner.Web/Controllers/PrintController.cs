@@ -74,20 +74,39 @@ namespace OOD.WeddingPlanner.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [Route("/rsvp/{code}")]
+        public async Task<IActionResult> GetViewByCode(string code)
+        {
+            var data = await Repository.GetWithFullNavigationByCodeAsync(code);
+            string tenant_name = "";
+            if (data.Invitation.TenantId.HasValue)
+            {
+                var tenant = await TenantStore.FindAsync(data.Invitation.TenantId.Value);
+                tenant_name = tenant.Name;
+            }
+            using (CurrentTenant.Change(data.Invitation.TenantId))
+            {
+                HttpContext.Response.Cookies.Append("tenant_name", tenant_name ?? "");
+                var invitationData = ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(data);
+                var viewModel = ObjectMapper.Map<InvitationWithNavigationPropertiesDto, ViewInvitationModel>(invitationData);
+                await viewModel.PrepareAsync(HttpContext.RequestServices);
+                if (HttpContext.Items.TryGetValue(UserPreferenceDefaultRequestCultureProvider.UserLanguagePreference, out _))
+                    return Redirect($"/rsvp/{code}?culture={invitationData.Design.DefaultCulture}");
+                HttpContext.Items["TenantName"] = tenant_name;
+                return View("Invitation/View", viewModel);
+            }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         [Route("/{id}/{tenant_name?}")]
         public async Task<IActionResult> GetView(Guid id, string tenant_name = null)
         {
             var tenantId = await GetTenantId(tenant_name);
             using (CurrentTenant.Change(tenantId))
             {
-                HttpContext.Response.Cookies.Append("tenant_name", tenant_name ?? "");
-                var invitationData = ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(await Repository.GetWithFullNavigationByIdAsync(id));
-                var viewModel = ObjectMapper.Map<InvitationWithNavigationPropertiesDto, ViewInvitationModel>(invitationData);
-                await viewModel.PrepareAsync(HttpContext.RequestServices);
-                if (HttpContext.Items.TryGetValue(UserPreferenceDefaultRequestCultureProvider.UserLanguagePreference, out _))
-                    return Redirect($"/{id}/{tenant_name}?culture={invitationData.Design.DefaultCulture}");
-                HttpContext.Items["TenantName"] = tenant_name;
-                return View("Invitation/View", viewModel);
+                var data = await Repository.GetAsync(id);
+                return Redirect($"/rsvp/{data.UniqueCode}");
             }
         }
 

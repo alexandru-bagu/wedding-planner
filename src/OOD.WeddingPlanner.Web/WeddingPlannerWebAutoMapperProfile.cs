@@ -13,6 +13,7 @@ using OOD.WeddingPlanner.Web.Pages.Invitees.ViewModels;
 using OOD.WeddingPlanner.Web.Pages.Locations.ViewModels;
 using OOD.WeddingPlanner.Web.Pages.Tables.ViewModels;
 using OOD.WeddingPlanner.Web.Pages.Weddings.ViewModels;
+using OOD.WeddingPlanner.TableInvitees.Dtos;
 using OOD.WeddingPlanner.Weddings.Dtos;
 
 namespace OOD.WeddingPlanner.Web

@@ -194,12 +194,18 @@ namespace OOD.WeddingPlanner.Migrations
                         .HasColumnType("char(36)")
                         .HasColumnName("TenantId");
 
+                    b.Property<string>("UniqueCode")
+                        .HasColumnType("varchar(255)");
+
                     b.Property<Guid?>("WeddingId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DesignId");
+
+                    b.HasIndex("UniqueCode")
+                        .IsUnique();
 
                     b.HasIndex("WeddingId");
 
@@ -268,9 +274,6 @@ namespace OOD.WeddingPlanner.Migrations
                     b.Property<string>("Surname")
                         .HasColumnType("longtext");
 
-                    b.Property<Guid?>("TableId")
-                        .HasColumnType("char(36)");
-
                     b.Property<Guid?>("TenantId")
                         .HasColumnType("char(36)")
                         .HasColumnName("TenantId");
@@ -278,8 +281,6 @@ namespace OOD.WeddingPlanner.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("InvitationId");
-
-                    b.HasIndex("TableId");
 
                     b.ToTable("AppInvitees", (string)null);
                 });
@@ -347,6 +348,63 @@ namespace OOD.WeddingPlanner.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppLocations", (string)null);
+                });
+
+            modelBuilder.Entity("OOD.WeddingPlanner.TableInvitees.TableInvitee", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<Guid?>("InviteeId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<Guid?>("TableId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("TenantId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InviteeId");
+
+                    b.HasIndex("TableId");
+
+                    b.HasIndex("TableId", "InviteeId")
+                        .IsUnique();
+
+                    b.ToTable("AppTableInvitees", (string)null);
                 });
 
             modelBuilder.Entity("OOD.WeddingPlanner.Tables.Table", b =>
@@ -2420,11 +2478,20 @@ namespace OOD.WeddingPlanner.Migrations
                         .WithMany("Invitees")
                         .HasForeignKey("InvitationId");
 
+                    b.Navigation("Invitation");
+                });
+
+            modelBuilder.Entity("OOD.WeddingPlanner.TableInvitees.TableInvitee", b =>
+                {
+                    b.HasOne("OOD.WeddingPlanner.Invitees.Invitee", "Invitee")
+                        .WithMany("TableAssignments")
+                        .HasForeignKey("InviteeId");
+
                     b.HasOne("OOD.WeddingPlanner.Tables.Table", "Table")
-                        .WithMany("Invitees")
+                        .WithMany("TableAssignments")
                         .HasForeignKey("TableId");
 
-                    b.Navigation("Invitation");
+                    b.Navigation("Invitee");
 
                     b.Navigation("Table");
                 });
@@ -2730,6 +2797,11 @@ namespace OOD.WeddingPlanner.Migrations
                     b.Navigation("Invitees");
                 });
 
+            modelBuilder.Entity("OOD.WeddingPlanner.Invitees.Invitee", b =>
+                {
+                    b.Navigation("TableAssignments");
+                });
+
             modelBuilder.Entity("OOD.WeddingPlanner.Locations.Location", b =>
                 {
                     b.Navigation("Events");
@@ -2737,7 +2809,7 @@ namespace OOD.WeddingPlanner.Migrations
 
             modelBuilder.Entity("OOD.WeddingPlanner.Tables.Table", b =>
                 {
-                    b.Navigation("Invitees");
+                    b.Navigation("TableAssignments");
                 });
 
             modelBuilder.Entity("OOD.WeddingPlanner.Weddings.Wedding", b =>

@@ -40,9 +40,6 @@ abp.modals.designModal = function () {
                 });
 
                 var iframe = modal.find('iframe#preview')[0];
-                editor.getModel().onDidChangeContent(() => {
-                    updateIframe();
-                });
 
                 design.measurementUnit.subscribe(updateIframe);
                 design.paperWidth.subscribe(updateIframe);
@@ -63,6 +60,7 @@ abp.modals.designModal = function () {
                     }
                 }
                 updateIframe();
+                modal.find('[data-bs-toggle="pill"]').on('click', updateIframe);
 
                 var submit = modal.find('button:not([data-dismiss])');
                 submit.on('click', function () {

@@ -12,8 +12,6 @@ namespace OOD.WeddingPlanner.Invitees.Dtos
 
         public Guid? InvitationId { get; set; }
 
-        public Guid? TableId { get; set; }
-
         public DateTime? RSVP { get; set; }
 
         public bool? Confirmed { get; set; }

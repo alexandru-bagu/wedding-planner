@@ -16,6 +16,8 @@ namespace OOD.WeddingPlanner.Invitations.Dtos
 
         public string Destination { get; set; }
 
+        public string UniqueCode { get; set; }
+
         public List<InviteeDto> Invitees { get; set; }
     }
 }

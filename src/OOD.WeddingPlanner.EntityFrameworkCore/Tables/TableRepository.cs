@@ -33,7 +33,7 @@ namespace OOD.WeddingPlanner.Tables
             {
                 Table = p,
                 Event = p.Event,
-                Invitees = p.Invitees
+                Assignments = p.TableAssignments
             })
             .OrderBy(string.IsNullOrWhiteSpace(sorting) ? $"{nameof(TableWithNavigationProperties.Table)}.{nameof(Table.Name)}" : sorting)
             .Skip(skipCount).Take(maxResultCount).ToListAsync();
@@ -57,7 +57,7 @@ namespace OOD.WeddingPlanner.Tables
             {
                 Table = p,
                 Event = p.Event,
-                Invitees = p.Invitees
+                Assignments = p.TableAssignments
             })
             .SingleAsync();
         }

@@ -121,6 +121,7 @@ namespace OOD.WeddingPlanner.Web
                     bundle.AddContributors(new MonacoEditorJsBundleContributor());
                     bundle.AddContributors(new QrCodeJsBundleContributor());
                     bundle.AddContributors(new GlobalJsBundleContributor());
+                    bundle.AddContributors(new GlobalizationJsBundleContributor());
                 });
             });
         }

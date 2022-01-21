@@ -1,5 +1,6 @@
 using OOD.WeddingPlanner.Events;
 using OOD.WeddingPlanner.Invitees;
+using OOD.WeddingPlanner.TableInvitees;
 using System;
 using System.Collections.Generic;
 using Volo.Abp.Domain.Entities.Auditing;
@@ -25,7 +26,7 @@ namespace OOD.WeddingPlanner.Tables
 
         public virtual Event Event { get; set; }
 
-        public virtual List<Invitee> Invitees { get; set; } = new List<Invitee>();
+        public virtual List<TableInvitee> TableAssignments { get; set; } = new List<TableInvitee>();
 
         protected Table()
         {

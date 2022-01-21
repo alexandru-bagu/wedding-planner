@@ -4,17 +4,89 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/libs/bootstrap/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Love+Light&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
     <title data-bind="text: invitation.destination"></title>
+    <style>
+      .body { position: relative; }
+      .groom-bride-name {
+        font-family: 'Love Light', cursive;
+        position: absolute; top: 110px;  left: 5px;
+        font-size: 86px;  line-height:30px; color: black;
+      }
+      .content { font-family: 'Nunito', sans-serif; }
+      hr {
+        border: 0; clear:both; display:block; width: 96%;        
+        background-color:silver; height: 2px; margin: 4px; margin-left: 2%;       
+      }
+      h6 { margin-bottom: 0px; }
+      .m-l-6 { margin-left: 6px; }
+      .d-ib-33w { display: inline-block; width: 32.7%; padding: 4px; text-align: center; text-transform: uppercase; }
+      .v-r { border-right: 1px solid silver; }
+      .v-l { border-left: 1px solid silver; }
+      .message { width: 100%; padding: 4px; display: inline-block; }
+      .br::before { content: "\A"; white-space: pre;  }
+      .br { display: block; }
+    </style>
   </head>
   <body data-bind="style: { width: width, height: height }">
-      <h1 data-bind="text: invitation.destination"></h1>
-      <img data-bind="attr: { src: qrCode }" />
+      <img src="https://cdn.optiononetech.com/data/flower_crown_r20.png"  data-bind="style: { width: width }"/>
+      <span class="groom-bride-name align-middle text-center" data-bind="style: { width: width }">
+        <span class="br" data-bind="text: wedding.groomName"></span>
+        <span class="br">și</span>
+        <span class="br" data-bind="text: wedding.brideName"></span>
+      </span>
+      <div class="content">
+        <h6 class="m-l-6" data-bind="text: invitation.destination + ','"></h6>
+        <hr>
+        <span class="text-center message">
+          avem marea placerea de a vă invita la celebrarea căsătoriei noastre. 
+        </span>
+        <hr>
+        <div style="width: 100%">
+          <div class="d-ib-33w align-middle">
+            <h1 data-bind="text: invitation.mainEvent.time"></h1>
+          </div>
+          <div class="d-ib-33w v-r v-l align-middle">
+            <div data-bind="text: invitation.mainEvent.day"></div>
+            <div data-bind="text: invitation.mainEvent.month"></div>
+            <div data-bind="text: invitation.mainEvent.year"></div>
+          </div>
+          <div class="d-ib-33w align-middle">
+            <div data-bind="text: invitation.mainEvent.location"></div>
+            <div data-bind="text: invitation.mainEvent.locationAddress"></div>
+          </div>
+        </div>
+        <hr>
+      </div>
+      <img data-bind="attr: { src: qrCode }" style="width: 64px" />
       <script src="/libs/jquery/jquery.js"></script>
       <script src="/libs/bootstrap/js/bootstrap.bundle.js"></script>
       <script src="/libs/popper.js/dist/umd/popper.min.js"></script>
       <script src="/libs/knockout/build/output/knockout-latest.js"></script>
       <script src="/libs/qrcodejs/qrcode.min.js"></script>
       <script>/*INVITATION DATA*/</script>
+      <script>
+        (function(invitation, wedding) {
+          var culture = 'ro-RO';
+          var event = {};
+          var evt = wedding.events[0] || { location: {} };
+          invitation.mainEvent = event;
+          var dtstr = evt.time.replace(/Z$/g, '').replace(/\+[0-9]{2}:[0-9]{2}$/g, '')  + 'Z';
+          var dt = new Date(dtstr);
+          const monthNames = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie",
+            "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"
+          ];
+          event.time = dt.getHours() + ':' + dt.getMinutes();
+          event.day = dt.getDate();
+          event.month = monthNames[dt.getMonth()];
+          event.year = dt.getFullYear();
+          event.location = evt.location.name;
+          event.locationAddress = evt.location.address;
+        })(invitation.invitation, invitation.wedding);
+      </script>
       <script src="/Pages/InvitationDesigns/invitation.js"></script>
   </body>
 </html>

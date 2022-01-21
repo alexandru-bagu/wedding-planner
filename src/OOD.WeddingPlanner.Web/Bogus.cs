@@ -27,7 +27,8 @@ namespace OOD.WeddingPlanner.Web
                 Wedding = wedding,
                 Design = invitationDesign,
                 DesignId = invitationDesign.Id,
-                Invitees = invitees
+                Invitees = invitees,
+                UniqueCode = "code"
             };
             for (int i = 0; i < 4; i++)
             {

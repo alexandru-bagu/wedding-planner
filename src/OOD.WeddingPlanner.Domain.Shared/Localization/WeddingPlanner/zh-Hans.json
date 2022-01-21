@@ -74,6 +74,14 @@
     "TableY": "TableY",
     "CreateTable": "CreateTable",
     "EditTable": "EditTable",
-    "TableDeletionConfirmationMessage": "Are you sure to delete the table {0}?"
+    "TableDeletionConfirmationMessage": "Are you sure to delete the table {0}?",
+    "Permission:TableInvitee": "TableInvitee",
+    "Menu:TableInvitee": "MenuTableInvitee",
+    "TableInvitee": "TableInvitee",
+    "TableInviteeTableId": "TableInviteeTableId",
+    "TableInviteeInviteeId": "TableInviteeInviteeId",
+    "CreateTableInvitee": "CreateTableInvitee",
+    "EditTableInvitee": "EditTableInvitee",
+    "TableInviteeDeletionConfirmationMessage": "Are you sure to delete the tableInvitee {0}?"
   }
 }

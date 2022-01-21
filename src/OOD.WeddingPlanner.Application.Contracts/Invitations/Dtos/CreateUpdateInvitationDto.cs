@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace OOD.WeddingPlanner.Invitations.Dtos
 {
     [Serializable]
-    public class CreateUpdateInvitationDto
+    public class CreateUpdateInvitationDto : UniqueInvitationDto
     {
         public Guid? WeddingId { get; set; }
 
