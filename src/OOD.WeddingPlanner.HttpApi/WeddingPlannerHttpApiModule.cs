@@ -1,4 +1,4 @@
-﻿using Localization.Resources.AbpUi;
+using Localization.Resources.AbpUi;
 using OOD.WeddingPlanner.Localization;
 using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;
@@ -8,6 +8,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement.HttpApi;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
+using EasyAbp.Abp.SettingUi;
 
 namespace OOD.WeddingPlanner
 {
@@ -20,6 +21,7 @@ namespace OOD.WeddingPlanner
         typeof(AbpFeatureManagementHttpApiModule),
         typeof(AbpSettingManagementHttpApiModule)
         )]
+    [DependsOn(typeof(AbpSettingUiHttpApiModule))]
     public class WeddingPlannerHttpApiModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)

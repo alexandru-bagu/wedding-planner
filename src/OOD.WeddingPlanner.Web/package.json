@@ -3,7 +3,7 @@
   "name": "my-app",
   "private": true,
   "dependencies": {
-    "@abp/aspnetcore.mvc.ui.theme.basic": "^5.0.0",
+    "@abp/aspnetcore.mvc.ui.theme.basic": "~5.1.2",
     "cldr-data": "^36.0.0",
     "globalize": "^1.7.0",
     "ionicons": "2.0.1",

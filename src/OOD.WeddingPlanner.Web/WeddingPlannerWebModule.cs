@@ -43,6 +43,7 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
 using WkHtmlToPdfDotNet;
 using WkHtmlToPdfDotNet.Contracts;
+using EasyAbp.Abp.SettingUi.Web;
 
 namespace OOD.WeddingPlanner.Web
 {
@@ -60,6 +61,7 @@ namespace OOD.WeddingPlanner.Web
         typeof(AbpSwashbuckleModule),
         typeof(AbpAspNetCoreMvcUiStislaThemeModule)
         )]
+    [DependsOn(typeof(AbpSettingUiWebModule))]
     public class WeddingPlannerWebModule : AbpModule
     {
         public override void PreConfigureServices(ServiceConfigurationContext context)

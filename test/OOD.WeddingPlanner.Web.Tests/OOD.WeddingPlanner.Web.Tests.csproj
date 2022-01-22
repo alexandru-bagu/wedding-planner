@@ -17,7 +17,7 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.36" />
     <ProjectReference Include="..\OOD.WeddingPlanner.Application.Tests\OOD.WeddingPlanner.Application.Tests.csproj" />
     <ProjectReference Include="..\..\src\OOD.WeddingPlanner.Web\OOD.WeddingPlanner.Web.csproj" />
-    <PackageReference Include="Volo.Abp.AspNetCore.TestBase" Version="5.0.0" />
+    <PackageReference Include="Volo.Abp.AspNetCore.TestBase" Version="5.1.2" />
   </ItemGroup>
 
   <ItemGroup>

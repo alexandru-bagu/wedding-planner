@@ -1,4 +1,4 @@
-﻿using OOD.WeddingPlanner.Localization;
+using OOD.WeddingPlanner.Localization;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.FeatureManagement;
@@ -13,6 +13,8 @@ using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.Localization;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
+using EasyAbp.Abp.SettingUi;
+using EasyAbp.Abp.SettingUi.Localization;
 
 namespace OOD.WeddingPlanner
 {
@@ -26,6 +28,7 @@ namespace OOD.WeddingPlanner
         typeof(AbpSettingManagementDomainSharedModule),
         typeof(AbpTenantManagementDomainSharedModule)
         )]
+    [DependsOn(typeof(AbpSettingUiDomainSharedModule))]
     public class WeddingPlannerDomainSharedModule : AbpModule
     {
         public override void PreConfigureServices(ServiceConfigurationContext context)
@@ -43,6 +46,10 @@ namespace OOD.WeddingPlanner
 
             Configure<AbpLocalizationOptions>(options =>
             {
+                options.Resources
+                    .Get<SettingUiResource>()
+                    .AddVirtualJson("/Localization/WeddingPlanner");
+
                 options.Resources
                     .Add<WeddingPlannerResource>("en")
                     .AddBaseTypes(typeof(AbpValidationResource))
