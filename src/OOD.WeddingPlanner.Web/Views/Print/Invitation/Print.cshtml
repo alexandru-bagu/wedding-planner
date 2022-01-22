@@ -1,12 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Serialization
-@using System.Globalization
 @model OOD.WeddingPlanner.Invitations.Dtos.InvitationWithNavigationPropertiesDto
 @{
     Layout = null;
     var body = Model.Design.Body;
-    var data = "var invitation = " + Json.Serialize(Model, new JsonSerializerSettings() { Culture = CultureInfo.InvariantCulture }).ToString();
+    var data = "var invitation = " + Json.Serialize(Model).ToString();
     body = body.Replace("/*INVITATION DATA*/", data);
 }
 @Html.Raw(body)
