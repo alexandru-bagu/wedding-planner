@@ -19,9 +19,11 @@ abp.modals.designModal = function () {
             var h = $("[name='ViewModel.PaperHeight']");
             var dpi = $("[name='ViewModel.PaperDpi']");
             design.measurementUnit = ko.observable(mu.val());
+
             design.paperWidth = ko.observable(w.val());
             design.paperHeight = ko.observable(h.val());
             design.paperDpi = ko.observable(dpi.val());
+
             window.bogusInvitation.debug = true;
 
             mu.attr('data-bind', 'value: measurementUnit');
@@ -49,7 +51,14 @@ abp.modals.designModal = function () {
                 function updateIframe() {
                     if (iframe && iframe.contentWindow && iframe.contentWindow.document) {
                         var content = editor.getValue();
-                        content = content.replace('/*INVITATION DATA*/', "var invitation = " + ko.toJSON(window.bogusInvitation));
+
+                        var jsonStr = ko.toJSON(window.bogusInvitation);
+                        var json = JSON.parse(jsonStr);
+                        json.design.paperWidth = Globalize.parseNumber(json.design.paperWidth);
+                        json.design.paperHeight = Globalize.parseNumber(json.design.paperHeight);
+                        json.design.paperDpi = Globalize.parseNumber(json.design.paperDpi);
+
+                        content = content.replace('/*INVITATION DATA*/', "var invitation = " + JSON.stringify(json));
                         iframe.contentWindow.document.open();
                         iframe.contentWindow.document.write('clean');
                         iframe.contentWindow.document.close();

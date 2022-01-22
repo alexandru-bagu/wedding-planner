@@ -271,3 +271,6 @@ WeddingPlanner.db-shm
 
 Logs
 tempkey.jwk
+
+
+src/OOD.WeddingPlanner.Web/wwwroot/libs/jquery-validation-globalize/globalize-*.js
