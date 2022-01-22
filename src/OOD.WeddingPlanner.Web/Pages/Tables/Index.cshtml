@@ -45,10 +45,10 @@
         </abp-card-header>
         <abp-card-body>
             <abp-row>
-                <abp-column size=_3>
+                <abp-column size-md=_3>
                     <abp-select asp-for="Wedding" data-bind="select2, options: weddings, optionsText: 'text', optionsValue: 'value', value: wedding"></abp-select>
                 </abp-column>
-                <abp-column size=_3>
+                <abp-column size-md=_3>
                     <abp-select asp-for="Event" data-bind="select2, options: events, optionsText: 'text', optionsValue: 'value', value: event"></abp-select>
                 </abp-column>
             </abp-row>
@@ -62,16 +62,16 @@
 </div>
 
 <script type="text/html" id="table-template">
-    <abp-column size=_4>
+    <abp-column size-md=_4>
       <abp-card>
         <abp-card-header>
           <abp-container>
             <abp-row>
-              <abp-column size=_9>
+              <abp-column size-md=_9>
                 <h4 data-bind="text: name"></h4>
                 <span data-bind="text: description"></span>
               </abp-column>
-              <abp-column size=_3 class="text-right">
+              <abp-column size-md=_3 class="text-right">
                 <span class="btn btn-secondary" data-bind="visible: canEdit, click: editTable"><i class="fas fa-pencil-alt"></i></span>
                 <span class="btn btn-danger" data-bind="visible: canDelete, click: deleteTable"><i class="fas fa-trash"></i></span>
               </abp-column>
@@ -93,10 +93,10 @@
 
 <script type="text/html" id="invitee-template">
     <abp-row class="lh-44">
-      <abp-column size=_1>
+      <abp-column size-md=_1>
         <span class="no-word-wrap" data-bind="text: number() + '.'"></span>
       </abp-column>
-      <abp-column size=_10>
+      <abp-column size-md=_10>
         <select data-bind="select2, options: invitees, optionsText: 'text', optionsValue: 'value', value: invitee" />
       </abp-column>
     </abp-row>
