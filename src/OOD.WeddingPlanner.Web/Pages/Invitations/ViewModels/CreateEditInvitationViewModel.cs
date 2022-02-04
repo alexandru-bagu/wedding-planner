@@ -29,7 +29,6 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.ViewModels
 
         [Required]
         [Display(Name = "InvitationPlusOne")]
-        [InputInfoText("InvitationPlusOne")]
         [SelectItems(nameof(BooleanItems))]
         public bool PlusOne { get; set; }
 
