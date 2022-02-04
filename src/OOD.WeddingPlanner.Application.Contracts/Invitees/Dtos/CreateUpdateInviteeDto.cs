@@ -15,6 +15,8 @@ namespace OOD.WeddingPlanner.Invitees.Dtos
 
         public bool? Confirmed { get; set; }
 
+        public bool Child { get; set; }
+
         public bool Male { get; set; }
 
         public bool PlusOne { get; set; }

@@ -34,7 +34,8 @@ namespace OOD.WeddingPlanner
             CreateMap<CreateUpdateLocationDto, Location>(MemberList.Source);
             CreateMap<CreateUpdateEventDto, Event>(MemberList.Source);
             CreateMap<CreateUpdateInviteeDto, Invitee>(MemberList.Source);
-            CreateMap<CreateUpdateInvitationDto, Invitation>(MemberList.Source);
+            CreateMap<CreateUpdateInvitationDto, Invitation>(MemberList.Source)
+                .AfterMap((dto, entity) => entity.UniqueCode = ((IUniqueCoded)dto).UniqueCode);
             CreateMap<CreateUpdateWeddingDto, Wedding>(MemberList.Source);
             CreateMap<CreateUpdateInvitationDesignDto, InvitationDesign>(MemberList.Source);
             CreateMap<CreateUpdateTableDto, Table>(MemberList.Source);

@@ -28,8 +28,9 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees
         public virtual async Task OnGetAsync()
         {
             ViewModel = new CreateEditInviteeViewModel();
+            ViewModel.PlusOne = false;
+
             ViewModel.BooleanItems.AddRange(new[] {
-                new SelectListItem("", ""),
                 new SelectListItem(L["No"].Value, "False"),
                 new SelectListItem(L["Yes"].Value, "True"),
             });

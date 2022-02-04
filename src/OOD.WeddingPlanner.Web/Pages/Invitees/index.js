@@ -5,8 +5,8 @@ $(function () {
     var service = oOD.weddingPlanner.invitees.invitee;
     var createModal = new abp.ModalManager({
         viewUrl: abp.appPath + 'Invitees/CreateModal',
-        scriptUrl: "/Pages/Invitees/invitee.js",
-        modalClass: "inviteeModal"
+        scriptUrl: "/Pages/Invitees/create.js",
+        modalClass: "inviteeCreateModal"
     });
     var editModal = new abp.ModalManager({
         viewUrl: abp.appPath + 'Invitees/EditModal',
