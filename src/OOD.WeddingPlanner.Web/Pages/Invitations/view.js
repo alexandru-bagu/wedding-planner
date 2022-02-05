@@ -16,8 +16,8 @@
     $(document).on('change', '[data-rsvp]', async function (evt) {
         var el = $("[name='" + evt.target.name + "']:checked");
         var menu = $('[data-menu][data-invitee-id="'+el.data('invitee-id')+'"]');
-        if (el.val() === "false") { menu.closest(".child-menu").addClass("d-none"); } 
-        else { menu.closest(".child-menu").removeClass("d-none"); }
+        if (el.val() === "false") { menu.closest(".invitee-menu").addClass("d-none"); } 
+        else { menu.closest(".invitee-menu").removeClass("d-none"); }
         await abp.ajax({ url: abp.appPath + 'RSVP/' + el.data('invitee-id') + '/' + (abp.currentTenant.name ?? ""), data: JSON.stringify(el.val()) });
         abp.notify.info(l('SuccessfullyUpdated'));
     });
