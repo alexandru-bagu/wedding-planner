@@ -18,6 +18,8 @@ namespace OOD.WeddingPlanner.Invitees.Dtos
         public bool Child { get; set; }
 
         public bool Male { get; set; }
+        
+        public string Menu { get; set; }
 
         public bool PlusOne { get; set; }
 

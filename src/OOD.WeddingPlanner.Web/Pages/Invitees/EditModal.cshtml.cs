@@ -54,10 +54,17 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees
                 ViewModel.InvitationItems.AddRange(
                   (await _invitationAppService.GetLookupListAsync(new LookupInvitationsInputDto() { WeddingId = dto.Wedding.Id }))
                     .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
+            ViewModel.MenuTypes.AddRange(new[] {
+                new SelectListItem("", ""),
+                new SelectListItem(L["MenuNone"].Value, "None"),
+                new SelectListItem(L["MenuChild"].Value, "Child"),
+                new SelectListItem(L["MenuAdult"].Value, "Adult")
+            });
         }
 
         public virtual async Task<IActionResult> OnPostAsync()
         {
+            if(!ViewModel.Child.Value && string.IsNullOrWhiteSpace(ViewModel.Menu)) ViewModel.Menu = "Adult";
             var dto = ObjectMapper.Map<CreateEditInviteeViewModel, CreateUpdateInviteeDto>(ViewModel);
             await _service.UpdateAsync(Id, dto);
             return NoContent();

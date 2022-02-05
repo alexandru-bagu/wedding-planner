@@ -28,6 +28,8 @@ namespace OOD.WeddingPlanner.Invitees
 
         public virtual bool PlusOne { get; set; }
 
+        public virtual string Menu { get; set;}
+
         public virtual int Order { get; set; }
 
         public virtual Invitation Invitation { get; set; }

@@ -29,6 +29,10 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees.ViewModels
         [SelectItems(nameof(BooleanItems))]
         public bool? Male { get; set; }
 
+        [Display(Name = "InviteeMenu")]
+        [SelectItems(nameof(MenuTypes))]
+        public string Menu { get; set; }
+
         [Required]
         [Display(Name = "InviteeOrder")]
         public int Order { get; set; }
@@ -56,5 +60,6 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees.ViewModels
         public List<SelectListItem> BooleanItems { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> InvitationItems { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> WeddingItems { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> MenuTypes { get; set; } = new List<SelectListItem>();
     }
 }

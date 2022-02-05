@@ -25,6 +25,13 @@ $(function () {
                     return '';
                 }
                 return value === 'true';
+            })(),
+            child: (function () {
+                var value = $("#ChildFilter").val();
+                if (value === undefined || value === null || value === '') {
+                    return '';
+                }
+                return value === 'true';
             })()
         };
     };
@@ -78,23 +85,34 @@ $(function () {
             },
             {
                 title: l('InviteeRSVP'),
-                data: "invitee.rsvp"
+                render: function (_, type, record) {
+                    if(record.invitee.rsvp) {
+                        var date = new Date(record.invitee.rsvp);
+                        return date.toLocaleTimeString() + " " + date.toLocaleDateString();
+                    } else {
+                        return '';
+                    }
+                }
             },
             {
                 title: l('InviteeConfirmed'),
                 data: "invitee.confirmed"
             },
             {
-                title: l('InviteeChild'),
-                data: "invitee.child"
+                title: l('InviteePersonType'),
+                render: function (_, type, record) {
+                    var age = l("Adult");
+                    var gender = l("Female");
+                    var plusOne = "";
+                    if (record.invitee.child) age = l("Child");
+                    if (record.invitee.male) gender = l("Male");
+                    if (record.invitee.plusOne) plusOne = "(+1)";
+                    return gender + " <span style='color: red'>" + age + "</strong> " + plusOne;
+                }
             },
             {
-                title: l('InviteeMale'),
-                data: "invitee.male"
-            },
-            {
-                title: l('InviteePlusOne'),
-                data: "invitee.plusOne"
+                title: l('InviteeMenu'),
+                data: "invitee.menu"
             },
             {
                 title: l('Invitation'),

@@ -109,6 +109,16 @@
     "InvitationPlusOne": "Plus unul permis",
     "InviteePlusOne": "Plus unul",
     "AddPlusOne": "Adaugă plus-unul tău",
-    "UpdateFailed": "Modificarea nu a reușit"
+    "UpdateFailed": "Modificarea nu a reușit",
+    "InviteeMenu": "Meniu",
+    "MenuNone": "Fară meniu",
+    "MenuChild": "Meniu copii",
+    "MenuAdult": "Meniu adulți",
+    "InviteePersonType": "Tip persoana",
+    "Child": "Copil",
+    "Adult": "Adult",
+    "Male": "Bărbat",
+    "Female": "Femeie",
+    "Select a menu": "Alege un meniu"
   }
 }

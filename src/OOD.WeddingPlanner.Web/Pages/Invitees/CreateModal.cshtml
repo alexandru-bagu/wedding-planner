@@ -17,7 +17,6 @@
         <abp-modal-body>
             <abp-input asp-for="ViewModel.Surname"/>
             <abp-input asp-for="ViewModel.Name" />
-
             <div>
                 <input type="checkbox" class="btn-check" id="child-toggle" autocomplete="off">
                 <label class="btn btn-outline-primary" for="child-toggle">
@@ -32,14 +31,15 @@
                     <i class="fa fa-female"></i> @L["Female"]
                 </label>
             </div>
+            <abp-input asp-for="ViewModel.Order" />
             <a href="#" class="show-invitee-details">@L["Show Details"]</a>
             <div class="invitee-details d-none">
-                <abp-input asp-for="ViewModel.Order" />
                 <abp-input asp-for="ViewModel.RSVP" />
                 @L["Confirmed"] <abp-radio asp-for="ViewModel.Confirmed" inline="true" asp-items="Model.ViewModel.BooleanItems" />
                 @L["PlusOne"] <abp-radio asp-for="ViewModel.PlusOne" inline="true" asp-items="Model.ViewModel.BooleanItems" />
                 <abp-select asp-for="ViewModel.WeddingId" asp-items="Model.ViewModel.WeddingItems" />
                 <abp-select asp-for="ViewModel.InvitationId" />
+                <abp-select asp-for="ViewModel.Menu" asp-items="Model.ViewModel.MenuTypes" />
             </div>
             <div class="d-none">
                 <abp-select asp-for="ViewModel.Child" asp-items="Model.ViewModel.BooleanItems" />

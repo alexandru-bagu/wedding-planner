@@ -9,14 +9,16 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees
     {
         public string NameFilter { get; set; }
         public string SurnameFilter { get; set; }
-        [SelectItems(nameof(ConfirmFilterItems))]
+        [SelectItems(nameof(BooleanFilterItems))]
         public bool? ConfirmedFilter { get; set; }
+        [SelectItems(nameof(BooleanFilterItems))]
+        public bool? ChildFilter { get; set; }
 
-        public List<SelectListItem> ConfirmFilterItems { get; set; }
+        public List<SelectListItem> BooleanFilterItems { get; set; }
 
         public virtual async Task OnGetAsync()
         {
-            ConfirmFilterItems =
+            BooleanFilterItems =
                new List<SelectListItem>
                {
                 new SelectListItem("", ""),

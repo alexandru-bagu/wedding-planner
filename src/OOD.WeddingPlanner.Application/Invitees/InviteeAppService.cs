@@ -41,6 +41,8 @@ namespace OOD.WeddingPlanner.Invitees
                 p => p.Invitee.Surname.Contains(input.Surname));
             query = query.WhereIf(input.Confirmed.HasValue,
                 p => p.Invitee.Confirmed == input.Confirmed);
+            query = query.WhereIf(input.Child.HasValue,
+                p => p.Invitee.Child == input.Child);
             return query.Select(p => p.Invitee);
         }
 
