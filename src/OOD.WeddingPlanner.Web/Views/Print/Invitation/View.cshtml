@@ -12,12 +12,17 @@
 @{
     Layout = ThemeManager.CurrentTheme.GetLayout(StandardLayouts.Empty);
 
-    Func<string, IEnumerable<SelectListItem>> get_menu = (selected) => { 
+    Func<string, bool, IEnumerable<SelectListItem>> get_menu = (selected, child) => { 
         IEnumerable<SelectListItem> ret = new [] {
             new SelectListItem(L["MenuNone"].Value, "None", selected == "None"),
             new SelectListItem(L["MenuChild"].Value, "Child", selected == "Child"),
             new SelectListItem(L["MenuAdult"].Value, "Adult", selected == "Adult")
         };
+        if(!child) {
+            ret = new [] {
+                new SelectListItem(L["MenuAdult"].Value, "Adult", selected == "Adult")
+            };
+        }
 
         if(string.IsNullOrWhiteSpace(selected)) {
             ret = new [] { new SelectListItem(L["Select a menu"].Value, "None", string.IsNullOrWhiteSpace(selected)) }
@@ -50,7 +55,7 @@
     .d-none {
         display: none;
     }
-    .child-menu select {
+    .invitee-menu select {
         height: 30px !important;
         padding: 0px !important;
     }
@@ -87,7 +92,7 @@
                         @foreach (var invitee in Model.Invitation.Invitees)
                         {
                             <div class="col-auto">
-                                <div class="input-group mb-3">
+                                <div class="input-group mb-1">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
                                             @{
@@ -119,17 +124,14 @@
                                                 <input class="form-check-input" type="radio" name="rsvp-@invitee.Id" id="rsvp-@invitee.Id-2" value="true" data-invitee-id="@invitee.Id" data-rsvp @Html.Raw((invitee.Confirmed == true) ? "checked" : "")>
                                                 <label class="form-check-label" for="rsvp-@invitee.Id-2">@L["Yes"]</label>
                                             </div>
-                                            @{
-                                                if (invitee.Child)
-                                                {
-                                                    <div class="child-menu @((!(invitee.Confirmed ?? true) ? "d-none" : ""))">
-                                                        <select class="form-control" data-menu data-invitee-id="@invitee.Id" name="menu-@invitee.Id" aria-placeholder="@(L["Select a menu"])" asp-items="get_menu(invitee.Menu)"></select>
-                                                    </div>
-                                                }
-                                            }
                                         </span>
                                     </div>
                                 </div>
+                                @{
+                                    <div class="invitee-menu @(((invitee.Confirmed.HasValue && invitee.Confirmed.Value) ? "" : "d-none"))">
+                                        <select class="form-control" data-menu data-invitee-id="@invitee.Id" name="menu-@invitee.Id" aria-placeholder="@(L["Select a menu"])" asp-items="get_menu(invitee.Menu, invitee.Child)"></select>
+                                    </div>
+                                }
                             </div>
                         }
                         @if (Model.Invitation.PlusOne && !Model.Invitation.Invitees.Any(p => p.PlusOne))
