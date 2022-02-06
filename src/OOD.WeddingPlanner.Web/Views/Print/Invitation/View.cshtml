@@ -25,7 +25,7 @@
         }
 
         if(string.IsNullOrWhiteSpace(selected)) {
-            ret = new [] { new SelectListItem(L["Select a menu"].Value, "None", string.IsNullOrWhiteSpace(selected)) }
+            ret = new [] { new SelectListItem(L["Select a menu"].Value, "None", string.IsNullOrWhiteSpace(selected), true) }
                 .Concat(ret);
         }
         return ret;
@@ -88,10 +88,10 @@
                             <span>@L["PleaseConfirmInvitees"]</span>
                         </abp-tab>
                     </abp-tabs>
-                    <div class="form-row align-items-center">
+                    <div class="form-row">
                         @foreach (var invitee in Model.Invitation.Invitees)
                         {
-                            <div class="col-auto">
+                            <div class="col-auto align-top">
                                 <div class="input-group mb-1">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -128,9 +128,12 @@
                                     </div>
                                 </div>
                                 @{
-                                    <div class="invitee-menu @(((invitee.Confirmed.HasValue && invitee.Confirmed.Value) ? "" : "d-none"))">
-                                        <select class="form-control" data-menu data-invitee-id="@invitee.Id" name="menu-@invitee.Id" aria-placeholder="@(L["Select a menu"])" asp-items="get_menu(invitee.Menu, invitee.Child)"></select>
-                                    </div>
+                                    if (invitee.Child)
+                                    {
+                                        <div class="invitee-menu @(((invitee.Confirmed.HasValue && invitee.Confirmed.Value) ? "" : "d-none"))">
+                                            <select class="form-control" data-menu data-invitee-id="@invitee.Id" name="menu-@invitee.Id" aria-placeholder="@(L["Select a menu"])" asp-items="get_menu(invitee.Menu, invitee.Child)"></select>
+                                        </div>
+                                    }
                                 }
                             </div>
                         }
