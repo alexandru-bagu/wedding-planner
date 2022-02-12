@@ -111,6 +111,7 @@
     "Adult": "Adult",
     "Male": "Male",
     "Female": "Female",
-    "Select a menu": "Select a menu"
+    "Select a menu": "Select a menu",
+    "InvitationUniqueCode": "Unique Code"
   }
 }

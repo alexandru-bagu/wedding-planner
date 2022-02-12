@@ -119,6 +119,7 @@
     "Adult": "Adult",
     "Male": "Bărbat",
     "Female": "Femeie",
-    "Select a menu": "Alege un meniu"
+    "Select a menu": "Alege un meniu",
+    "InvitationUniqueCode": "Unique Code"
   }
 }
