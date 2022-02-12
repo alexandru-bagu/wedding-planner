@@ -5,7 +5,6 @@ RUN apt -y update && apt -y install git
 WORKDIR /app
 COPY .git /app/.git
 RUN git checkout .
-RUN dotnet restore OOD.WeddingPlanner.sln
 RUN dotnet publish -c Release -o /app/build/web src/OOD.WeddingPlanner.Web/OOD.WeddingPlanner.Web.csproj
 RUN dotnet publish -c Release -o /app/build/dbmigrator src/OOD.WeddingPlanner.DbMigrator/OOD.WeddingPlanner.DbMigrator.csproj
 
