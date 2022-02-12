@@ -58,7 +58,7 @@ abp.modals.inviteeCreateModal = function () {
             var wedding = modal.find('[name="ViewModel.WeddingId"]');
             var invitation = modal.find('[name="ViewModel.InvitationId"]');
             invitation.data('value', invitation.val());
-            wedding.off('change').change(async function (evt) {
+            wedding.on("change", async function (evt) {
                 var value = invitation.data('value');
                 invitation.empty();
                 if (wedding.val()) {

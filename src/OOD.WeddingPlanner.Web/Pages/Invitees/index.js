@@ -24,14 +24,21 @@ $(function () {
                 if (value === undefined || value === null || value === '') {
                     return '';
                 }
-                return value === 'true';
+                return value.toLowerCase() === 'true';
             })(),
             child: (function () {
                 var value = $("#ChildFilter").val();
                 if (value === undefined || value === null || value === '') {
                     return '';
                 }
-                return value === 'true';
+                return value.toLowerCase() === 'true';
+            })(),
+            hasInvitation: (function () {
+                var value = $("#HasInvitationFilter").val();
+                if (value === undefined || value === null || value === '') {
+                    return '';
+                }
+                return value.toLowerCase() === 'true';
             })()
         };
     };
@@ -85,6 +92,7 @@ $(function () {
             },
             {
                 title: l('InviteeRSVP'),
+                data: "invitee.rsvp",
                 render: function (_, type, record) {
                     if(record.invitee.rsvp) {
                         var date = new Date(record.invitee.rsvp);
@@ -100,6 +108,7 @@ $(function () {
             },
             {
                 title: l('InviteePersonType'),
+                data: "invitee.child",
                 render: function (_, type, record) {
                     var age = l("Adult");
                     var gender = l("Female");
@@ -116,6 +125,7 @@ $(function () {
             },
             {
                 title: l('Invitation'),
+                data: "invitee.invitationId",
                 render: function (_, type, record) {
                     if (record.invitation)
                         return record.invitation.destination;
@@ -124,6 +134,7 @@ $(function () {
             },
             {
                 title: l('Wedding'),
+                data: "invitation.weddingId",
                 render: function (_, type, record) {
                     if (record.wedding)
                         return record.wedding.name;

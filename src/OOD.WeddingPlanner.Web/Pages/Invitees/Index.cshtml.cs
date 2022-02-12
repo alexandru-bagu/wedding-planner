@@ -13,6 +13,8 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees
         public bool? ConfirmedFilter { get; set; }
         [SelectItems(nameof(BooleanFilterItems))]
         public bool? ChildFilter { get; set; }
+        [SelectItems(nameof(BooleanFilterItems))]
+        public bool? HasInvitationFilter { get; set; }
 
         public List<SelectListItem> BooleanFilterItems { get; set; }
 

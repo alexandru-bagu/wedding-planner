@@ -57,17 +57,20 @@
         </abp-row>
 
         <abp-row id="AdvancedFilterSection" style="display: none;">
-            <abp-column size="_3">
+            <abp-column size-md="_3">
                 <abp-input asp-for="NameFilter" label="@L["InviteeName"].Value" />
             </abp-column>
-            <abp-column size="_3">
+            <abp-column size-md="_3">
                 <abp-input asp-for="SurnameFilter" label="@L["InviteeSurname"].Value" />
             </abp-column>
-            <abp-column size="_3">
+            <abp-column size-md="_3">
                 <abp-select asp-for="ConfirmedFilter" label="@L["InviteeConfirmed"].Value" />
             </abp-column>
-            <abp-column size="_3">
+            <abp-column size-md="_3">
                 <abp-select asp-for="ChildFilter" label="@L["InviteeChild"].Value" />
+            </abp-column>
+            <abp-column size-md="_3">
+                <abp-select asp-for="HasInvitationFilter" label="@L["InviteeInvitationId"].Value" />
             </abp-column>
         </abp-row>
         <abp-table striped-rows="true" id="InviteeTable" class="nowrap" />

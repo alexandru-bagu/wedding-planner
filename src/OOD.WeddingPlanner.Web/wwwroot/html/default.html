@@ -24,11 +24,16 @@
       h6 { margin-bottom: 0px; }
       .m-l-6 { margin-left: 6px; }
       .d-ib-33w { display: inline-block; width: 32.7%; padding: 4px; text-align: center; text-transform: uppercase; }
+      .d-ib-20w { display: inline-block; width: 20%; padding: 4px; }
+      .d-ib-80w { display: inline-block; width: 79%; padding: 4px; }
       .v-r { border-right: 1px solid silver; }
       .v-l { border-left: 1px solid silver; }
       .message { width: 100%; padding: 4px; display: inline-block; }
       .br::before { content: "\A"; white-space: pre;  }
       .br { display: block; }
+      .contact-or { font-size: 12px; line-height: 8px; height: 7px; }
+      .p-relative { position: relative; }
+      .p-absolute { position: absolute; }
     </style>
   </head>
   <body data-bind="style: { width: width, height: height }">
@@ -38,20 +43,20 @@
         <span class="br">și</span>
         <span class="br" data-bind="text: wedding.brideName"></span>
       </span>
-      <div class="content">
-        <h6 class="m-l-6" data-bind="text: invitation.destination + ','"></h6>
+      <div class="content" style="margin-top: 10px">
+        <h6 class="m-l-6" data-bind="text: invitation.destination"></h6>
         <hr>
-        <span class="text-center message">
-          avem marea placerea de a vă invita la celebrarea căsătoriei noastre. 
+        <span class="text-center message p-3">
+          Împreună cu familiile noastre, vă invităm să ne fiți alături la celebrarea căsătoriei noastre.
         </span>
         <hr>
         <div style="width: 100%">
           <div class="d-ib-33w align-middle">
-            <h1 data-bind="text: invitation.mainEvent.time"></h1>
+            <div>Ora</div>
+            <div data-bind="text: invitation.mainEvent.time"></div>
           </div>
           <div class="d-ib-33w v-r v-l align-middle">
-            <div data-bind="text: invitation.mainEvent.day"></div>
-            <div data-bind="text: invitation.mainEvent.month"></div>
+            <div data-bind="text: invitation.mainEvent.day + ' ' + invitation.mainEvent.month"></div>
             <div data-bind="text: invitation.mainEvent.year"></div>
           </div>
           <div class="d-ib-33w align-middle">
@@ -60,8 +65,36 @@
           </div>
         </div>
         <hr>
+
+        <div class="p-2">
+          <h4 class="text-center ">Vă așteptăm cu drag!</h4>
+          <div class="m-2">Vă rugăm să confirmați prezența folosind următoarele date de contact:</div>
+        </div>
+        
+        <div class="w-100 p-relative" style="height: 120px; margin-top: 0px">
+          <div class="d-ib-20w p-absolute" style="top: 10px; left: 10px;">
+            <img data-bind="attr: { src: qrCode }" style="width: 96px;" />
+          </div>
+          <div class="d-ib-80w p-absolute" style="top: 0px; left: 120px;">
+            <div class="container">
+              <div class="row" style="padding-top: 6px">
+                Alexandru Bâgu - 0756434070 <br/>
+                Rebeca Rișciuc - 0755026610
+              </div>
+              <div class="row d-block text-center w-100 contact-or">
+                
+              </div>
+              <div class="row">
+                Scanați codul și deschideți site-ul web pentru mai multe detalii. <br/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-100">
+          <img src="https://cdn.optiononetech.com/data/divider.png" class="w-100" />
+        </div>
       </div>
-      <img data-bind="attr: { src: qrCode }" style="width: 64px" />
       <script src="/libs/jquery/jquery.js"></script>
       <script src="/libs/bootstrap/js/bootstrap.bundle.js"></script>
       <script src="/libs/popper.js/dist/umd/popper.min.js"></script>

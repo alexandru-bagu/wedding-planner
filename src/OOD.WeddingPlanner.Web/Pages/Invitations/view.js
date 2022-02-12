@@ -19,13 +19,13 @@
         if (el.val() === "false") { menu.closest(".invitee-menu").addClass("d-none"); } 
         else { menu.closest(".invitee-menu").removeClass("d-none"); }
         await abp.ajax({ url: abp.appPath + 'RSVP/' + el.data('invitee-id') + '/' + (abp.currentTenant.name ?? ""), data: JSON.stringify(el.val()) });
-        abp.notify.info(l('SuccessfullyUpdated'));
+        console.log(l('SuccessfullyUpdated'));
     });
 
     $(document).on('change', '[data-menu]', async function (evt) {
         var el = $(evt.target);
         await abp.ajax({ url: abp.appPath + 'RSVPMenu/' + el.data('invitee-id') + '/' + (abp.currentTenant.name ?? ""), data: JSON.stringify(el.val()) });
-        abp.notify.info(l('SuccessfullyUpdated'));
+        console.log(l('SuccessfullyUpdated'));
     });
 
     $(document).on('click keypress', '[data-events] li a', function (evt) {

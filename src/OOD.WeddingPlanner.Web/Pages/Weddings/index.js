@@ -5,13 +5,13 @@ $(function () {
     var service = oOD.weddingPlanner.weddings.wedding;
     var createModal = new abp.ModalManager({
         viewUrl: abp.appPath + 'Weddings/CreateModal',
-        scriptUrl: "/Pages/select2modal.js",
-        modalClass: "select2modal"
+        scriptUrl: "/Pages/Weddings/wedding.js",
+        modalClass: "weddingModal"
     });
     var editModal = new abp.ModalManager({
         viewUrl: abp.appPath + 'Weddings/EditModal',
-        scriptUrl: "/Pages/select2modal.js",
-        modalClass: "select2modal"
+        scriptUrl: "/Pages/Weddings/wedding.js",
+        modalClass: "weddingModal"
     });
 
     var dataTable = $('#WeddingTable').DataTable(abp.libs.datatables.normalizeConfiguration({
