@@ -37,7 +37,7 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.ViewModels
         [Display(Name = "InvitationUniqueCode")]
         [HiddenInput]
         [ReadOnlyInput]
-        public bool UniqueCode { get; set; }
+        public string UniqueCode { get; set; }
 
         public List<SelectListItem> WeddingItems { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> InviteeItems { get; set; } = new List<SelectListItem>();
