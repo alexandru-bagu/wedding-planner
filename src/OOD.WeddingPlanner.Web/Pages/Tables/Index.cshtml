@@ -40,6 +40,7 @@
                                 icon="plus"
                                 button-type="Primary" />
                     }
+                    <abp-button id="DownloadTablesButton" text="@L["DownloadTables"].Value" icon="download " button-type="Primary" />
                 </abp-column>
             </abp-row>
         </abp-card-header>
@@ -66,14 +67,16 @@
       <abp-card>
         <abp-card-header>
           <abp-container>
-            <abp-row>
-              <abp-column size-md=_9>
-                <h4 data-bind="text: name"></h4>
-                <span data-bind="text: description"></span>
-              </abp-column>
-              <abp-column size-md=_3 class="text-right">
+            <div>
+              <h4 data-bind="text: name" style="display: inline-block;"></h4>
+              <span style="float: right">
                 <span class="btn btn-secondary" data-bind="visible: canEdit, click: editTable"><i class="fas fa-pencil-alt"></i></span>
                 <span class="btn btn-danger" data-bind="visible: canDelete, click: deleteTable"><i class="fas fa-trash"></i></span>
+              </span>
+            </div>
+            <abp-row>
+              <abp-column size-md=_9>
+                <span data-bind="text: description"></span>
               </abp-column>
             </abp-row>
             <hr class="m-2" />
@@ -93,11 +96,20 @@
 
 <script type="text/html" id="invitee-template">
     <abp-row class="lh-44">
-      <abp-column size-md=_1>
-        <span class="no-word-wrap" data-bind="text: number() + '.'"></span>
-      </abp-column>
-      <abp-column size-md=_10>
-        <select data-bind="select2, options: invitees, optionsText: 'text', optionsValue: 'value', value: invitee" />
+      <abp-column>
+        <div>
+            <div style="float: left;">
+                <span class="no-word-wrap" data-bind="text: number() + '.'" style="display: inline-block"></span>
+            </div>
+            <div style="overflow: hidden;">
+                <select data-bind="select2, options: invitees, optionsText: 'text', optionsValue: 'value', value: invitee" style="display: inline-block"/>
+            </div>
+        </div>
+        <!-- ko if: plusOne -->
+        <div class="table-has-plus-one">
+            <span data-bind="text: plusOne().surname + ' ' + plusOne().name"></span>
+        </div>
+        <!-- /ko -->
       </abp-column>
     </abp-row>
 </script>

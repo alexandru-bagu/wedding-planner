@@ -12,6 +12,7 @@ namespace OOD.WeddingPlanner.Invitees
         Task<long> GetCountAsync(string filter, Guid? invitationId, Guid? weddingId, string name, string surname, bool? confirmed);
         Task<List<Invitee>> GetPagedListAsync(string filter, Guid? invitationId, Guid? weddingId, string name, string surname, bool? confirmed, int skipCount, int maxResultCount, string sorting);
         Task<InviteeWithNavigationProperties> GetWithNavigationByIdAsync(Guid id);
+        Task<Invitee> GetPlusOneByIdAsync(Guid id);
         Task<List<InviteeWithNavigationProperties>> GetListWithNavigationAsync(string filter, Guid? invitationId, Guid? weddingId, string name, string surname, bool? confirmed, string sorting, int skipCount, int maxResultCount);
     }
 }

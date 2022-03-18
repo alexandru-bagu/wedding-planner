@@ -35,6 +35,13 @@ namespace OOD.WeddingPlanner.Invitees
             return await query.SingleAsync();
         }
 
+        public async Task<Invitee> GetPlusOneByIdAsync(Guid id)
+        {
+            var invitee = await (await GetQueryableAsync()).Where(p => p.Id == id).FirstOrDefaultAsync();
+            var evt = await (await GetQueryableAsync()).Where(p => p.InvitationId == invitee.InvitationId).ToListAsync();
+            return await ((await GetQueryableAsync()).Where(p => p.InvitationId == invitee.InvitationId && p.PlusOne != invitee.PlusOne)).FirstOrDefaultAsync();
+        }
+
         public async Task<List<InviteeWithNavigationProperties>> GetListWithNavigationAsync(string filter, Guid? invitationId, Guid? weddingId, string name, string surname, bool? confirmed, string sorting, int skipCount, int maxResultCount)
         {
             var query = await GetQueryableWithNavigation();

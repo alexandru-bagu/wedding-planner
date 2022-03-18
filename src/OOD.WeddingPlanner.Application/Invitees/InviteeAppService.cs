@@ -70,5 +70,11 @@ namespace OOD.WeddingPlanner.Invitees
             var list = await _repository.GetListWithNavigationAsync(input.Filter, input.InvitationId, input.WeddingId, input.Name, input.Surname, input.Confirmed, input.Sorting, input.SkipCount, input.MaxResultCount);
             return new PagedResultDto<InviteeWithNavigationPropertiesDto>(count, ObjectMapper.Map<List<InviteeWithNavigationProperties>, List<InviteeWithNavigationPropertiesDto>>(list));
         }
+
+        public async Task<InviteeDto> GetPlusOneByIdAsync(Guid id)
+        {
+            return ObjectMapper.Map<Invitee, InviteeDto>(
+              await _repository.GetPlusOneByIdAsync(id));
+        }
     }
 }

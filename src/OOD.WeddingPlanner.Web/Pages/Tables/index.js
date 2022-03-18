@@ -21,9 +21,12 @@ $(async function () {
 
     ko.subscribable.fn.subscribeChanged = function (callback) {
         var oldValue;
-        this.subscribe(function (_oldValue) {
-            oldValue = _oldValue;
-        }, this, 'beforeChange');
+        if (!this.__hasOldSubscribed) {
+            this.__hasOldSubscribed = true;
+            this.subscribe(function (_oldValue) {
+                oldValue = _oldValue;
+            }, this, 'beforeChange');
+        }
 
         this.subscribe(function (newValue) {
             callback(newValue, oldValue);
@@ -63,6 +66,7 @@ $(async function () {
         var guest = this;
         guest.number = ko.observable();
         guest.invitee = ko.observable();
+        guest.plusOne = ko.observable(); 
         guest.pushUpdates = false;
 
         guest.invitees = ko.computed(function () {
@@ -74,6 +78,14 @@ $(async function () {
         });
 
         guest.invitee.subscribeChanged(async function (current, previous) {
+            guest.plusOne(null);
+            if (current) {
+                var plusOne = await inviteeService.getPlusOneById(current);
+                if (plusOne) {
+                    guest.plusOne(plusOne);
+                }
+            }
+            if (!guest.pushUpdates) return;
             if (previous) {
                 var inv = vm.allInvitees().filter(function (p) { return p.id == previous })[0];
                 if (inv) inv.tableId(null);
@@ -82,7 +94,7 @@ $(async function () {
                 var inv = vm.allInvitees().filter(function (p) { return p.id == current })[0];
                 if (inv) inv.tableId(table.id);
             }
-            if (guest.pushUpdates) {
+            if (pushUpdates) {
                 if (previous) {
                     var tblInv = await tableInviteeService.getList({ tableId: table.id, inviteeId: previous });
                     if (tblInv.items) {
@@ -137,9 +149,9 @@ $(async function () {
             if (tbl.assignments.length > i) {
                 var assignment = tbl.assignments[i];
                 guest.invitee(assignment.inviteeId);
+                guest.pushUpdates = true;
             }
             table.guests.push(guest);
-            guest.pushUpdates = true;
         }
     }
 
@@ -153,7 +165,8 @@ $(async function () {
         vm.allInvitees = ko.observableArray();
 
         vm.event.subscribe(async function () {
-            var invitees = await inviteeService.getList({ weddingId: vm.wedding() });
+            pushUpdates = false;
+            var invitees = await inviteeService.getList({ confirmed: true, weddingId: vm.wedding() });
             invitees.items.splice(0, 0, { surname: "---------" });
             vm.allInvitees(invitees.items.map(function (value) { return new Invitee(value); }));
 
@@ -203,5 +216,7 @@ $(async function () {
         createModal.open({ weddingId: vm.wedding(), eventId: vm.event() });
     });
 
-
+    $("#DownloadTablesButton").click(function () {
+        window.open('/download/tables/' + vm.event(), '_blank');
+    });
 });

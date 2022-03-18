@@ -3,17 +3,22 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NanoXLSX;
 using OOD.WeddingPlanner.InvitationDesigns;
 using OOD.WeddingPlanner.Invitations;
 using OOD.WeddingPlanner.Invitations.Dtos;
 using OOD.WeddingPlanner.Permissions;
+using OOD.WeddingPlanner.TableInvitees;
 using OOD.WeddingPlanner.Web.Download;
 using OOD.WeddingPlanner.Web.Models;
 using OOD.WeddingPlanner.Web.Providers;
 using OOD.WeddingPlanner.Web.Services;
 using System;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Data;
 using Volo.Abp.MultiTenancy;
@@ -29,15 +34,17 @@ namespace OOD.WeddingPlanner.Web.Controllers
         public IConverter HtmlConverter { get; }
         public IInvitationDownloadManager InvitationDownloadManager { get; }
         public ITenantStore TenantStore { get; }
+        public ITableInviteeAppService TableInviteeAppService { get; }
 
         public PrintController(IInvitationRepository repository, IInvitationDesignRepository designRepository, IConverter htmlConverter,
-            IInvitationDownloadManager invitationDownloadManager, ITenantStore tenantStore)
+            IInvitationDownloadManager invitationDownloadManager, ITenantStore tenantStore, ITableInviteeAppService tableInviteeAppService)
         {
             Repository = repository;
             DesignRepository = designRepository;
             HtmlConverter = htmlConverter;
             InvitationDownloadManager = invitationDownloadManager;
             TenantStore = tenantStore;
+            TableInviteeAppService = tableInviteeAppService;
         }
 
         private async Task<Guid?> GetTenantId(string name)
@@ -171,6 +178,35 @@ namespace OOD.WeddingPlanner.Web.Controllers
             var stream = await InvitationDownloadManager.Download(id);
             if (stream == null) return NotFound();
             return File(stream, "application/pdf", $"{id}.pdf");
+        }
+
+        [HttpGet]
+        [Route("/download/tables/{eventId}")]
+        [Authorize(WeddingPlannerPermissions.Table.Default)]
+        public async Task<IActionResult> DownloadTables(Guid eventId)
+        {
+            var invitees = await TableInviteeAppService.GetListWithNavigationAsync(new TableInvitees.Dtos.GetTableInviteesDto() { EventId = eventId, SkipCount = 0, MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount });
+            var stream = new MemoryStream();
+            Workbook workbook = new Workbook(false);
+            foreach (var tableGroupping in invitees.Items.GroupBy(p => p.Table.Id))
+            {
+                var table = tableGroupping.FirstOrDefault()?.Table;
+                if (table != null)
+                {
+                    var worksheet = new Worksheet() { SheetName = table.Name };
+                    workbook.AddWorksheet(worksheet);
+                    int index = 0;
+                    foreach (var invitee in tableGroupping)
+                    {
+                        worksheet.AddCell(index + 1, 0, index);
+                        worksheet.AddCell(invitee.Invitee.Surname + " " + invitee.Invitee.Name, 1, index);
+                        index++;
+                    }
+                }
+            }
+            workbook.SaveAsStream(stream, true);
+            stream.Position = 0;
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "tables.xlsx");
         }
     }
 }

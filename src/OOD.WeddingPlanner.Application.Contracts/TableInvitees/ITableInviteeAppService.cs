@@ -1,5 +1,7 @@
 using System;
+using System.Threading.Tasks;
 using OOD.WeddingPlanner.TableInvitees.Dtos;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
 namespace OOD.WeddingPlanner.TableInvitees
@@ -12,6 +14,6 @@ namespace OOD.WeddingPlanner.TableInvitees
             CreateUpdateTableInviteeDto,
             CreateUpdateTableInviteeDto>
     {
-
+        Task<PagedResultDto<TableInviteeWithNavigationPropertiesDto>> GetListWithNavigationAsync(GetTableInviteesDto input);
     }
 }
