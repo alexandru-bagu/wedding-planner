@@ -50,6 +50,20 @@ namespace OOD.WeddingPlanner.Web.Controllers
         }
 
         [HttpPost]
+        [Route("RSVPMenu/{id}/{tenant_name?}")]
+        [AllowAnonymous]
+        public async Task RSVPMenu(Guid id, string tenant_name, [FromBody] string menu)
+        {
+            var tenantId = await GetTenantId(tenant_name);
+            using (CurrentTenant.Change(tenantId))
+            {
+                var invitee = await Repository.GetAsync(id);
+                invitee.Menu = menu;
+                await Repository.UpdateAsync(invitee, true);
+            }
+        }
+
+        [HttpPost]
         [Route("PlusOne/{id}/{tenant_name?}")]
         [AllowAnonymous]
         public async Task<IActionResult> PlusOne(Guid id, string tenant_name, [FromBody] CreatePlusOneViewModel model)

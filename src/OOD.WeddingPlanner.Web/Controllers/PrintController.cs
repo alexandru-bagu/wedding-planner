@@ -62,7 +62,7 @@ namespace OOD.WeddingPlanner.Web.Controllers
             var invitation = await Repository.GetAsync(id);
             var design = await DesignRepository.GetAsync(invitation.DesignId.Value);
             var content = PrintInvitation(id, CurrentTenant.Name, design, HttpContext.Request.Scheme + "://" + HttpContext.Request.Host, HtmlConverter, Logger);
-            return File(content, "application/pdf", $"{id}.pdf");
+            return File(content, "application/pdf", $"{invitation.Destination}.pdf");
         }
 
         [HttpGet]

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -23,14 +24,20 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.ViewModels
         public string Destination { get; set; }
 
         [Required]
+        [Display(Name = "Invitee")]
+        [SelectItems(nameof(InviteeItems))]
+        public List<Guid> InviteeIds { get; set; }
+
+        [Required]
         [Display(Name = "InvitationPlusOne")]
         [SelectItems(nameof(BooleanItems))]
         public bool PlusOne { get; set; }
 
         [Required]
-        [Display(Name = "Invitee")]
-        [SelectItems(nameof(InviteeItems))]
-        public List<Guid> InviteeIds { get; set; }
+        [Display(Name = "InvitationUniqueCode")]
+        [HiddenInput]
+        [ReadOnlyInput]
+        public string UniqueCode { get; set; }
 
         public List<SelectListItem> WeddingItems { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> InviteeItems { get; set; } = new List<SelectListItem>();

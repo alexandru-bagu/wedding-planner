@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 
 namespace OOD.WeddingPlanner.Web.Pages.Weddings.ViewModels
 {
@@ -6,9 +7,6 @@ namespace OOD.WeddingPlanner.Web.Pages.Weddings.ViewModels
     {
         [Display(Name = "WeddingName")]
         public string Name { get; set; }
-
-        [Display(Name = "WeddingInvitationNote")]
-        public string InvitationNote { get; set; }
 
         [Display(Name = "WeddingGroomName")]
         public string GroomName { get; set; }
@@ -18,5 +16,9 @@ namespace OOD.WeddingPlanner.Web.Pages.Weddings.ViewModels
 
         [Display(Name = "WeddingContactPhoneNumber")]
         public string ContactPhoneNumber { get; set; }
+
+        [Display(Name = "WeddingInvitationNote")]
+        [TextArea]
+        public string InvitationNote { get; set; }
     }
 }

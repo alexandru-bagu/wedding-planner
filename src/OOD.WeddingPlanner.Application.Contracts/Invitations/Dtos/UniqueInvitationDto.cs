@@ -2,6 +2,6 @@
 {
     public class UniqueInvitationDto : IUniqueCoded
     {
-        string IUniqueCoded.UniqueCode { get; set; }
+        public string UniqueCode { get; set; }
     }
 }

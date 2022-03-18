@@ -13,9 +13,13 @@ namespace OOD.WeddingPlanner.Invitees.Dtos
 
         public bool? Confirmed { get; set; }
 
+        public bool? Child { get; set; }
+
         public Guid? InvitationId { get; set; }
 
         public Guid? WeddingId { get; set; }
+
+        public bool? HasInvitation { get; set; }
 
         public GetInviteesInputDto()
         {

@@ -11,6 +11,25 @@
 @inject IThemeManager ThemeManager
 @{
     Layout = ThemeManager.CurrentTheme.GetLayout(StandardLayouts.Empty);
+
+    Func<string, bool, IEnumerable<SelectListItem>> get_menu = (selected, child) => { 
+        IEnumerable<SelectListItem> ret = new [] {
+            new SelectListItem(L["MenuNone"].Value, "None", selected == "None"),
+            new SelectListItem(L["MenuChild"].Value, "Child", selected == "Child"),
+            new SelectListItem(L["MenuAdult"].Value, "Adult", selected == "Adult")
+        };
+        if(!child) {
+            ret = new [] {
+                new SelectListItem(L["MenuAdult"].Value, "Adult", selected == "Adult")
+            };
+        }
+
+        if(string.IsNullOrWhiteSpace(selected)) {
+            ret = new [] { new SelectListItem(L["Select a menu"].Value, "None", string.IsNullOrWhiteSpace(selected), true) }
+                .Concat(ret);
+        }
+        return ret;
+    };
 }
 
 @section scripts
@@ -32,6 +51,16 @@
 <abp-style src="/libs/leaflet/dist/leaflet.css" />
 }
 
+<style>
+    .d-none {
+        display: none;
+    }
+    .invitee-menu select {
+        height: 30px !important;
+        padding: 0px !important;
+    }
+</style>
+
 <abp-card>
     <abp-container>
         <abp-row class="language-row">
@@ -47,10 +76,9 @@
         <hr />
         <abp-row>
             <abp-column class="text-center">
-                <h4>@Html.Raw(Model.Wedding.InvitationNote)</h4>
+                @Html.Raw(Model.Wedding.InvitationNote)
             </abp-column>
         </abp-row>
-        <hr />
         <abp-row>
             <abp-column>
                 <abp-container>
@@ -59,17 +87,17 @@
                             <span>@L["PleaseConfirmInvitees"]</span>
                         </abp-tab>
                     </abp-tabs>
-                    <div class="form-row align-items-center">
+                    <div class="form-row">
                         @foreach (var invitee in Model.Invitation.Invitees)
                         {
-                            <div class="col-auto">
-                                <div class="input-group mb-3">
+                            <div class="col-auto align-top">
+                                <div class="input-group mb-1">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
                                             @{
                                                 if (invitee.Child)
                                                 {
-                                                    <i class="fa fa-user"></i>
+                                                    <i class="fa fa-child"></i>
                                                 }
                                                 else if (invitee.Male)
                                                 {
@@ -98,6 +126,14 @@
                                         </span>
                                     </div>
                                 </div>
+                                @{
+                                    if (invitee.Child)
+                                    {
+                                        <div class="invitee-menu @(((invitee.Confirmed.HasValue && invitee.Confirmed.Value) ? "" : "d-none"))">
+                                            <select class="form-control" data-menu data-invitee-id="@invitee.Id" name="menu-@invitee.Id" aria-placeholder="@(L["Select a menu"])" asp-items="get_menu(invitee.Menu, invitee.Child)"></select>
+                                        </div>
+                                    }
+                                }
                             </div>
                         }
                         @if (Model.Invitation.PlusOne && !Model.Invitation.Invitees.Any(p => p.PlusOne))

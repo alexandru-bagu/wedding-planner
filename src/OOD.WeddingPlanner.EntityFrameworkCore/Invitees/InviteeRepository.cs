@@ -46,28 +46,28 @@ namespace OOD.WeddingPlanner.Invitees
         {
             var query = await GetQueryableWithNavigation();
 
-            return await applyFilters(query, filter, invitationId, weddingId, name, surname, confirmed)
+            return await applyFilters(query, filter, invitationId, weddingId, name, surname, confirmed, child, hasInvitation)
             .OrderBy(string.IsNullOrWhiteSpace(sorting) ? $"{nameof(InviteeWithNavigationProperties.Invitee)}.{nameof(Invitee.Surname)}" : sorting)
             .Skip(skipCount).Take(maxResultCount).ToListAsync();
         }
 
-        public async Task<long> GetCountAsync(string filter, Guid? invitationId, Guid? weddingId, string name, string surname, bool? confirmed)
+        public async Task<long> GetCountAsync(string filter, Guid? invitationId, Guid? weddingId, string name, string surname, bool? confirmed, bool? child, bool? hasInvitation)
         {
             var query = await GetQueryableWithNavigation();
-            return await applyFilters(query, filter, invitationId, weddingId, name, surname, confirmed)
+            return await applyFilters(query, filter, invitationId, weddingId, name, surname, confirmed, child, hasInvitation)
             .LongCountAsync();
         }
 
-        public async Task<List<Invitee>> GetPagedListAsync(string filter, Guid? invitationId, Guid? weddingId, string name, string surname, bool? confirmed, int skipCount, int maxResultCount, string sorting)
+        public async Task<List<Invitee>> GetPagedListAsync(string filter, Guid? invitationId, Guid? weddingId, string name, string surname, bool? confirmed, bool? child, bool? hasInvitation, int skipCount, int maxResultCount, string sorting)
         {
             var query = await GetQueryableWithNavigation();
-            return await applyFilters(query, filter, invitationId, weddingId, name, surname, confirmed)
+            return await applyFilters(query, filter, invitationId, weddingId, name, surname, confirmed, child, hasInvitation)
             .Select(p => p.Invitee)
             .OrderBy(string.IsNullOrWhiteSpace(sorting) ? $"{nameof(Invitee.Surname)}" : sorting)
             .Skip(skipCount).Take(maxResultCount).ToListAsync();
         }
 
-        protected IQueryable<InviteeWithNavigationProperties> applyFilters(IQueryable<InviteeWithNavigationProperties> query, string filter = null, Guid? invitationId = null, Guid? weddingId = null, string name = null, string surname = null, bool? confirmed = null)
+        protected IQueryable<InviteeWithNavigationProperties> applyFilters(IQueryable<InviteeWithNavigationProperties> query, string filter = null, Guid? invitationId = null, Guid? weddingId = null, string name = null, string surname = null, bool? confirmed = null, bool? child = null, bool? hasInvitation = null)
         {
             query = query.WhereIf(invitationId.HasValue, p => p.Invitee.InvitationId == invitationId);
             query = query.WhereIf(weddingId.HasValue, p => p.Invitation.WeddingId == weddingId);
@@ -80,6 +80,11 @@ namespace OOD.WeddingPlanner.Invitees
                 p => p.Invitee.Surname.Contains(surname));
             query = query.WhereIf(confirmed.HasValue,
                 p => p.Invitee.Confirmed == confirmed);
+            query = query.WhereIf(child.HasValue,
+                p => p.Invitee.Child == child);
+            query = query.WhereIf(hasInvitation.HasValue,
+                p => (hasInvitation.Value && p.Invitee.InvitationId != null) || 
+                    (!hasInvitation.Value && p.Invitee.InvitationId == null));
             return query;
         }
     }

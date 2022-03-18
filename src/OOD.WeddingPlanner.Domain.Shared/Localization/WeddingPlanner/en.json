@@ -95,6 +95,7 @@
     "GetDirections": "Get directions",
     "LocationParkingGoogleLink": "Google Maps link to parking area",
     "InviteeMale": "Is male?",
+    "InviteeMenu": "Menu",
     "InviteeOrder": "Invitation order",
     "PleaseConfirmInvitees": "Please confirm the persons that will join our wedding event.",
     "InvitationDesignDefaultCulture": "Default language",
@@ -103,5 +104,16 @@
     "AddPlusOne": "Add your plus one",
     "UpdateFailed": "Update failed",
     "DownloadTables": "Download table excel"
+    "UpdateFailed": "Update failed",
+    "MenuNone": "No menu",
+    "MenuChild": "Child menu",
+    "MenuAdult": "Adult menu",
+    "InviteePersonType": "Person Type",
+    "Child": "Child",
+    "Adult": "Adult",
+    "Male": "Male",
+    "Female": "Female",
+    "Select a menu": "Select a menu",
+    "InvitationUniqueCode": "Unique Code"
   }
 }

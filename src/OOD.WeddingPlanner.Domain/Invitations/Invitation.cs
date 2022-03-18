@@ -3,6 +3,9 @@ using OOD.WeddingPlanner.Invitees;
 using OOD.WeddingPlanner.Weddings;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 
@@ -42,6 +45,32 @@ namespace OOD.WeddingPlanner.Invitations
             TenantId = tenantId;
             WeddingId = weddingId;
             Destination = destination;
+        }
+
+        public static async Task<string> GenerateUniqueCode(IInvitationRepository repo)
+        {
+            var unique = "";
+            while (unique == "")
+            {
+                var hash = Sha256(Guid.NewGuid().ToString());
+                int len = 3;
+                do { unique = hash.Substring(0, ++len); }
+                while (len < hash.Length && await repo.UniqueCodeUsedAsync(unique));
+            }
+            return unique;
+        }
+
+        static string Sha256(string rawData)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                    builder.Append(bytes[i].ToString("x2"));
+                return builder.ToString();
+            }
         }
     }
 }

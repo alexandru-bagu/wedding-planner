@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -16,27 +17,21 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees.ViewModels
         [Display(Name = "InviteeName")]
         public string Name { get; set; }
 
-        [Display(Name = "InviteeRSVP")]
-        public DateTime? RSVP { get; set; }
-
-        [Display(Name = "InviteeConfirmed")]
-        [SelectItems(nameof(BooleanItems))]
-        public bool? Confirmed { get; set; }
-
+        [HiddenInput]
         [Required]
         [Display(Name = "InviteeChild")]
         [SelectItems(nameof(BooleanItems))]
         public bool? Child { get; set; }
 
+        [HiddenInput]
         [Required]
         [Display(Name = "InviteeMale")]
         [SelectItems(nameof(BooleanItems))]
         public bool? Male { get; set; }
 
-        [Required]
-        [Display(Name = "InviteePlusOne")]
-        [SelectItems(nameof(BooleanItems))]
-        public bool? PlusOne { get; set; }
+        [Display(Name = "InviteeMenu")]
+        [SelectItems(nameof(MenuTypes))]
+        public string Menu { get; set; }
 
         [Required]
         [Display(Name = "InviteeOrder")]
@@ -49,9 +44,22 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees.ViewModels
         [Display(Name = "Invitation")]
         [SelectItems(nameof(InvitationItems))]
         public Guid? InvitationId { get; set; }
+        
+        [Display(Name = "InviteeRSVP")]
+        public DateTime? RSVP { get; set; }
+
+        [Display(Name = "InviteeConfirmed")]
+        [SelectItems(nameof(BooleanItems))]
+        public bool? Confirmed { get; set; }
+        
+        [Required]
+        [Display(Name = "InviteePlusOne")]
+        [SelectItems(nameof(BooleanItems))]
+        public bool? PlusOne { get; set; }
 
         public List<SelectListItem> BooleanItems { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> InvitationItems { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> WeddingItems { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> MenuTypes { get; set; } = new List<SelectListItem>();
     }
 }
