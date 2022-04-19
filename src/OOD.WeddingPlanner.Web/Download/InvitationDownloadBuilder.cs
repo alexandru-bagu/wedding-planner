@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Volo.Abp.Data;
 using Volo.Abp.MultiTenancy;
 using WkHtmlToPdfDotNet.Contracts;
+using Newtonsoft.Json;
 
 namespace OOD.WeddingPlanner.Web.Download
 {
@@ -68,6 +69,7 @@ namespace OOD.WeddingPlanner.Web.Download
                     var converter = serviceProvider.GetService<IConverter>();
                     var logger = serviceProvider.GetService<ILogger<InvitationDownloadBuilder>>();
                     var invitations = await invitationRepository.GetListAsync(_input.WeddingId, _input.Destination);
+                    _logger.LogInformation($"Processing {JsonConvert.SerializeObject(_input)} / {invitations.Count}");
                     if (invitations.Count > 0)
                     {
                         Total = invitations.Count * 2 - 1;
