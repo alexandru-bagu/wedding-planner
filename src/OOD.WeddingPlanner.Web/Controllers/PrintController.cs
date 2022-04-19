@@ -24,6 +24,7 @@ using Volo.Abp.Data;
 using Volo.Abp.MultiTenancy;
 using WkHtmlToPdfDotNet;
 using WkHtmlToPdfDotNet.Contracts;
+using Newtonsoft.Json;
 
 namespace OOD.WeddingPlanner.Web.Controllers
 {
@@ -148,8 +149,9 @@ namespace OOD.WeddingPlanner.Web.Controllers
         [HttpPost]
         [Route("/download/begin")]
         [Authorize(WeddingPlannerPermissions.Invitation.Default)]
-        public async Task<IActionResult> DownloadBegin(GetInvitationsInputDto input)
+        public async Task<IActionResult> DownloadBegin([FromBody] GetInvitationsInputDto input)
         {
+            Logger.LogInformation($"Processing {JsonConvert.SerializeObject(input)}");
             var id = await InvitationDownloadManager.Begin(input, CurrentTenant.Id);
             return Json(new { id });
         }
