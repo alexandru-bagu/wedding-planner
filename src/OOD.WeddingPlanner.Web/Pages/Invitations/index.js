@@ -128,7 +128,7 @@ $(function () {
 
     $('#DownloadInvitationButton').click(async function (e) {
         abp.notify.info(l('Invitations build is enqueued.'));
-        const { id } = await abp.ajax({ url: '/download/begin', data: getFilter() });
+        const { id } = await abp.ajax({ url: '/download/begin', contentType : 'application/json', data: JSON.stringify(getFilter()) });
         var status = null;
         while (status == null || !status.total) {
             status = await abp.ajax({ url: '/download/status/' + id, method: 'get' });
