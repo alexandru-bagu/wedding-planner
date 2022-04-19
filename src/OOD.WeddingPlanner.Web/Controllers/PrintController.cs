@@ -149,11 +149,15 @@ namespace OOD.WeddingPlanner.Web.Controllers
         [HttpPost]
         [Route("/download/begin")]
         [Authorize(WeddingPlannerPermissions.Invitation.Default)]
-        public async Task<IActionResult> DownloadBegin(GetInvitationsInputDto input)
+        public async Task<IActionResult> DownloadBegin()
         {
-            Logger.LogInformation($"Processing {JsonConvert.SerializeObject(input)}");
-            var id = await InvitationDownloadManager.Begin(input, CurrentTenant.Id);
-            return Json(new { id });
+            using (var reader = new StreamReader(Request.Body))
+            {
+                GetInvitationsInputDto input = JsonConvert.DeserializeObject<GetInvitationsInputDto>(await reader.ReadToEndAsync());
+                Logger.LogInformation($"Processing {JsonConvert.SerializeObject(input)}");
+                var id = await InvitationDownloadManager.Begin(input, CurrentTenant.Id);
+                return Json(new { id });
+            }
         }
 
         [HttpPost]
