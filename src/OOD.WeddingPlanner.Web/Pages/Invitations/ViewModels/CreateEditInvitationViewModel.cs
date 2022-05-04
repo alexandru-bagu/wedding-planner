@@ -33,7 +33,6 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.ViewModels
         [SelectItems(nameof(BooleanItems))]
         public bool PlusOne { get; set; }
 
-        [Required]
         [Display(Name = "InvitationUniqueCode")]
         [HiddenInput]
         [ReadOnlyInput]
