@@ -112,7 +112,8 @@
     "UpdateFailed": "Modificarea nu a reușit",
     "InviteeMenu": "Meniu",
     "MenuNone": "Fară meniu",
-    "MenuChild": "Meniu copii",
+    "MenuChildFree": "Meniu copii sub 5 ani (gratuit)",
+    "MenuChild": "Meniu copii peste 5 ani",
     "MenuAdult": "Meniu adulți",
     "InviteePersonType": "Tip persoana",
     "Child": "Copil",
@@ -120,6 +121,7 @@
     "Male": "Bărbat",
     "Female": "Femeie",
     "Select a menu": "Alege un meniu",
-    "InvitationUniqueCode": "Unique Code"
+    "InvitationUniqueCode": "Unique Code",
+    "WeddingInvitationStyle": "Stil invitație"
   }
 }

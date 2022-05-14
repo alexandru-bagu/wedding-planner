@@ -15,6 +15,7 @@
     Func<string, bool, IEnumerable<SelectListItem>> get_menu = (selected, child) => { 
         IEnumerable<SelectListItem> ret = new [] {
             new SelectListItem(L["MenuNone"].Value, "None", selected == "None"),
+            new SelectListItem(L["MenuChildFree"].Value, "ChildFree", selected == "ChildFree"),
             new SelectListItem(L["MenuChild"].Value, "Child", selected == "Child"),
             new SelectListItem(L["MenuAdult"].Value, "Adult", selected == "Adult")
         };
@@ -59,6 +60,7 @@
         height: 30px !important;
         padding: 0px !important;
     }
+    @Html.Raw(Model.Wedding.InvitationStyle)
 </style>
 
 <abp-card>

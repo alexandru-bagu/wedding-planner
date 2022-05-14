@@ -20,5 +20,9 @@ namespace OOD.WeddingPlanner.Web.Pages.Weddings.ViewModels
         [Display(Name = "WeddingInvitationNote")]
         [TextArea]
         public string InvitationNote { get; set; }
+
+        [Display(Name = "WeddingInvitationStyle")]
+        [TextArea]
+        public string InvitationStyle { get; set; }
     }
 }

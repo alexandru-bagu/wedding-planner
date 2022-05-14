@@ -18,6 +18,8 @@ namespace OOD.WeddingPlanner.Weddings
         public virtual string Name { get; set; }
 
         public virtual string InvitationNote { get; set; }
+        
+        public virtual string InvitationStyle { get; set; }
 
         public virtual string ContactPhoneNumber { get; set; }
 

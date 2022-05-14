@@ -14,5 +14,7 @@ namespace OOD.WeddingPlanner.Weddings.Dtos
         public string ContactPhoneNumber { get; set; }
 
         public string InvitationNote { get; set; }
+        
+        public string InvitationStyle { get; set; }
     }
 }
