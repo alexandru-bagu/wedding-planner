@@ -3,7 +3,7 @@ module.exports = {
 
     },
     mappings: {
-        "./Library/jquery-validation-globalize/**": "@libs/jquery-validation-globalize",
+        "Library/**": "@libs/",
         "@node_modules/cldr-data/**": "@libs/cldr-data",
         "@node_modules/cldrjs/**": "@libs/cldrjs",
         "@node_modules/globalize/**": "@libs/globalize",
