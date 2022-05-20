@@ -202,8 +202,8 @@
                                                                             "description":"@Model.Wedding.GroomName & @Model.Wedding.BrideName - @evt.Name",
                                                                             "startDate":"@evt.Time.ToString("yyyy-MM-dd")",
                                                                             "endDate":"@evt.Time.ToString("yyyy-MM-dd")",
-                                                                            "startTime":"@evt.Time.ToString("hh:mm")",
-                                                                            "endTime":"@evt.Time.AddHours(1).ToString("hh:mm")",
+                                                                            "startTime":"@evt.Time.ToString("HH:mm")",
+                                                                            "endTime":"@evt.Time.AddHours(1).ToString("HH:mm")",
                                                                             "location":"@evt.Location.Name.FoldToASCII(), @evt.Location.Hall.FoldToASCII(), @evt.Location.Address.FoldToASCII()"
                                                                         },
                                                                         "label":"@L["Add to calendar"]",
