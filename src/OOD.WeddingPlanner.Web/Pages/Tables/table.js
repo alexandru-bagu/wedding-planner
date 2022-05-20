@@ -3,9 +3,6 @@
 abp.modals.tableModal = function () {
     var initModal = function (publicApi, args) {
 
-        if(publicApi.__init__) return;
-        publicApi.__init__ = true;
-        
         publicApi.onOpen(function () {
             var modal = publicApi.getModal();
             modal.find('select').select2();
