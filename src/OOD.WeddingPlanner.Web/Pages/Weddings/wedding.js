@@ -5,7 +5,9 @@ abp.modals.weddingModal = function () {
 
         publicApi.onOpen(function () {
             var modal = publicApi.getModal();
-            modal.find('select').select2();
+            modal.find('select').select2({
+                dropdownParent: modal
+            });
 
             var noteInput = modal.find('[name="ViewModel.InvitationNoteHtml"]');
             noteInput.hide();

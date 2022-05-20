@@ -5,7 +5,9 @@ abp.modals.select2modal = function () {
 
         publicApi.onOpen(function () {
             var modal = publicApi.getModal();
-            modal.find('select').select2();
+            modal.find('select').select2({
+                dropdownParent: modal
+            });
         });
     };
 

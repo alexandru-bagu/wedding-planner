@@ -4,7 +4,9 @@ abp.modals.inviteeModal = function () {
     var initModal = function (publicApi, args) {
         publicApi.onOpen(function () {
             var modal = publicApi.getModal();
-            modal.find('select').select2();
+            modal.find('select').select2({
+                dropdownParent: modal
+            });
 
             var service = oOD.weddingPlanner.invitations.invitation;
             var wedding = modal.find('[name="ViewModel.WeddingId"]');
