@@ -7,7 +7,6 @@ abp.modals.select2modal = function () {
             var modal = publicApi.getModal();
             modal.find('select').select2();
         });
-
     };
 
     return {

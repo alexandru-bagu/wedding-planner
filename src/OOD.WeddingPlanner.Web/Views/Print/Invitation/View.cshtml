@@ -199,12 +199,12 @@
                                                                             "@@context":"https://schema.org",
                                                                             "@@type":"Event",
                                                                             "name":"@evt.Name",
-                                                                            "description":"@Model.Wedding.GroomName & @Model.Wedding.BrideName - @evt.Name",
+                                                                            "description":"@Model.Wedding.GroomName & @Model.Wedding.BrideName - @evt.Name; <br/> @evt.Location.Name.FoldToASCII(), @evt.Location.Hall.FoldToASCII()",
                                                                             "startDate":"@evt.Time.ToString("yyyy-MM-dd")",
                                                                             "endDate":"@evt.Time.ToString("yyyy-MM-dd")",
                                                                             "startTime":"@evt.Time.ToString("HH:mm")",
                                                                             "endTime":"@evt.Time.AddHours(1).ToString("HH:mm")",
-                                                                            "location":"@evt.Location.Name.FoldToASCII(), @evt.Location.Hall.FoldToASCII(), @evt.Location.Address.FoldToASCII()"
+                                                                            "location":"@evt.Location.Name.FoldToASCII(), @evt.Location.Address.FoldToASCII()"
                                                                         },
                                                                         "label":"@L["Add to calendar"]",
                                                                         "options":[ "Apple", "Google", "iCal", "Microsoft365", "MicrosoftTeams", "Outlook.com", "Yahoo" ],
