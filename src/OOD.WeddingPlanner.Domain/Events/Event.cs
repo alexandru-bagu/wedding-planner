@@ -20,6 +20,8 @@ namespace OOD.WeddingPlanner.Events
 
         public virtual DateTime Time { get; set; }
 
+        public virtual string TimeZone { get; set; }
+
         public virtual Location Location { get; set; }
 
         public virtual Wedding Wedding { get; set; }

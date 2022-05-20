@@ -123,6 +123,7 @@
     "Select a menu": "Alege un meniu",
     "InvitationUniqueCode": "Unique Code",
     "WeddingInvitationHeaderHtml": "Antet invitație",
-    "WeddingInvitationFooterHtml": "Subsol invitație"
+    "WeddingInvitationFooterHtml": "Subsol invitație",
+    "EventTimeZone": "Fus orar"
   }
 }

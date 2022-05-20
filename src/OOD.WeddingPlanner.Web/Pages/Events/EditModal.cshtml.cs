@@ -44,6 +44,9 @@ namespace OOD.WeddingPlanner.Web.Pages.Events
               (await _locationAppService.GetLookupListAsync(new LookupRequestDto()))
                 .Items
                 .Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
+
+            var tz = TimeZoneInfo.GetSystemTimeZones();
+            ViewModel.TimeZones.AddRange(tz.Select(p => new SelectListItem(p.DisplayName, p.Id)));
         }
 
         public virtual async Task<IActionResult> OnPostAsync()

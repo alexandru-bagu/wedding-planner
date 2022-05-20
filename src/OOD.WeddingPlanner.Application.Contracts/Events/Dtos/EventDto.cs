@@ -15,6 +15,8 @@ namespace OOD.WeddingPlanner.Events.Dtos
 
         public DateTime Time { get; set; }
 
+        public string TimeZone { get; set; }
+
         public LocationDto Location { get; set; }
     }
 }

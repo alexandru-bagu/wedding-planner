@@ -204,11 +204,11 @@
                                                                             "endDate":"@evt.Time.ToString("yyyy-MM-dd")",
                                                                             "startTime":"@evt.Time.ToString("hh:mm")",
                                                                             "endTime":"@evt.Time.AddHours(1).ToString("hh:mm")",
-                                                                            "location":"@evt.Location.Name, @evt.Location.Hall, @evt.Location.Address"
+                                                                            "location":"@evt.Location.Name.FoldToASCII(), @evt.Location.Hall.FoldToASCII(), @evt.Location.Address.FoldToASCII()"
                                                                         },
                                                                         "label":"@L["Add to calendar"]",
                                                                         "options":[ "Apple", "Google", "iCal", "Microsoft365", "MicrosoftTeams", "Outlook.com", "Yahoo" ],
-                                                                        "timeZone":"@System.TimeZoneInfo.Local.Id",
+                                                                        "timeZone":"@evt.TimeZone",
                                                                         "trigger":"click",
                                                                         "iCalFileName":"Reminder-Event"
                                                                         }

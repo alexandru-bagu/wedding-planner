@@ -26,7 +26,13 @@ namespace OOD.WeddingPlanner.Web.Pages.Events.ViewModels
         [Display(Name = "EventTime")]
         public DateTime Time { get; set; }
 
+        [Required]
+        [Display(Name = "EventTimeZone")]
+        [SelectItems(nameof(TimeZones))]
+        public string TimeZone { get; set; }
+
         public List<SelectListItem> LocationItems { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> WeddingItems { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> TimeZones { get; set; } = new List<SelectListItem>();
     }
 }

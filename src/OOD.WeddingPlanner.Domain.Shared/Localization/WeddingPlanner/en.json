@@ -116,6 +116,7 @@
     "Male": "Male",
     "Female": "Female",
     "Select a menu": "Select a menu",
-    "InvitationUniqueCode": "Unique Code"
+    "InvitationUniqueCode": "Unique Code",
+    "EventTimeZone": "Time Zone"
   }
 }
