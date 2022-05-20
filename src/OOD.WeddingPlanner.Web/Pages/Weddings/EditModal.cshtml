@@ -7,13 +7,31 @@
 @{
     Layout = null;
 }
-<abp-dynamic-form abp-model="ViewModel" data-ajaxForm="true" asp-page="EditModal">
-    <abp-modal>
+<form data-ajaxForm="true" asp-page="EditModal">
+    <abp-modal size=ExtraLarge>
         <abp-modal-header title="@L["EditWedding"].Value"></abp-modal-header>
         <abp-modal-body>
             <abp-input asp-for="Id" />
-            <abp-form-content />
+            <abp-container>
+                <abp-row>
+                    <abp-column size-md=_6>
+                        <abp-input asp-for="ViewModel.Name" />
+                        <abp-input asp-for="ViewModel.GroomName" />
+                        <abp-input asp-for="ViewModel.BrideName" />
+                        <abp-input asp-for="ViewModel.ContactPhoneNumber" />
+
+                        <label asp-for="ViewModel.InvitationNoteHtml"></label>
+                        <textarea asp-for="ViewModel.InvitationNoteHtml"></textarea>
+                    </abp-column>
+                    <abp-column size-md=_6>
+                        <label asp-for="ViewModel.InvitationHeaderHtml"></label>
+                        <textarea asp-for="ViewModel.InvitationHeaderHtml"></textarea>
+                        <label asp-for="ViewModel.InvitationFooterHtml"></label>
+                        <textarea asp-for="ViewModel.InvitationFooterHtml"></textarea>
+                    </abp-column>
+                </abp-row>
+            </abp-container>
         </abp-modal-body>
         <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
     </abp-modal>
-</abp-dynamic-form>
+</form>

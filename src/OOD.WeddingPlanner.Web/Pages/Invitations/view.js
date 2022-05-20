@@ -18,13 +18,13 @@
         var menu = $('[data-menu][data-invitee-id="'+el.data('invitee-id')+'"]');
         if (el.val() === "false") { menu.closest(".invitee-menu").addClass("d-none"); } 
         else { menu.closest(".invitee-menu").removeClass("d-none"); }
-        await abp.ajax({ url: abp.appPath + 'RSVP/' + el.data('invitee-id') + '/' + (abp.currentTenant.name ?? ""), data: JSON.stringify(el.val()) });
+        await abp.ajax({ url: abp.appPath + 'RSVP/' + el.data('invitee-id') + '/' + encodeURIComponent(window.app_tenant_name || ""), data: JSON.stringify(el.val()) });
         console.log(l('SuccessfullyUpdated'));
     });
 
     $(document).on('change', '[data-menu]', async function (evt) {
         var el = $(evt.target);
-        await abp.ajax({ url: abp.appPath + 'RSVPMenu/' + el.data('invitee-id') + '/' + (abp.currentTenant.name ?? ""), data: JSON.stringify(el.val()) });
+        await abp.ajax({ url: abp.appPath + 'RSVPMenu/' + el.data('invitee-id') + '/' + encodeURIComponent(window.app_tenant_name || ""), data: JSON.stringify(el.val()) });
         console.log(l('SuccessfullyUpdated'));
     });
 
@@ -61,7 +61,7 @@
                 busy: true
             });
             try {
-                await abp.ajax({ url: abp.appPath + 'PlusOne/' + model.invitation.id + '/' + (abp.currentTenant.name ?? ""), data: JSON.stringify(data) });
+                await abp.ajax({ url: abp.appPath + 'PlusOne/' + model.invitation.id + '/' + encodeURIComponent(window.app_tenant_name || ""), data: JSON.stringify(data) });
                 abp.notify.info(l('SuccessfullyUpdated'));
                 setTimeout(function () { location.reload(); }, 1000);
             } catch {

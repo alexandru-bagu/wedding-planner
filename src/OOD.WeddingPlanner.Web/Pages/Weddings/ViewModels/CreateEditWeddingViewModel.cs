@@ -17,12 +17,16 @@ namespace OOD.WeddingPlanner.Web.Pages.Weddings.ViewModels
         [Display(Name = "WeddingContactPhoneNumber")]
         public string ContactPhoneNumber { get; set; }
 
-        [Display(Name = "WeddingInvitationNote")]
+        [Display(Name = "WeddingInvitationNoteHtml")]
         [TextArea]
-        public string InvitationNote { get; set; }
+        public string InvitationNoteHtml { get; set; }
 
-        [Display(Name = "WeddingInvitationStyle")]
+        [Display(Name = "WeddingInvitationHeaderHtml")]
         [TextArea]
-        public string InvitationStyle { get; set; }
+        public string InvitationHeaderHtml { get; set; }
+
+        [Display(Name = "WeddingInvitationFooterHtml")]
+        [TextArea]
+        public string InvitationFooterHtml { get; set; }
     }
 }

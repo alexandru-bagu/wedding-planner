@@ -97,7 +97,7 @@
     "View": "Previzualizează",
     "Welcome to the Wedding Planner": "Bine ai venit la planificatorul de nuntă",
     "Tenant": "Chiriaș",
-    "WeddingInvitationNote": "Notițe invitație",
+    "WeddingInvitationNoteHtml": "Notițe invitație",
     "LocationHall": "Sală",
     "LocationAddress": "Adresă",
     "GetDirections": "Obțineți direcții",
@@ -122,6 +122,7 @@
     "Female": "Femeie",
     "Select a menu": "Alege un meniu",
     "InvitationUniqueCode": "Unique Code",
-    "WeddingInvitationStyle": "Stil invitație"
+    "WeddingInvitationHeaderHtml": "Antet invitație",
+    "WeddingInvitationFooterHtml": "Subsol invitație"
   }
 }

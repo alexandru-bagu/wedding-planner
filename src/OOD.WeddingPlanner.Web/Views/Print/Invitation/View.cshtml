@@ -33,119 +33,36 @@
     };
 }
 
+<script>
+    window.app_tenant_name = '@(Context.Items["TenantName"])';
+    window.app_culture = '@System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName';
+    window.model = @Json.Serialize(Model);
+</script>
 @section scripts
 {
 <abp-script src="/Pages/Invitations/view.js" />
 <abp-script src="/libs/leaflet/dist/leaflet.js" />
 <abp-script src="/libs/leaflet-providers/leaflet-providers.js" />
-<script>
-    var model = @Json.Serialize(Model);
-    $(function(){
-        abp.currentTenant.name = '@(Context.Items["TenantName"])';
-    });
-</script>
+<abp-script src="/libs/add-to-calendar-button/assets/js/atcb.min.js" />
 }
 @section styles
 {
 <abp-style src="/empty-layout.css" />
 <abp-style src="/invitation.css" />
 <abp-style src="/libs/leaflet/dist/leaflet.css" />
+<abp-style src="/libs/add-to-calendar-button/assets/css/atcb.min.css" />
 }
 
 <style>
-    .d-none {
-        display: none;
-    }
+    .d-none { display: none; }
     .invitee-menu select {
         height: 30px !important;
         padding: 0px !important;
     }
-    .lds-ripple {
-    display: inline-block;
-    position: relative;
-    width: 80px;
-    height: 80px;
-    }
-    .lds-ripple div {
-    position: absolute;
-    border: 4px solid #fdd;
-    opacity: 1;
-    border-radius: 50%;
-    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-    }
-    .lds-ripple div:nth-child(2) {
-    animation-delay: -0.5s;
-    }
-    @@keyframes lds-ripple {
-        0% {
-            top: 36px;
-            left: 36px;
-            width: 0;
-            height: 0;
-            opacity: 0;
-        }
-        4.9% {
-            top: 36px;
-            left: 36px;
-            width: 0;
-            height: 0;
-            opacity: 0;
-        }
-        5% {
-            top: 36px;
-            left: 36px;
-            width: 0;
-            height: 0;
-            opacity: 1;
-        }
-        100% {
-            top: 0px;
-            left: 0px;
-            width: 72px;
-            height: 72px;
-            opacity: 0;
-        }
-    }
-    #page-loader {
-        position: fixed;
-        top: 0px;
-        left: 0px;
-        width: 100vw;
-        height: 100vh;
-        display: table;
-        background-color: rgb(251, 249, 245);
-        z-index: 10000;
-    }
-    #page-loader-container {
-        display: table-cell;
-        vertical-align: middle;
-        height: 100%;
-    }
-    @Html.Raw(Model.Wedding.InvitationStyle)
 </style>
-<div id="page-loader" class="text-center">
-    <div id="page-loader-container">
-        <div class="lds-ripple"><div></div><div></div></div>
-    </div>
-</div>
-<script>
 
-function docReady(fn) {
-    // see if DOM is already available
-    if (document.readyState === "complete" || document.readyState === "interactive") {
-        // call on next available tick
-        setTimeout(fn, 1);
-    } else {
-        document.addEventListener("DOMContentLoaded", fn);
-    }
-}    
-docReady(function() {
-    setTimeout(function(){
-        $('#page-loader').fadeOut( 1000 );
-    }, 100);
-});
-</script>
-<div id="header"></div>
+@Html.Raw(Model.Wedding.InvitationHeaderHtml)
+
 <abp-card>
     <abp-container>
         <abp-row class="language-row">
@@ -159,8 +76,7 @@ docReady(function() {
             </abp-column>
         </abp-row>
         <hr />
-        <script>window.app_culture = '@System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName';</script>
-        @Html.Raw(Model.Wedding.InvitationNote)
+        @Html.Raw(Model.Wedding.InvitationNoteHtml)
         <abp-row>
             <abp-column>
                 <abp-container>
@@ -267,9 +183,40 @@ docReady(function() {
                                                     <span>@evt.Location.Hall</span> <br />
                                                     <span>@evt.Location.Address</span>
                                                 </abp-column>
+
                                                 <abp-column size-lg=_6>
-                                                    <span>@evt.Time.ToLongTimeString()</span> <br />
-                                                    <span>@evt.Time.ToLongDateString()</span>
+                                                    <abp-container class="p-0">
+                                                        <abp-row>
+                                                            <abp-column size=_6>
+                                                                <span>@evt.Time.ToLongTimeString()</span> <br />
+                                                                <span>@evt.Time.ToLongDateString()</span>
+                                                            </abp-column>
+                                                            <abp-column size=_6>
+                                                                <div class="atcb">
+                                                                    <script type="application/ld+json">
+                                                                        {
+                                                                        "event": {
+                                                                            "@@context":"https://schema.org",
+                                                                            "@@type":"Event",
+                                                                            "name":"@evt.Name",
+                                                                            "description":"@Model.Wedding.GroomName & @Model.Wedding.BrideName - @evt.Name",
+                                                                            "startDate":"@evt.Time.ToString("yyyy-MM-dd")",
+                                                                            "endDate":"@evt.Time.ToString("yyyy-MM-dd")",
+                                                                            "startTime":"@evt.Time.ToString("hh:mm")",
+                                                                            "endTime":"@evt.Time.AddHours(1).ToString("hh:mm")",
+                                                                            "location":"@evt.Location.Name, @evt.Location.Hall, @evt.Location.Address"
+                                                                        },
+                                                                        "label":"@L["Add to calendar"]",
+                                                                        "options":[ "Apple", "Google", "iCal", "Microsoft365", "MicrosoftTeams", "Outlook.com", "Yahoo" ],
+                                                                        "timeZone":"@System.TimeZoneInfo.Local.Id",
+                                                                        "trigger":"click",
+                                                                        "iCalFileName":"Reminder-Event"
+                                                                        }
+                                                                    </script>
+                                                                </div>
+                                                            </abp-column>
+                                                        </abp-row>
+                                                    </abp-container>
                                                 </abp-column>
                                             </abp-row>
                                         </abp-container>
@@ -289,4 +236,5 @@ docReady(function() {
         </abp-row>
     </abp-container>
 </abp-card>
-<div id="footer"></div>
+
+@Html.Raw(Model.Wedding.InvitationFooterHtml)

@@ -474,10 +474,13 @@ namespace OOD.WeddingPlanner.Migrations
                     b.Property<string>("GroomName")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("InvitationNote")
+                    b.Property<string>("InvitationFooterHtml")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("InvitationStyle")
+                    b.Property<string>("InvitationHeaderHtml")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("InvitationNoteHtml")
                         .HasColumnType("longtext");
 
                     b.Property<bool>("IsDeleted")

@@ -10,15 +10,20 @@ abp.modals.weddingModal = function () {
             var modal = publicApi.getModal();
             modal.find('select').select2();
 
-            var noteInput = modal.find('[name="ViewModel.InvitationNote"]');
+            var noteInput = modal.find('[name="ViewModel.InvitationNoteHtml"]');
             noteInput.hide();
             var noteMonacoContainer = $('<div id="editor" style="height: 200px;"></div>');
             noteMonacoContainer.insertAfter(noteInput);
 
-            var styleInput = modal.find('[name="ViewModel.InvitationStyle"]');
-            styleInput.hide();
-            var styleMonacoContainer = $('<div id="editor" style="height: 200px;"></div>');
-            styleMonacoContainer.insertAfter(styleInput);
+            var headerInput = modal.find('[name="ViewModel.InvitationHeaderHtml"]');
+            headerInput.hide();
+            var headerMonacoContainer = $('<div id="editor" style="height: 200px;"></div>');
+            headerMonacoContainer.insertAfter(headerInput);
+
+            var footerInput = modal.find('[name="ViewModel.InvitationFooterHtml"]');
+            footerInput.hide();
+            var footerMonacoContainer = $('<div id="editor" style="height: 200px;"></div>');
+            footerMonacoContainer.insertAfter(footerInput);
 
             require(['vs/editor/editor.main'], function () {
                 var noteEditor = monaco.editor.create(noteMonacoContainer[0], {
@@ -30,13 +35,22 @@ abp.modals.weddingModal = function () {
                     noteInput.val(noteEditor.getValue()).trigger('change');
                 });
 
-                var styleEditor = monaco.editor.create(styleMonacoContainer[0], {
-                    value: styleInput.val(),
-                    language: 'css',
+                var headerEditor = monaco.editor.create(headerMonacoContainer[0], {
+                    value: headerInput.val(),
+                    language: 'html',
                     automaticLayout: true
                 });
-                styleEditor.onDidChangeModelContent(function () {
-                    styleInput.val(styleEditor.getValue()).trigger('change');
+                headerEditor.onDidChangeModelContent(function () {
+                    headerInput.val(headerEditor.getValue()).trigger('change');
+                });
+
+                var footerEditor = monaco.editor.create(footerMonacoContainer[0], {
+                    value: footerInput.val(),
+                    language: 'html',
+                    automaticLayout: true
+                });
+                footerEditor.onDidChangeModelContent(function () {
+                    footerInput.val(footerEditor.getValue()).trigger('change');
                 });
             });
         });

@@ -40,7 +40,7 @@ $(function () {
                             {
                                 text: l('Preview Print'),
                                 action: function (data) {
-                                    var a = $('<a href="' + abp.appPath + "Invitation/Print/" + data.record.invitation.id + '/' + (abp.currentTenant.name ?? "") + '" target="_blank"></a>');
+                                    var a = $('<a href="' + abp.appPath + "Invitation/Print/" + data.record.invitation.id + '/' + encodeURIComponent(window.app_tenant_name || "") + '" target="_blank"></a>');
                                     a.appendTo(document.body);
                                     a[0].click();
                                     a.remove();
@@ -57,7 +57,7 @@ $(function () {
                             {
                                 text: l('View'),
                                 action: function (data) {
-                                    var a = $('<a href="' + abp.appPath + data.record.invitation.id + '/' + (abp.currentTenant.name ?? "")+ '" target="_blank"></a>');
+                                    var a = $('<a href="' + abp.appPath + data.record.invitation.id + '/' + encodeURIComponent(window.app_tenant_name || "") + '" target="_blank"></a>');
                                     a.appendTo(document.body);
                                     a[0].click();
                                     a.remove();

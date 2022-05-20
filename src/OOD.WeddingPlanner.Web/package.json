@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@abp/aspnetcore.mvc.ui.theme.basic": "~5.1.2",
+    "add-to-calendar-button": "^1.8.6",
     "cldr-data": "^36.0.0",
     "globalize": "^1.7.0",
     "ionicons": "2.0.1",

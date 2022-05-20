@@ -193,6 +193,11 @@ abbrev@1:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
+add-to-calendar-button@^1.8.6:
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/add-to-calendar-button/-/add-to-calendar-button-1.8.6.tgz#6837d4395b90d9d246a1352430035a436b8a44b3"
+  integrity sha512-Ot/6kpq6ugsm4Ei5nqP6aq2PWpYH9vx3CSJ0OTzi9k0PfYNPcugChq2aVY6MkSxV/5kc8F1k4cOxzOh/ycY7wA==
+
 adm-zip@0.4.11:
   version "0.4.11"
   resolved "https://registry.yarnpkg.com/adm-zip/-/adm-zip-0.4.11.tgz#2aa54c84c4b01a9d0fb89bb11982a51f13e3d62a"
