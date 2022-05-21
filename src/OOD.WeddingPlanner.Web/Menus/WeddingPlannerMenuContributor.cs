@@ -91,6 +91,12 @@ namespace OOD.WeddingPlanner.Web.Menus
                     new ApplicationMenuItem(WeddingPlannerMenus.Invitee, l["Menu:Invitee"], "/Invitees", icon: "fas fa-user")
                 );
             }
+            if (await context.IsGrantedAsync(WeddingPlannerPermissions.TableMenu.Default))
+            {
+                context.Menu.AddItem(
+                    new ApplicationMenuItem(WeddingPlannerMenus.TableMenu, l["Menu:TableMenu"], "/TableMenus", icon: "fas fa-utensils")
+                );
+            }
             if (await context.IsGrantedAsync(WeddingPlannerPermissions.Invitation.Default))
             {
                 context.Menu.AddItem(

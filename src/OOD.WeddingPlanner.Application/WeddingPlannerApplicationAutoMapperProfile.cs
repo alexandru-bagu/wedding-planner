@@ -15,6 +15,8 @@ using OOD.WeddingPlanner.Weddings;
 using OOD.WeddingPlanner.Weddings.Dtos;
 using OOD.WeddingPlanner.TableInvitees;
 using OOD.WeddingPlanner.TableInvitees.Dtos;
+using OOD.WeddingPlanner.TableMenus;
+using OOD.WeddingPlanner.TableMenus.Dtos;
 using System;
 
 namespace OOD.WeddingPlanner
@@ -60,6 +62,8 @@ namespace OOD.WeddingPlanner
               .ForMember(p => p.DisplayName, p => p.MapFrom(q => q.Name));
             CreateMap<TableInvitee, TableInviteeDto>();
             CreateMap<CreateUpdateTableInviteeDto, TableInvitee>(MemberList.Source);
+            CreateMap<TableMenu, TableMenuDto>();
+            CreateMap<CreateUpdateTableMenuDto, TableMenu>(MemberList.Source);
         }
     }
 }

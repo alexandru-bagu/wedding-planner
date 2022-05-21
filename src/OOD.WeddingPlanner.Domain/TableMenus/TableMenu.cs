@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 
@@ -16,6 +16,20 @@ namespace OOD.WeddingPlanner.TableMenus
 
         protected TableMenu()
         {
+        }
+
+        public TableMenu(
+            Guid id,
+            Guid? tenantId,
+            string name,
+            bool adult,
+            int order
+        ) : base(id)
+        {
+            TenantId = tenantId;
+            Name = name;
+            Adult = adult;
+            Order = order;
         }
     }
 }

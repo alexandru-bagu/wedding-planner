@@ -12,6 +12,7 @@ using System.Globalization;
 using OOD.WeddingPlanner.Invitations;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using Volo.Abp;
 
 namespace OOD.WeddingPlanner.Web.Controllers
 {
@@ -68,18 +69,19 @@ namespace OOD.WeddingPlanner.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> PlusOne(Guid id, string tenant_name, [FromBody] CreatePlusOneViewModel model)
         {
+            if (!model.Male.HasValue) throw new UserFriendlyException(L["You have to specify gender."]);
             var tenantId = await GetTenantId(tenant_name);
             using (CurrentTenant.Change(tenantId))
             {
                 var invitation = await InvitationRepository.GetWithFullNavigationByIdAsync(id);
-                string gender = "male";
-                try
-                {
-                    var client = new GenderApiClient(new HttpClient { BaseAddress = new Uri("https://gender-api.com") }, new GenderApiConfiguration { ApiKey = "3eluzDcaydE8LpLhTXyDBBkY8xF34Cm7WeeU" });
-                    var response = await client.GetByNameAndCountry2Alpha($"{model.Name} {model.Surname}", new CultureInfo(invitation.Design.DefaultCulture).TwoLetterISOLanguageName);
-                    gender = response.Gender;
-                }
-                catch (Exception ex) { Logger.LogError(ex, "PlusOne"); }
+                string gender = model.Male == true ? "male" : "female";
+                //try
+                //{
+                //    var client = new GenderApiClient(new HttpClient { BaseAddress = new Uri("https://gender-api.com") }, new GenderApiConfiguration { ApiKey = "3eluzDcaydE8LpLhTXyDBBkY8xF34Cm7WeeU" });
+                //    var response = await client.GetByNameAndCountry2Alpha($"{model.Name} {model.Surname}", new CultureInfo(invitation.Design.DefaultCulture).TwoLetterISOLanguageName);
+                //    gender = response.Gender;
+                //}
+                //catch (Exception ex) { Logger.LogError(ex, "PlusOne"); }
                 if (!invitation.Invitation.Invitees.Any(p => p.PlusOne))
                 {
                     var invitee = new Invitee(Guid.NewGuid(), tenantId, model.Surname, model.Name, id, null, true, false, gender.Equals("male", StringComparison.InvariantCultureIgnoreCase), true);

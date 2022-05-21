@@ -3,17 +3,22 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using OOD.WeddingPlanner.Invitations.Dtos;
 using OOD.WeddingPlanner.Localization;
+using OOD.WeddingPlanner.TableMenus;
+using OOD.WeddingPlanner.TableMenus.Dtos;
 using OOD.WeddingPlanner.Web.Pages.Invitees.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
 
 namespace OOD.WeddingPlanner.Web.Models
 {
     public class ViewInvitationModel : InvitationWithNavigationPropertiesDto
     {
         public IStringLocalizer<WeddingPlannerResource> L { get; private set; }
+        public TableMenuDto[] AdultMenus { get; private set; }
+        public TableMenuDto[] ChildMenus { get; private set; }
         public CreatePlusOneViewModel PlusOne { get; set; }
 
         public ViewInvitationModel()
@@ -24,31 +29,23 @@ namespace OOD.WeddingPlanner.Web.Models
         {
             SelectListItem[] ret;
             if (child)
-            {
-                ret = new[] {
-                    new SelectListItem(L["MenuChild"].Value, "Child", selected == "Child"),
-                    new SelectListItem(L["MenuChildFree"].Value, "ChildFree", selected == "ChildFree"),
-                    new SelectListItem(L["MenuAdult"].Value, "Adult", selected == "Adult"),
-                    new SelectListItem(L["MenuNone"].Value, "None", selected == "None")
-                };
-            }
+                ret = ChildMenus.Select(p => new SelectListItem(p.Name, p.Name, p.Name == selected)).ToArray();
             else
-            {
-                ret = new[] {
-                    new SelectListItem(L["MenuAdult"].Value, "Adult", selected == "Adult")
-                };
-            }
+                ret = AdultMenus.Select(p => new SelectListItem(p.Name, p.Name, p.Name == selected)).ToArray();
             if (!ret.Any(p => p.Selected)) ret[0].Selected = true;
             return ret;
         }
 
-        public Task PrepareAsync(IServiceProvider serviceProvider)
+        public async Task PrepareAsync(IServiceProvider serviceProvider)
         {
             L = serviceProvider.GetService<IStringLocalizer<WeddingPlannerResource>>();
+            var menuAppService = serviceProvider.GetService<ITableMenuAppService>();
+            var menus = await menuAppService.GetListAsync(new PagedAndSortedResultRequestDto() { MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount });
+            AdultMenus = menus.Items.Where(p => p.Adult).OrderBy(p => p.Order).ToArray();
+            ChildMenus = menus.Items.Where(p => !p.Adult).OrderBy(p => p.Order).ToArray();
             PlusOne = new CreatePlusOneViewModel();
             PlusOne.GenderItems.Add(new SelectListItem(L["Male"], "true"));
             PlusOne.GenderItems.Add(new SelectListItem(L["Female"], "false"));
-            return Task.CompletedTask;
         }
     }
 }

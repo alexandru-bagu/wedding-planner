@@ -21,6 +21,7 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using OOD.WeddingPlanner.TableInvitees;
+using OOD.WeddingPlanner.TableMenus;
 
 namespace OOD.WeddingPlanner.EntityFrameworkCore
 {
@@ -68,6 +69,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
         public DbSet<InvitationDesign> InvitationDesigns { get; set; }
         public DbSet<Table> Tables { get; set; }
         public DbSet<TableInvitee> TableInvitees { get; set; }
+        public DbSet<TableMenu> TableMenus { get; set; }
 
         public WeddingPlannerDbContext(DbContextOptions<WeddingPlannerDbContext> options)
             : base(options)
@@ -169,6 +171,16 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
                 b.HasOne(p => p.Table).WithMany(p => p.TableAssignments);
                 b.HasIndex(p => new { p.TableId, p.InviteeId }).IsUnique();
                 b.HasIndex(p => new { p.TableId });
+            });
+
+
+            builder.Entity<TableMenu>(b =>
+            {
+                b.ToTable(WeddingPlannerConsts.DbTablePrefix + "TableMenus", WeddingPlannerConsts.DbSchema);
+                b.ConfigureByConvention(); 
+                
+
+                /* Configure more properties here */
             });
         }
     }

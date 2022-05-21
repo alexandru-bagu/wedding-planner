@@ -120,6 +120,16 @@
     "EventTimeZone": "Time Zone",
     "My wedding": "My wedding",
     "Menu:MyWedding": "My wedding",
-    "SaveWedding": "Save"
+    "SaveWedding": "Save",
+    "Permission:TableMenu": "Menus",
+    "Menu:TableMenu": "Menus",
+    "TableMenu": "Menu",
+    "TableMenuName": "Name",
+    "TableMenuAdult": "Is it for adults?",
+    "TableMenuOrder": "Render order",
+    "CreateTableMenu": "Create menu",
+    "EditTableMenu": "Edit menu",
+    "TableMenuDeletionConfirmationMessage": "Are you sure to delete the menu {0}?",
+    "Permission:TableInvitee": "Table invitee"
   }
 }

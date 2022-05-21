@@ -124,6 +124,20 @@
     "InvitationUniqueCode": "Unique Code",
     "WeddingInvitationHeaderHtml": "Antet invitație",
     "WeddingInvitationFooterHtml": "Subsol invitație",
-    "EventTimeZone": "Fus orar"
+    "EventTimeZone": "Fus orar",
+    "My wedding": "My wedding",
+    "Menu:MyWedding": "Nunta mea",
+    "SaveWedding": "Salvează",
+    "Permission:TableMenu": "Meniuri",
+    "Menu:TableMenu": "Meniuri",
+    "TableMenu": "Meniu",
+    "TableMenuName": "Nume",
+    "TableMenuAdult": "Este pentru adulți?",
+    "TableMenuOrder": "Ordine de afisare",
+    "CreateTableMenu": "Crează meniu",
+    "EditTableMenu": "Editează meniu",
+    "TableMenuDeletionConfirmationMessage": "Ești sigur că vrei să ștergi meniul {0}?",
+    "Permission:TableInvitee": "Invitat la masă",
+    "Add to calendar": "Adaugă în calendar"
   }
 }

@@ -1,3 +1,4 @@
+using OOD.WeddingPlanner.TableMenus;
 using OOD.WeddingPlanner.TableInvitees;
 using Microsoft.Extensions.DependencyInjection;
 using OOD.WeddingPlanner.Events;
@@ -55,6 +56,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
                 options.AddRepository<InvitationDesign, InvitationDesignRepository>();
                 options.AddRepository<Table, TableRepository>();
                 options.AddRepository<TableInvitee, TableInviteeRepository>();
+                options.AddRepository<TableMenu, TableMenuRepository>();
             });
 
             Configure<AbpDbContextOptions>(options =>

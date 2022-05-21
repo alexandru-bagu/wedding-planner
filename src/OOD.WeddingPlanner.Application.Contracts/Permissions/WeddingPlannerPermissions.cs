@@ -70,5 +70,13 @@ namespace OOD.WeddingPlanner.Permissions
             public const string Create = Default + ".Create";
             public const string Delete = Default + ".Delete";
         }
+
+        public class TableMenu
+        {
+            public const string Default = GroupName + ".TableMenu";
+            public const string Update = Default + ".Update";
+            public const string Create = Default + ".Create";
+            public const string Delete = Default + ".Delete";
+        }
     }
 }

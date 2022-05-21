@@ -82,6 +82,15 @@
     "TableInviteeInviteeId": "TableInviteeInviteeId",
     "CreateTableInvitee": "CreateTableInvitee",
     "EditTableInvitee": "EditTableInvitee",
-    "TableInviteeDeletionConfirmationMessage": "Are you sure to delete the tableInvitee {0}?"
+    "TableInviteeDeletionConfirmationMessage": "Are you sure to delete the tableInvitee {0}?",
+    "Permission:TableMenu": "TableMenu",
+    "Menu:TableMenu": "MenuTableMenu",
+    "TableMenu": "TableMenu",
+    "TableMenuName": "TableMenuName",
+    "TableMenuAdult": "TableMenuAdult",
+    "TableMenuOrder": "TableMenuOrder",
+    "CreateTableMenu": "CreateTableMenu",
+    "EditTableMenu": "EditTableMenu",
+    "TableMenuDeletionConfirmationMessage": "Are you sure to delete the tableMenu {0}?"
   }
 }
