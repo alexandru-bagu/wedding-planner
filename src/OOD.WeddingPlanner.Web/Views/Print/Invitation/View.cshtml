@@ -162,7 +162,7 @@
                 }
                 @foreach (var evt in Model.Wedding.Events)
                 {
-                  <abp-tab title=@L[evt.Name] active=active>
+                  <abp-tab title=@L[evt.Name].Value active=active>
                     <abp-container data-event-id=@evt.Id>
                       <abp-row>
                         <abp-column size-lg=_6>
