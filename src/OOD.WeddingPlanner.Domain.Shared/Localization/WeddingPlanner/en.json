@@ -130,6 +130,16 @@
     "CreateTableMenu": "Create menu",
     "EditTableMenu": "Edit menu",
     "TableMenuDeletionConfirmationMessage": "Are you sure to delete the menu {0}?",
-    "Permission:TableInvitee": "Table invitee"
+    "Permission:TableInvitee": "Table invitee",
+    "Permission:LanguageText": "Translations",
+    "Menu:LanguageText": "Translations",
+    "LanguageText": "Translations",
+    "LanguageTextResourceName": "Resource",
+    "LanguageTextCultureName": "Culture",
+    "LanguageTextName": "Name",
+    "LanguageTextValue": "Value",
+    "CreateLanguageText": "Add translation",
+    "EditLanguageText": "Edit translations",
+    "LanguageTextDeletionConfirmationMessage": "Are you sure to delete the translation {0}?"
   }
 }

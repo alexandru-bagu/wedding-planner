@@ -91,6 +91,16 @@
     "TableMenuOrder": "TableMenuOrder",
     "CreateTableMenu": "CreateTableMenu",
     "EditTableMenu": "EditTableMenu",
-    "TableMenuDeletionConfirmationMessage": "Are you sure to delete the tableMenu {0}?"
+    "TableMenuDeletionConfirmationMessage": "Are you sure to delete the tableMenu {0}?",
+    "Permission:LanguageText": "LanguageText",
+    "Menu:LanguageText": "MenuLanguageText",
+    "LanguageText": "LanguageText",
+    "LanguageTextResourceName": "LanguageTextResourceName",
+    "LanguageTextCultureName": "LanguageTextCultureName",
+    "LanguageTextName": "LanguageTextName",
+    "LanguageTextValue": "LanguageTextValue",
+    "CreateLanguageText": "CreateLanguageText",
+    "EditLanguageText": "EditLanguageText",
+    "LanguageTextDeletionConfirmationMessage": "Are you sure to delete the languageText {0}?"
   }
 }

@@ -138,6 +138,16 @@
     "EditTableMenu": "Editează meniu",
     "TableMenuDeletionConfirmationMessage": "Ești sigur că vrei să ștergi meniul {0}?",
     "Permission:TableInvitee": "Invitat la masă",
-    "Add to calendar": "Adaugă în calendar"
+    "Add to calendar": "Adaugă în calendar",
+    "Permission:LanguageText": "Traduceri",
+    "Menu:LanguageText": "Traduceri",
+    "LanguageText": "Traduceri",
+    "LanguageTextResourceName": "Resursă",
+    "LanguageTextCultureName": "Cultură",
+    "LanguageTextName": "Nume",
+    "LanguageTextValue": "Valoare",
+    "CreateLanguageText": "Adaugă traducere",
+    "EditLanguageText": "Modifică traducere",
+    "LanguageTextDeletionConfirmationMessage": "Ești sigur că vrei să ștergi traducerea {0}?"
   }
 }

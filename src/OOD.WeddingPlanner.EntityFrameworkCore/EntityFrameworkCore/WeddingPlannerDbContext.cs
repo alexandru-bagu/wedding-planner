@@ -22,6 +22,7 @@ using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using OOD.WeddingPlanner.TableInvitees;
 using OOD.WeddingPlanner.TableMenus;
+using OOD.WeddingPlanner.LanguageTexts;
 
 namespace OOD.WeddingPlanner.EntityFrameworkCore
 {
@@ -70,6 +71,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
         public DbSet<Table> Tables { get; set; }
         public DbSet<TableInvitee> TableInvitees { get; set; }
         public DbSet<TableMenu> TableMenus { get; set; }
+        public DbSet<LanguageText> LanguageTexts { get; set; }
 
         public WeddingPlannerDbContext(DbContextOptions<WeddingPlannerDbContext> options)
             : base(options)
@@ -177,6 +179,16 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
             builder.Entity<TableMenu>(b =>
             {
                 b.ToTable(WeddingPlannerConsts.DbTablePrefix + "TableMenus", WeddingPlannerConsts.DbSchema);
+                b.ConfigureByConvention(); 
+                
+
+                /* Configure more properties here */
+            });
+
+
+            builder.Entity<LanguageText>(b =>
+            {
+                b.ToTable(WeddingPlannerConsts.DbTablePrefix + "LanguageTexts", WeddingPlannerConsts.DbSchema);
                 b.ConfigureByConvention(); 
                 
 

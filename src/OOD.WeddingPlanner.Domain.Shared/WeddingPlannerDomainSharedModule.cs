@@ -56,6 +56,12 @@ namespace OOD.WeddingPlanner
                     .AddBaseTypes(typeof(AbpTenantManagementResource))
                     .AddVirtualJson("/Localization/WeddingPlanner");
 
+                options.Resources
+                    .Add<WeddingPlannerResourceBase>("en")
+                    .AddBaseTypes(typeof(AbpValidationResource))
+                    .AddBaseTypes(typeof(AbpTenantManagementResource))
+                    .AddVirtualJson("/Localization/WeddingPlanner");
+
                 options.DefaultResourceType = typeof(WeddingPlannerResource);
             });
 

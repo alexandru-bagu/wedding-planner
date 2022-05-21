@@ -1,3 +1,4 @@
+using OOD.WeddingPlanner.LanguageTexts;
 using OOD.WeddingPlanner.TableMenus;
 using OOD.WeddingPlanner.TableInvitees;
 using Microsoft.Extensions.DependencyInjection;
@@ -57,6 +58,7 @@ namespace OOD.WeddingPlanner.EntityFrameworkCore
                 options.AddRepository<Table, TableRepository>();
                 options.AddRepository<TableInvitee, TableInviteeRepository>();
                 options.AddRepository<TableMenu, TableMenuRepository>();
+                options.AddRepository<LanguageText, LanguageTextRepository>();
             });
 
             Configure<AbpDbContextOptions>(options =>

@@ -56,6 +56,11 @@ namespace OOD.WeddingPlanner.Permissions
             tableMenuPermission.AddChild(WeddingPlannerPermissions.TableMenu.Create, L("Permission:Create"));
             tableMenuPermission.AddChild(WeddingPlannerPermissions.TableMenu.Update, L("Permission:Update"));
             tableMenuPermission.AddChild(WeddingPlannerPermissions.TableMenu.Delete, L("Permission:Delete"));
+
+            var languageTextPermission = myGroup.AddPermission(WeddingPlannerPermissions.LanguageText.Default, L("Permission:LanguageText"));
+            languageTextPermission.AddChild(WeddingPlannerPermissions.LanguageText.Create, L("Permission:Create"));
+            languageTextPermission.AddChild(WeddingPlannerPermissions.LanguageText.Update, L("Permission:Update"));
+            languageTextPermission.AddChild(WeddingPlannerPermissions.LanguageText.Delete, L("Permission:Delete"));
         }
 
         private static LocalizableString L(string name)

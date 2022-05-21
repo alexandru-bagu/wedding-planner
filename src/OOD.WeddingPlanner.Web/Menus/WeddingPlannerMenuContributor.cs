@@ -52,6 +52,12 @@ namespace OOD.WeddingPlanner.Web.Menus
 
             administration.SetSubItemOrder(IdentityMenuNames.GroupName, 2);
             administration.SetSubItemOrder(SettingManagementMenuNames.GroupName, 3);
+            if (await context.IsGrantedAsync(WeddingPlannerPermissions.LanguageText.Default))
+            {
+                administration.AddItem(
+                    new ApplicationMenuItem(WeddingPlannerMenus.LanguageText, l["Menu:LanguageText"], "/LanguageTexts", "fas fa-text-size")
+                );
+            }
             if (await context.IsGrantedAsync(WeddingPlannerPermissions.Wedding.Default))
             {
                 if (tenant.Id != null)

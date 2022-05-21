@@ -13,6 +13,9 @@ using OOD.WeddingPlanner.Invitations;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Threading;
+using Volo.Abp.Localization;
+using OOD.WeddingPlanner.LanguageTexts;
+using OOD.WeddingPlanner.Localization;
 
 namespace OOD.WeddingPlanner
 {
@@ -34,6 +37,13 @@ namespace OOD.WeddingPlanner
             Configure<AbpAutoMapperOptions>(options =>
             {
                 options.AddMaps<WeddingPlannerApplicationModule>();
+            });
+
+
+            Configure<AbpLocalizationOptions>(options =>
+            {
+                var resource = options.Resources.Get<WeddingPlannerResource>();
+                resource.Contributors.Add(new DbLocalizationResourceContributor());
             });
         }
     }

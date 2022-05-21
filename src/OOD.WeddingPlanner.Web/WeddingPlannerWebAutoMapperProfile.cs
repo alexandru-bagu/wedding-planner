@@ -16,6 +16,8 @@ using OOD.WeddingPlanner.Web.Pages.Weddings.ViewModels;
 using OOD.WeddingPlanner.TableInvitees.Dtos;
 using OOD.WeddingPlanner.TableMenus.Dtos;
 using OOD.WeddingPlanner.Web.Pages.TableMenus.ViewModels;
+using OOD.WeddingPlanner.LanguageTexts.Dtos;
+using OOD.WeddingPlanner.Web.Pages.LanguageTexts.ViewModels;
 using OOD.WeddingPlanner.Weddings.Dtos;
 
 namespace OOD.WeddingPlanner.Web
@@ -42,6 +44,10 @@ namespace OOD.WeddingPlanner.Web
             CreateMap<InvitationWithNavigationPropertiesDto, ViewInvitationModel>();
             CreateMap<TableMenuDto, CreateEditTableMenuViewModel>();
             CreateMap<CreateEditTableMenuViewModel, CreateUpdateTableMenuDto>();
+            CreateMap<LanguageTextDto, CreateLanguageTextViewModel>();
+            CreateMap<CreateLanguageTextViewModel, CreateUpdateLanguageTextDto>();
+            CreateMap<LanguageTextDto, EditLanguageTextViewModel>();
+            CreateMap<EditLanguageTextViewModel, CreateUpdateLanguageTextDto>();
         }
     }
 }

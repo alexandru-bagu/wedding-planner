@@ -29,9 +29,9 @@ namespace OOD.WeddingPlanner.Web.Models
         {
             SelectListItem[] ret;
             if (child)
-                ret = ChildMenus.Select(p => new SelectListItem(p.Name, p.Name, p.Name == selected)).ToArray();
+                ret = ChildMenus.Select(p => new SelectListItem(L[p.Name], p.Name, p.Name == selected)).ToArray();
             else
-                ret = AdultMenus.Select(p => new SelectListItem(p.Name, p.Name, p.Name == selected)).ToArray();
+                ret = AdultMenus.Select(p => new SelectListItem(L[p.Name], p.Name, p.Name == selected)).ToArray();
             if (!ret.Any(p => p.Selected)) ret[0].Selected = true;
             return ret;
         }

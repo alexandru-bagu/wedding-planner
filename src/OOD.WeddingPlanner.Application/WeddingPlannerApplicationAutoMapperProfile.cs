@@ -17,6 +17,8 @@ using OOD.WeddingPlanner.TableInvitees;
 using OOD.WeddingPlanner.TableInvitees.Dtos;
 using OOD.WeddingPlanner.TableMenus;
 using OOD.WeddingPlanner.TableMenus.Dtos;
+using OOD.WeddingPlanner.LanguageTexts;
+using OOD.WeddingPlanner.LanguageTexts.Dtos;
 using System;
 
 namespace OOD.WeddingPlanner
@@ -64,6 +66,8 @@ namespace OOD.WeddingPlanner
             CreateMap<CreateUpdateTableInviteeDto, TableInvitee>(MemberList.Source);
             CreateMap<TableMenu, TableMenuDto>();
             CreateMap<CreateUpdateTableMenuDto, TableMenu>(MemberList.Source);
+            CreateMap<LanguageText, LanguageTextDto>();
+            CreateMap<CreateUpdateLanguageTextDto, LanguageText>(MemberList.Source);
         }
     }
 }
