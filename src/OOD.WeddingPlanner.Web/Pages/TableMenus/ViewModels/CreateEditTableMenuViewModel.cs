@@ -1,5 +1,5 @@
 using System;
-
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace OOD.WeddingPlanner.Web.Pages.TableMenus.ViewModels
@@ -13,6 +13,7 @@ namespace OOD.WeddingPlanner.Web.Pages.TableMenus.ViewModels
         public bool Adult { get; set; }
 
         [Display(Name = "TableMenuOrder")]
-        public int Order { get; set; }
+        [DefaultValue(0)]
+        public int Order { get; set; } = 0;
     }
 }
