@@ -37,13 +37,11 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees
             ViewModel.InvitationItems.AddRange(new[] {
                 new SelectListItem("", "")
             });
-            ViewModel.WeddingItems.AddRange(new[] {
-                new SelectListItem("", "")
-            });
             ViewModel.WeddingItems.AddRange(
               (await _weddingAppService.GetLookupListAsync(new LookupRequestDto()))
                 .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
-
+            var wedding = ViewModel.WeddingItems.FirstOrDefault();
+            if (wedding != null) wedding.Selected = true;
             ViewModel.MenuTypes.AddRange(new[] {
                 new SelectListItem("", ""),
                 new SelectListItem(L["MenuNone"].Value, "None"),

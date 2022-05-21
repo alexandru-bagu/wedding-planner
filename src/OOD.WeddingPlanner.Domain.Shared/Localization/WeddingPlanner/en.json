@@ -117,6 +117,9 @@
     "Female": "Female",
     "Select a menu": "Select a menu",
     "InvitationUniqueCode": "Unique Code",
-    "EventTimeZone": "Time Zone"
+    "EventTimeZone": "Time Zone",
+    "My wedding": "My wedding",
+    "Menu:MyWedding": "My wedding",
+    "SaveWedding": "Save"
   }
 }

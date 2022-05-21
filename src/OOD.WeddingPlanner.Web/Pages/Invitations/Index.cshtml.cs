@@ -15,11 +15,8 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations
         [SelectItems(nameof(WeddingIdFilterItems))]
         public Guid? WeddingIdFilter { get; set; }
 
-        public List<SelectListItem> WeddingIdFilterItems { get; set; } =
-            new List<SelectListItem>
-            {
-                new SelectListItem("", "")
-            };
+        public List<SelectListItem> WeddingIdFilterItems { get; set; } = new List<SelectListItem>();
+
         public IWeddingAppService AppService { get; }
 
         public IndexModel(IWeddingAppService appService)

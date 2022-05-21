@@ -42,7 +42,7 @@
     </abp-card-header>
     <abp-card-body>
         <abp-row>
-            <abp-column size-md="_3">
+            <abp-column size-md="_3" class="@(Model.WeddingIdFilterItems.Count <= 1?"d-none":"")">
                 <abp-select asp-for="WeddingIdFilter" label="@L["InvitationWeddingId"].Value" />
             </abp-column>
             <abp-column size-md="_3">

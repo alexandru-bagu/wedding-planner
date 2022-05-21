@@ -21,6 +21,8 @@
         <None Remove="Logs\**" />
         <None Remove="Lsw.Abp.AspNetCore.Mvc.UI.Theme.Stisla" />
         <None Remove="Pages\Invitations\view.js" />
+        <None Remove="Pages\MyWedding\index.css" />
+        <None Remove="Pages\MyWedding\index.js" />
     </ItemGroup>
 
     <ItemGroup>

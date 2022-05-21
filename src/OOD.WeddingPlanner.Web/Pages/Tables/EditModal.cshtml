@@ -5,15 +5,24 @@
 @inject IHtmlLocalizer<WeddingPlannerResource> L
 @model OOD.WeddingPlanner.Web.Pages.Tables.EditModalModel
 @{
-    Layout = null;
+  Layout = null;
 }
-<abp-dynamic-form abp-model="ViewModel" data-ajaxForm="true" asp-page="EditModal">
-    <abp-modal>
-        <abp-modal-header title="@L["EditTable"].Value"></abp-modal-header>
-        <abp-modal-body>
-            <abp-input asp-for="Id" />
-            <abp-form-content />
-        </abp-modal-body>
-        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
-    </abp-modal>
-</abp-dynamic-form>
+<form abp-model="ViewModel" data-ajaxForm="true" asp-page="EditModal">
+  <abp-modal>
+    <abp-modal-header title="@L["EditTable"].Value"></abp-modal-header>
+    <abp-modal-body>
+      <abp-input asp-for="Id" />
+
+      <div class="@(Model.ViewModel.WeddingItems.Count <= 1?"d-none":"")">
+        <abp-select asp-for="ViewModel.WeddingId" asp-items="Model.ViewModel.WeddingItems" />
+      </div>
+      <abp-select asp-for="ViewModel.EventId" asp-items="Model.ViewModel.EventItems" />
+      <abp-input asp-for="ViewModel.Name" />
+      <abp-input asp-for="ViewModel.Description" />
+      <abp-input asp-for="ViewModel.Size" />
+      <abp-input asp-for="ViewModel.Row" />
+      <abp-input asp-for="ViewModel.Column" />
+    </abp-modal-body>
+    <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+  </abp-modal>
+</form>

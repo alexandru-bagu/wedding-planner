@@ -11,17 +11,17 @@ abp.modals.weddingModal = function () {
 
             var noteInput = modal.find('[name="ViewModel.InvitationNoteHtml"]');
             noteInput.hide();
-            var noteMonacoContainer = $('<div id="editor" style="height: 200px;"></div>');
+            var noteMonacoContainer = $('<div style="height: 200px;"></div>');
             noteMonacoContainer.insertAfter(noteInput);
 
             var headerInput = modal.find('[name="ViewModel.InvitationHeaderHtml"]');
             headerInput.hide();
-            var headerMonacoContainer = $('<div id="editor" style="height: 200px;"></div>');
+            var headerMonacoContainer = $('<div style="height: 200px;"></div>');
             headerMonacoContainer.insertAfter(headerInput);
 
             var footerInput = modal.find('[name="ViewModel.InvitationFooterHtml"]');
             footerInput.hide();
-            var footerMonacoContainer = $('<div id="editor" style="height: 200px;"></div>');
+            var footerMonacoContainer = $('<div style="height: 200px;"></div>');
             footerMonacoContainer.insertAfter(footerInput);
 
             require(['vs/editor/editor.main'], function () {

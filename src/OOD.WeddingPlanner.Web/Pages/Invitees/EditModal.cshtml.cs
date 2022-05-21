@@ -41,9 +41,6 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitees
                 new SelectListItem(L["No"].Value, "False"),
                 new SelectListItem(L["Yes"].Value, "True"),
             });
-            ViewModel.WeddingItems.AddRange(new[] {
-                new SelectListItem("", "")
-            });
             ViewModel.WeddingItems.AddRange(
               (await _weddingAppService.GetLookupListAsync(new LookupRequestDto()))
                 .Items.Select(p => new SelectListItem(p.DisplayName, p.Id.ToString()) { Selected = dto.Invitation?.WeddingId == p.Id }));

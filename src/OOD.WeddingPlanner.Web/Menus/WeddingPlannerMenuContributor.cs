@@ -1,8 +1,10 @@
+using Microsoft.Extensions.DependencyInjection;
 using OOD.WeddingPlanner.Localization;
 using OOD.WeddingPlanner.MultiTenancy;
 using OOD.WeddingPlanner.Permissions;
 using System.Threading.Tasks;
 using Volo.Abp.Identity.Web.Navigation;
+using Volo.Abp.MultiTenancy;
 using Volo.Abp.SettingManagement.Web.Navigation;
 using Volo.Abp.TenantManagement.Web.Navigation;
 using Volo.Abp.UI.Navigation;
@@ -21,6 +23,7 @@ namespace OOD.WeddingPlanner.Web.Menus
 
         private async Task ConfigureMainMenuAsync(MenuConfigurationContext context)
         {
+            var tenant = context.ServiceProvider.GetService<ICurrentTenant>();
             var administration = context.Menu.GetAdministration();
             var l = context.GetLocalizer<WeddingPlannerResource>();
 
@@ -51,9 +54,18 @@ namespace OOD.WeddingPlanner.Web.Menus
             administration.SetSubItemOrder(SettingManagementMenuNames.GroupName, 3);
             if (await context.IsGrantedAsync(WeddingPlannerPermissions.Wedding.Default))
             {
-                context.Menu.AddItem(
-                    new ApplicationMenuItem(WeddingPlannerMenus.Wedding, l["Menu:Wedding"], "/Weddings", icon: "fas fa-church")
-                );
+                if (tenant.Id != null)
+                {
+                    context.Menu.AddItem(
+                        new ApplicationMenuItem(WeddingPlannerMenus.MyWedding, l["Menu:MyWedding"], "/MyWedding", icon: "fas fa-church")
+                    );
+                }
+                else
+                {
+                    context.Menu.AddItem(
+                        new ApplicationMenuItem(WeddingPlannerMenus.Wedding, l["Menu:Wedding"], "/Weddings", icon: "fas fa-church")
+                    );
+                }
             }
             if (await context.IsGrantedAsync(WeddingPlannerPermissions.Location.Default))
             {

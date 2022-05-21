@@ -11,105 +11,105 @@
 @inject IHtmlLocalizer<WeddingPlannerResource> L
 @inject IAuthorizationService Authorization
 @{
-    PageLayout.Content.Title = L["Table"].Value;
-    PageLayout.Content.BreadCrumb.Add(L["Menu:Table"].Value);
-    PageLayout.Content.MenuItemName = WeddingPlannerMenus.Table;
+  PageLayout.Content.Title = L["Table"].Value;
+  PageLayout.Content.BreadCrumb.Add(L["Menu:Table"].Value);
+  PageLayout.Content.MenuItemName = WeddingPlannerMenus.Table;
 }
 
 @section scripts
-{
-<abp-script src="/Pages/Tables/index.js" />
+  {
+  <abp-script src="/Pages/Tables/index.js" />
 }
-@section styles
-{
-<abp-style src="/Pages/Tables/index.css" />
+  @section styles
+  {
+  <abp-style src="/Pages/Tables/index.css" />
 }
 
-<div id="table-card">
+  <div id="table-card">
     <abp-card>
-        <abp-card-header>
-            <abp-row>
-                <abp-column size-md="_6">
-                    <abp-card-title>@L["Table"]</abp-card-title>
-                </abp-column>
-                <abp-column size-md="_6" class="text-right">
-                    @if (await Authorization.IsGrantedAsync(WeddingPlannerPermissions.Table.Create))
-                    {
-                        <abp-button id="NewTableButton"
-                                text="@L["CreateTable"].Value"
-                                icon="plus"
-                                button-type="Primary" />
-                    }
-                    <abp-button id="DownloadTablesButton" text="@L["DownloadTables"].Value" icon="download " button-type="Primary" />
-                </abp-column>
-            </abp-row>
-        </abp-card-header>
-        <abp-card-body>
-            <abp-row>
-                <abp-column size-md=_3>
-                    <abp-select asp-for="Wedding" data-bind="select2, options: weddings, optionsText: 'text', optionsValue: 'value', value: wedding"></abp-select>
-                </abp-column>
-                <abp-column size-md=_3>
-                    <abp-select asp-for="Event" data-bind="select2, options: events, optionsText: 'text', optionsValue: 'value', value: event"></abp-select>
-                </abp-column>
-            </abp-row>
-        </abp-card-body>
-    </abp-card>
-    <abp-row>
-        <div class="container-fluid">
-            <abp-row data-bind="template: { name: 'table-template', foreach: tables }"></abp-row>
-        </div>
-    </abp-row>
+      <abp-card-header>
+        <abp-row>
+          <abp-column size-md="_6">
+            <abp-card-title>@L["Table"]</abp-card-title>
+          </abp-column>
+          <abp-column size-md="_6" class="text-right">
+            @if (await Authorization.IsGrantedAsync(WeddingPlannerPermissions.Table.Create))
+          {
+            <abp-button id="NewTableButton"
+                      text="@L["CreateTable"].Value"
+                      icon="plus"
+                      button-type="Primary" />
+          }
+          <abp-button id="DownloadTablesButton" text="@L["DownloadTables"].Value" icon="download " button-type="Primary" />
+        </abp-column>
+      </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+      <abp-row>
+        <abp-column size-md=_3 class="@(Model.WeddingCount <= 1?"d-none":"")">
+          <abp-select asp-for="Wedding" data-bind="select2, options: weddings, optionsText: 'text', optionsValue: 'value', value: wedding"></abp-select>
+        </abp-column>
+        <abp-column size-md=_3>
+          <abp-select asp-for="Event" data-bind="select2, options: events, optionsText: 'text', optionsValue: 'value', value: event"></abp-select>
+        </abp-column>
+      </abp-row>
+    </abp-card-body>
+  </abp-card>
+  <abp-row>
+    <div class="container-fluid">
+      <abp-row data-bind="template: { name: 'table-template', foreach: tables }"></abp-row>
+    </div>
+  </abp-row>
 </div>
 
 <script type="text/html" id="table-template">
-    <abp-column size-md=_4>
-      <abp-card>
-        <abp-card-header>
-          <abp-container>
-            <div>
-              <h4 data-bind="text: name" style="display: inline-block;"></h4>
-              <span style="float: right">
-                <span class="btn btn-secondary" data-bind="visible: canEdit, click: editTable"><i class="fas fa-pencil-alt"></i></span>
-                <span class="btn btn-danger" data-bind="visible: canDelete, click: deleteTable"><i class="fas fa-trash"></i></span>
-              </span>
-            </div>
-            <abp-row>
-              <abp-column size-md=_9>
-                <span data-bind="text: description"></span>
-              </abp-column>
-            </abp-row>
-            <hr class="m-2" />
-            <abp-row class="text-center">
-              <abp-column>
-                <span>@L["TableRow"]:</span> <span data-bind="text: row"></span> &nbsp; <span>@L["TableColumn"]:</span> <span data-bind="text: column"></span>
-              </abp-column>
-            </abp-row>
-          </abp-container>
-        </abp-card-header>
-        <abp-card-body>
-          <div class="container-fluid" data-bind="template: { name: 'invitee-template', foreach: guests }"></div>
-        </abp-card-body>
-      </abp-card>
-    </abp-column>
+  <abp-column size-md=_4>
+    <abp-card>
+      <abp-card-header>
+        <abp-container>
+          <div>
+            <h4 data-bind="text: name" style="display: inline-block;"></h4>
+            <span style="float: right">
+              <span class="btn btn-secondary" data-bind="visible: canEdit, click: editTable"><i class="fas fa-pencil-alt"></i></span>
+              <span class="btn btn-danger" data-bind="visible: canDelete, click: deleteTable"><i class="fas fa-trash"></i></span>
+            </span>
+          </div>
+          <abp-row>
+            <abp-column size-md=_9>
+              <span data-bind="text: description"></span>
+            </abp-column>
+          </abp-row>
+          <hr class="m-2" />
+          <abp-row class="text-center">
+            <abp-column>
+              <span>@L["TableRow"]:</span> <span data-bind="text: row"></span> &nbsp; <span>@L["TableColumn"]:</span> <span data-bind="text: column"></span>
+            </abp-column>
+          </abp-row>
+        </abp-container>
+      </abp-card-header>
+      <abp-card-body>
+        <div class="container-fluid" data-bind="template: { name: 'invitee-template', foreach: guests }"></div>
+      </abp-card-body>
+    </abp-card>
+  </abp-column>
 </script>
 
 <script type="text/html" id="invitee-template">
-    <abp-row class="lh-44">
-      <abp-column>
-        <div>
-            <div style="float: left;">
-                <span class="no-word-wrap" data-bind="text: number() + '.'" style="display: inline-block"></span>
-            </div>
-            <div style="overflow: hidden;">
-                <select data-bind="select2, options: invitees, optionsText: 'text', optionsValue: 'value', value: invitee" style="display: inline-block"/>
-            </div>
-        </div>
-        <!-- ko if: plusOne -->
-        <div class="table-has-plus-one">
-            <span data-bind="text: plusOne().surname + ' ' + plusOne().name"></span>
-        </div>
-        <!-- /ko -->
-      </abp-column>
-    </abp-row>
+  <abp-row class="lh-44">
+    <abp-column>
+      <div>
+          <div style="float: left;">
+              <span class="no-word-wrap" data-bind="text: number() + '.'" style="display: inline-block"></span>
+          </div>
+          <div style="overflow: hidden;">
+              <select data-bind="select2, options: invitees, optionsText: 'text', optionsValue: 'value', value: invitee" style="display: inline-block"/>
+          </div>
+      </div>
+      <!-- ko if: plusOne -->
+      <div class="table-has-plus-one">
+          <span data-bind="text: plusOne().surname + ' ' + plusOne().name"></span>
+      </div>
+      <!-- /ko -->
+    </abp-column>
+  </abp-row>
 </script>

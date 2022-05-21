@@ -1,6 +1,7 @@
 using OOD.WeddingPlanner.Events.Dtos;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Application.Dtos;
 
 namespace OOD.WeddingPlanner.Weddings.Dtos

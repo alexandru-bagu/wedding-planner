@@ -5,47 +5,54 @@
 @inject IHtmlLocalizer<WeddingPlannerResource> L
 @model OOD.WeddingPlanner.Web.Pages.Invitees.CreateModalModel
 @{
-    Layout = null;
+  Layout = null;
 }
 <form abp-model="ViewModel" data-ajaxForm="true" asp-page="CreateModal">
-    <abp-modal>
-        <style>
-            .btn-check { display: none; }
-            .d-none { display: none; }
-        </style>
-        <abp-modal-header title="@L["CreateInvitee"].Value"></abp-modal-header>
-        <abp-modal-body>
-            <abp-input asp-for="ViewModel.Surname"/>
-            <abp-input asp-for="ViewModel.Name" />
-            <div>
-                <input type="checkbox" class="btn-check" id="child-toggle" autocomplete="off">
-                <label class="btn btn-outline-primary" for="child-toggle">
-                    <i class="fa fa-user"></i> @L["Child"]
-                </label>
-                <input type="checkbox" class="btn-check" id="male-toggle" autocomplete="off">
-                <label class="btn btn-outline-primary" for="male-toggle">
-                    <i class="fa fa-male"></i> @L["Male"]
-                </label>
-                <input type="checkbox" class="btn-check" id="female-toggle" autocomplete="off">
-                <label class="btn btn-outline-primary" for="female-toggle">
-                    <i class="fa fa-female"></i> @L["Female"]
-                </label>
-            </div>
-            <abp-input asp-for="ViewModel.Order" />
-            <a href="#" class="show-invitee-details">@L["Show Details"]</a>
-            <div class="invitee-details d-none">
-                <abp-input asp-for="ViewModel.RSVP" />
-                @L["Confirmed"] <abp-radio asp-for="ViewModel.Confirmed" inline="true" asp-items="Model.ViewModel.BooleanItems" />
-                @L["PlusOne"] <abp-radio asp-for="ViewModel.PlusOne" inline="true" asp-items="Model.ViewModel.BooleanItems" />
-                <abp-select asp-for="ViewModel.WeddingId" asp-items="Model.ViewModel.WeddingItems" />
-                <abp-select asp-for="ViewModel.InvitationId" />
-                <abp-select asp-for="ViewModel.Menu" asp-items="Model.ViewModel.MenuTypes" />
-            </div>
-            <div class="d-none">
-                <abp-select asp-for="ViewModel.Child" asp-items="Model.ViewModel.BooleanItems" />
-                <abp-select asp-for="ViewModel.Male" asp-items="Model.ViewModel.BooleanItems" />
-            </div>
-        </abp-modal-body>
-        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
-    </abp-modal>
+  <abp-modal>
+    <style>
+      .btn-check {
+          display: none;
+      }
+
+      .d-none {
+          display: none;
+      }
+    </style>
+    <abp-modal-header title="@L["CreateInvitee"].Value"></abp-modal-header>
+    <abp-modal-body>
+      <abp-input asp-for="ViewModel.Surname" />
+      <abp-input asp-for="ViewModel.Name" />
+      <div>
+        <input type="checkbox" class="btn-check" id="child-toggle" autocomplete="off">
+        <label class="btn btn-outline-primary" for="child-toggle">
+          <i class="fa fa-user"></i> @L["Child"]
+        </label>
+        <input type="checkbox" class="btn-check" id="male-toggle" autocomplete="off">
+        <label class="btn btn-outline-primary" for="male-toggle">
+          <i class="fa fa-male"></i> @L["Male"]
+        </label>
+        <input type="checkbox" class="btn-check" id="female-toggle" autocomplete="off">
+        <label class="btn btn-outline-primary" for="female-toggle">
+          <i class="fa fa-female"></i> @L["Female"]
+        </label>
+      </div>
+      <abp-input asp-for="ViewModel.Order" />
+      <a href="#" class="show-invitee-details">@L["Show Details"]</a>
+      <div class="invitee-details d-none">
+        <abp-input asp-for="ViewModel.RSVP" />
+        @L["Confirmed"] <abp-radio asp-for="ViewModel.Confirmed" inline="true" asp-items="Model.ViewModel.BooleanItems" />
+        @L["PlusOne"] <abp-radio asp-for="ViewModel.PlusOne" inline="true" asp-items="Model.ViewModel.BooleanItems" />
+        <div class="@(Model.ViewModel.WeddingItems.Count <= 1?"d-none":"")">
+          <abp-select asp-for="ViewModel.WeddingId" asp-items="Model.ViewModel.WeddingItems" />
+        </div>
+        <abp-select asp-for="ViewModel.InvitationId" />
+        <abp-select asp-for="ViewModel.Menu" asp-items="Model.ViewModel.MenuTypes" />
+      </div>
+      <div class="d-none">
+        <abp-select asp-for="ViewModel.Child" asp-items="Model.ViewModel.BooleanItems" />
+        <abp-select asp-for="ViewModel.Male" asp-items="Model.ViewModel.BooleanItems" />
+      </div>
+    </abp-modal-body>
+    <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+  </abp-modal>
 </form>

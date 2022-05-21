@@ -10,231 +10,218 @@
 @inject IHtmlLocalizer<WeddingPlannerResource> L
 @inject IThemeManager ThemeManager
 @{
-    Layout = ThemeManager.CurrentTheme.GetLayout(StandardLayouts.Empty);
-
-    Func<string, bool, IEnumerable<SelectListItem>> get_menu = (selected, child) => { 
-        IEnumerable<SelectListItem> ret = new [] {
-            new SelectListItem(L["MenuNone"].Value, "None", selected == "None"),
-            new SelectListItem(L["MenuChildFree"].Value, "ChildFree", selected == "ChildFree"),
-            new SelectListItem(L["MenuChild"].Value, "Child", selected == "Child"),
-            new SelectListItem(L["MenuAdult"].Value, "Adult", selected == "Adult")
-        };
-        if(!child) {
-            ret = new [] {
-                new SelectListItem(L["MenuAdult"].Value, "Adult", selected == "Adult")
-            };
-        }
-
-        if(string.IsNullOrWhiteSpace(selected)) {
-            ret = new [] { new SelectListItem(L["Select a menu"].Value, "None", string.IsNullOrWhiteSpace(selected), true) }
-                .Concat(ret);
-        }
-        return ret;
-    };
+  Layout = ThemeManager.CurrentTheme.GetLayout(StandardLayouts.Empty);
 }
 
 <script>
-    window.app_tenant_name = '@(Context.Items["TenantName"])';
-    window.app_culture = '@System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName';
-    window.model = @Json.Serialize(Model);
+  window.app_tenant_name = '@(Context.Items["TenantName"])';
+  window.app_culture = '@System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName';
+  window.model = @Json.Serialize(Model);
 </script>
 @section scripts
-{
-<abp-script src="/Pages/Invitations/view.js" />
-<abp-script src="/libs/leaflet/dist/leaflet.js" />
-<abp-script src="/libs/leaflet-providers/leaflet-providers.js" />
-<abp-script src="/libs/add-to-calendar-button/assets/js/atcb.min.js" />
+  {
+  <abp-script src="/Pages/Invitations/view.js" />
+  <abp-script src="/libs/leaflet/dist/leaflet.js" />
+  <abp-script src="/libs/leaflet-providers/leaflet-providers.js" />
+  <abp-script src="/libs/add-to-calendar-button/assets/js/atcb.min.js" />
 }
-@section styles
-{
-<abp-style src="/empty-layout.css" />
-<abp-style src="/invitation.css" />
-<abp-style src="/libs/leaflet/dist/leaflet.css" />
-<abp-style src="/libs/add-to-calendar-button/assets/css/atcb.min.css" />
+  @section styles
+  {
+  <abp-style src="/empty-layout.css" />
+  <abp-style src="/invitation.css" />
+  <abp-style src="/libs/leaflet/dist/leaflet.css" />
+  <abp-style src="/libs/add-to-calendar-button/assets/css/atcb.min.css" />
 }
 
-<style>
-    .d-none { display: none; }
+  <style>
+    .d-none {
+        display: none;
+    }
+
     .invitee-menu select {
         height: 30px !important;
         padding: 0px !important;
     }
-</style>
+  </style>
 
-@Html.Raw(Model.Wedding.InvitationHeaderHtml)
+  @Html.Raw(Model.Wedding.InvitationHeaderHtml)
 
-<abp-card>
+  <abp-card>
     <abp-container>
-        <abp-row class="language-row">
-            <abp-column>
-                @await Component.InvokeAsync(typeof(LanguageSwitchViewComponent))
-            </abp-column>
-        </abp-row>
-        <abp-row>
-            <abp-column class="text-center">
-                <h2>@Model.Wedding.GroomName & @Model.Wedding.BrideName</h2>
-            </abp-column>
-        </abp-row>
-        <hr />
-        @Html.Raw(Model.Wedding.InvitationNoteHtml)
-        <abp-row>
-            <abp-column>
-                <abp-container>
-                    <hr />
-                    <abp-row>
-                        <abp-column>
-                            <span>@L["PleaseConfirmInvitees"]</span>
-                        </abp-column>
-                    </abp-row>
-                    <div class="form-row mb-2">
-                        @foreach (var invitee in Model.Invitation.Invitees)
+      <abp-row class="language-row">
+        <abp-column>
+          @await Component.InvokeAsync(typeof(LanguageSwitchViewComponent))
+        </abp-column>
+      </abp-row>
+      <abp-row>
+        <abp-column class="text-center">
+          <h2>@Model.Wedding.GroomName & @Model.Wedding.BrideName</h2>
+        </abp-column>
+      </abp-row>
+      <hr />
+      @Html.Raw(Model.Wedding.InvitationNoteHtml)
+      <abp-row>
+        <abp-column>
+          <abp-container>
+            <hr />
+            <abp-row>
+              <abp-column>
+                <span>@L["PleaseConfirmInvitees"]</span>
+              </abp-column>
+            </abp-row>
+            <div class="form-row mb-2">
+              @foreach (var invitee in Model.Invitation.Invitees)
+            {
+              <div class="col-auto align-top">
+                <div class="input-group mb-1">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      @{
+                        if (invitee.Child)
                         {
-                            <div class="col-auto align-top">
-                                <div class="input-group mb-1">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            @{
-                                                if (invitee.Child)
-                                                {
-                                                    <i class="fa fa-child"></i>
-                                                }
-                                                else if (invitee.Male)
-                                                {
-                                                    <i class="fa fa-male"></i>
-                                                }
-                                                else
-                                                {
-                                                    <i class="fa fa-female"></i>
-                                                }
-                                            }
-                                        </span>
-                                    </div>
-                                    <span class="form-control">
-                                        @invitee.Name @invitee.Surname
-                                    </span>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="rsvp-@invitee.Id" id="rsvp-@invitee.Id-1" value="false" data-invitee-id="@invitee.Id" data-rsvp @Html.Raw((invitee.Confirmed == false) ? "checked" : "")>
-                                                <label class="form-check-label" for="rsvp-@invitee.Id-1">@L["No"]</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="rsvp-@invitee.Id" id="rsvp-@invitee.Id-2" value="true" data-invitee-id="@invitee.Id" data-rsvp @Html.Raw((invitee.Confirmed == true) ? "checked" : "")>
-                                                <label class="form-check-label" for="rsvp-@invitee.Id-2">@L["Yes"]</label>
-                                            </div>
-                                        </span>
-                                    </div>
-                                </div>
-                                @{
-                                    if (invitee.Child)
-                                    {
-                                        <div class="invitee-menu @(((invitee.Confirmed.HasValue && invitee.Confirmed.Value) ? "" : "d-none"))">
-                                            <select class="form-control" data-menu data-invitee-id="@invitee.Id" name="menu-@invitee.Id" aria-placeholder="@(L["Select a menu"])" asp-items="get_menu(invitee.Menu, invitee.Child)"></select>
-                                        </div>
-                                    }
-                                }
-                            </div>
+                          <i class="fa fa-child"></i>
                         }
-                        @if (Model.Invitation.PlusOne && !Model.Invitation.Invitees.Any(p => p.PlusOne))
+                        else if (invitee.Male)
                         {
-                            <div class="modal fade" id="add-plus-one-modal" tabindex="-1" aria-labelledby="addPlusOneModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="addPlusOneModalLabel">@L["AddPlusOne"]</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <abp-dynamic-form abp-model=PlusOne data-type="plus-one-form"></abp-dynamic-form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <span type="button" class="btn btn-secondary" data-bs-dismiss="modal">@L["Close"]</span>
-                                            <span type="button" class="btn btn-primary" data-type="save">@L["Save"]</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <div class="input-group mb-3">
-                                    <span class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-plus-one-modal">@L["AddPlusOne"]</span>
-                                </div>
-                            </div>
+                          <i class="fa fa-male"></i>
                         }
+                        else
+                        {
+                          <i class="fa fa-female"></i>
+                        }
+                      }
+                    </span>
+                  </div>
+                  <span class="form-control">
+                    @invitee.Name @invitee.Surname
+                  </span>
+                  <div class="input-group-append">
+                    <span class="input-group-text">
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="rsvp-@invitee.Id" id="rsvp-@invitee.Id-1" value="false" data-invitee-id="@invitee.Id" data-rsvp @Html.Raw((invitee.Confirmed == false) ? "checked" : "")>
+                        <label class="form-check-label" for="rsvp-@invitee.Id-1">@L["No"]</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="rsvp-@invitee.Id" id="rsvp-@invitee.Id-2" value="true" data-invitee-id="@invitee.Id" data-rsvp @Html.Raw((invitee.Confirmed == true) ? "checked" : "")>
+                        <label class="form-check-label" for="rsvp-@invitee.Id-2">@L["Yes"]</label>
+                      </div>
+                    </span>
+                  </div>
+                </div>
+                @{
+                  var items = Model.GetMenuItems(invitee.Menu, invitee.Child);
+                  <div class="invitee-menu @(((invitee.Confirmed.HasValue && invitee.Confirmed.Value)  ? "" : "d-none"))">
+                    <div class="@(items.Length > 1 ? "":"d-none")">
+                      <select class="form-control" data-menu data-invitee-id="@invitee.Id" name="menu-@invitee.Id" aria-placeholder="@(L["Select a menu"])" asp-items="items"></select>
                     </div>
-                </abp-container>
-            </abp-column>
-        </abp-row>
-        <abp-row>
-            <abp-column>
-                <abp-container>
-                    <abp-row>
-                        <abp-column data-events>
-                            <abp-tabs>
-                                @{
-                                    bool active = true;
-                                }
-                                @foreach (var evt in Model.Wedding.Events)
-                                {
-                                    <abp-tab title=@evt.Name active=active>
-                                        <abp-container data-event-id=@evt.Id>
-                                            <abp-row>
-                                                <abp-column size-lg=_6>
-                                                    <div class="event-line"><h5>@evt.Location.Name</h5> <a href="@(!string.IsNullOrEmpty(evt.Location.ParkingGoogleLink) ? evt.Location.ParkingGoogleLink : $"http://maps.google.com/?q={evt.Location.Name}&sll={evt.Location.Latitude},{evt.Location.Longitude}")" class="btn btn-primary" target="_blank">@L["GetDirections"]</a></div>
-                                                    <span>@evt.Location.Hall</span> <br />
-                                                    <span>@evt.Location.Address</span>
-                                                </abp-column>
+                  </div>
+                }
+              </div>
+            }
+            @if (Model.Invitation.PlusOne && !Model.Invitation.Invitees.Any(p => p.PlusOne))
+            {
+              <div class="modal fade" id="add-plus-one-modal" tabindex="-1" aria-labelledby="addPlusOneModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="addPlusOneModalLabel">@L["AddPlusOne"]</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form data-type="plus-one-form">
+                        <abp-input asp-for="PlusOne.Surname" />
+                        <abp-input asp-for="PlusOne.Name" />
+                        <abp-radio asp-for="PlusOne.Male" asp-items="Model.PlusOne.GenderItems" inline="true" />
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <span type="button" class="btn btn-secondary" data-bs-dismiss="modal">@L["Close"]</span>
+                      <span type="button" class="btn btn-primary" data-type="save">@L["Save"]</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="input-group mb-3">
+                  <span class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-plus-one-modal">@L["AddPlusOne"]</span>
+                </div>
+              </div>
+            }
+          </div>
+        </abp-container>
+      </abp-column>
+    </abp-row>
+    <abp-row>
+      <abp-column>
+        <abp-container>
+          <abp-row>
+            <abp-column data-events>
+              <abp-tabs>
+                @{
+                  bool active = true;
+                }
+                @foreach (var evt in Model.Wedding.Events)
+                {
+                  <abp-tab title=@evt.Name active=active>
+                    <abp-container data-event-id=@evt.Id>
+                      <abp-row>
+                        <abp-column size-lg=_6>
+                          <div class="event-line"><h5>@evt.Location.Name</h5> <a href="@(!string.IsNullOrEmpty(evt.Location.ParkingGoogleLink) ? evt.Location.ParkingGoogleLink : $"http://maps.google.com/?q={evt.Location.Name}&sll={evt.Location.Latitude},{evt.Location.Longitude}")" class="btn btn-primary" target="_blank">@L["GetDirections"]</a></div>
+                          <span>@evt.Location.Hall</span> <br />
+                          <span>@evt.Location.Address</span>
+                        </abp-column>
 
-                                                <abp-column size-lg=_6>
-                                                    <abp-container class="p-0">
-                                                        <abp-row>
-                                                            <abp-column size=_6>
-                                                                <span>@evt.Time.ToLongTimeString()</span> <br />
-                                                                <span>@evt.Time.ToLongDateString()</span>
-                                                            </abp-column>
-                                                            <abp-column size=_6>
-                                                                <div class="atcb">
-                                                                    <script type="application/ld+json">
-                                                                        {
-                                                                        "event": {
-                                                                            "@@context":"https://schema.org",
-                                                                            "@@type":"Event",
-                                                                            "name":"@evt.Name",
-                                                                            "description":"@Model.Wedding.GroomName & @Model.Wedding.BrideName - @L[evt.Name]<br/>@evt.Location.Name.FoldToASCII(), @evt.Location.Hall.FoldToASCII()",
-                                                                            "startDate":"@evt.Time.ToString("yyyy-MM-dd")",
-                                                                            "endDate":"@evt.Time.ToString("yyyy-MM-dd")",
-                                                                            "startTime":"@evt.Time.ToString("HH:mm")",
-                                                                            "endTime":"@evt.Time.AddHours(1).ToString("HH:mm")",
-                                                                            "location":"@evt.Location.Name.FoldToASCII(), @evt.Location.Address.FoldToASCII()"
-                                                                        },
-                                                                        "label":"@L["Add to calendar"]",
-                                                                        "options":[ "Apple", "Google", "iCal", "Microsoft365", "MicrosoftTeams", "Outlook.com", "Yahoo" ],
-                                                                        "timeZone":"@evt.TimeZone",
-                                                                        "trigger":"click",
-                                                                        "iCalFileName":"Reminder-Event"
-                                                                        }
-                                                                    </script>
-                                                                </div>
-                                                            </abp-column>
-                                                        </abp-row>
-                                                    </abp-container>
-                                                </abp-column>
-                                            </abp-row>
-                                        </abp-container>
-                                    </abp-tab>
-                                    active = false;
-                                }
-                            </abp-tabs>
+                        <abp-column size-lg=_6>
+                          <abp-container class="p-0">
+                            <abp-row>
+                              <abp-column size=_6>
+                                <span>@evt.Time.ToLongTimeString()</span> <br />
+                                <span>@evt.Time.ToLongDateString()</span>
+                              </abp-column>
+                              <abp-column size=_6>
+                                <div class="atcb">
+                                  <script type="application/ld+json">
+                                    {
+                                    "event": {
+                                        "@@context":"https://schema.org",
+                                        "@@type":"Event",
+                                        "name":"@evt.Name",
+                                        "description":"@Model.Wedding.GroomName & @Model.Wedding.BrideName - @L[evt.Name]<br/>@evt.Location.Name.FoldToASCII(), @evt.Location.Hall.FoldToASCII()",
+                                        "startDate":"@evt.Time.ToString("yyyy-MM-dd")",
+                                        "endDate":"@evt.Time.ToString("yyyy-MM-dd")",
+                                        "startTime":"@evt.Time.ToString("HH:mm")",
+                                        "endTime":"@evt.Time.AddHours(1).ToString("HH:mm")",
+                                        "location":"@evt.Location.Name.FoldToASCII(), @evt.Location.Address.FoldToASCII()"
+                                    },
+                                    "label":"@L["Add to calendar"]",
+                                    "options":[ "Apple", "Google", "iCal", "Microsoft365", "MicrosoftTeams", "Outlook.com", "Yahoo" ],
+                                    "timeZone":"@evt.TimeZone",
+                                    "trigger":"click",
+                                    "iCalFileName":"Reminder-Event"
+                                    }
+                                  </script>
+                                </div>
+                              </abp-column>
+                            </abp-row>
+                          </abp-container>
                         </abp-column>
-                    </abp-row>
-                    <abp-row>
-                        <abp-column>
-                            <div id="map"></div>
-                        </abp-column>
-                    </abp-row>
-                </abp-container>
+                      </abp-row>
+                    </abp-container>
+                  </abp-tab>
+                  active = false;
+                }
+              </abp-tabs>
             </abp-column>
-        </abp-row>
-    </abp-container>
+          </abp-row>
+          <abp-row>
+            <abp-column>
+              <div id="map"></div>
+            </abp-column>
+          </abp-row>
+        </abp-container>
+      </abp-column>
+    </abp-row>
+  </abp-container>
 </abp-card>
 
 @Html.Raw(Model.Wedding.InvitationFooterHtml)

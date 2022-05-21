@@ -16,6 +16,9 @@ namespace OOD.WeddingPlanner.Web.Pages.Events
         [BindProperty]
         public CreateEditEventViewModel ViewModel { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public string TimeZone { get; set; }
+
         private readonly IEventAppService _service;
         private readonly IWeddingAppService _weddingAppService;
         private readonly ILocationAppService _locationAppService;
@@ -40,8 +43,14 @@ namespace OOD.WeddingPlanner.Web.Pages.Events
                 .Items
                 .Select(p => new SelectListItem(p.DisplayName, p.Id.ToString())));
 
+            var wding = ViewModel.WeddingItems.FirstOrDefault();
+            if (wding != null) wding.Selected = true;
+
             var tz = TimeZoneInfo.GetSystemTimeZones();
-            ViewModel.TimeZones.AddRange(tz.Select(p => new SelectListItem(p.DisplayName, p.Id)));
+            var userTz = TimeZoneInfo.Local;
+            if (!string.IsNullOrEmpty(TimeZone))
+                try { userTz = TimeZoneInfo.FindSystemTimeZoneById(TimeZone); } catch { }
+            ViewModel.TimeZones.AddRange(tz.Select(p => new SelectListItem(p.DisplayName, p.Id, p.DisplayName == userTz.DisplayName)));
         }
 
         public virtual async Task<IActionResult> OnPostAsync()

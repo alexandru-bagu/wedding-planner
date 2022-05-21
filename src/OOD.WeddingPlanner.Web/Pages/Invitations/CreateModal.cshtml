@@ -5,14 +5,21 @@
 @inject IHtmlLocalizer<WeddingPlannerResource> L
 @model OOD.WeddingPlanner.Web.Pages.Invitations.CreateModalModel
 @{
-    Layout = null;
+  Layout = null;
 }
-<abp-dynamic-form abp-model="ViewModel" data-ajaxForm="true" asp-page="CreateModal">
-    <abp-modal>
-        <abp-modal-header title="@L["CreateInvitation"].Value"></abp-modal-header>
-        <abp-modal-body>
-            <abp-form-content />
-        </abp-modal-body>
-        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
-    </abp-modal>
-</abp-dynamic-form>
+<form abp-model="ViewModel" data-ajaxForm="true" asp-page="CreateModal">
+  <abp-modal>
+    <abp-modal-header title="@L["CreateInvitation"].Value"></abp-modal-header>
+    <abp-modal-body>
+      <div class="@(Model.ViewModel.WeddingItems.Count <= 1?"d-none":"")">
+        <abp-select asp-for="ViewModel.WeddingId" asp-items="Model.ViewModel.WeddingItems" />
+      </div>
+      <abp-select asp-for="ViewModel.DesignId" asp-items="Model.ViewModel.DesignItems" />
+      <abp-input asp-for="ViewModel.Destination" />
+      <abp-select asp-for="ViewModel.InviteeIds" asp-items="Model.ViewModel.InviteeItems" />
+      <abp-input asp-for="ViewModel.PlusOne" />
+      <abp-input asp-for="ViewModel.UniqueCode" />
+    </abp-modal-body>
+    <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+  </abp-modal>
+</form>

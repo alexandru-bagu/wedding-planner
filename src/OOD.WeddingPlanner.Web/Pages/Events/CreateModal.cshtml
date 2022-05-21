@@ -7,12 +7,18 @@
 @{
   Layout = null;
 }
-<abp-dynamic-form abp-model="ViewModel" data-ajaxForm="true" asp-page="CreateModal">
+<form abp-model="ViewModel" data-ajaxForm="true" asp-page="CreateModal">
   <abp-modal>
     <abp-modal-header title="@L["CreateEvent"].Value"></abp-modal-header>
     <abp-modal-body>
-      <abp-form-content />
+      <abp-select asp-for="ViewModel.LocationId" asp-items="Model.ViewModel.LocationItems"/>
+      <div class="@(Model.ViewModel.WeddingItems.Count <= 1?"d-none":"")">
+        <abp-select asp-for="ViewModel.WeddingId" asp-items="Model.ViewModel.WeddingItems" />
+      </div>
+      <abp-input asp-for="ViewModel.Name" />
+      <abp-input asp-for="ViewModel.Time" />
+      <abp-select asp-for="ViewModel.TimeZone" asp-items="Model.ViewModel.TimeZones"  />
     </abp-modal-body>
     <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
   </abp-modal>
-</abp-dynamic-form>
+</form>

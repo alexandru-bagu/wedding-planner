@@ -1,8 +1,9 @@
-$(function () {
+$(async function () {
 
     var l = abp.localization.getResource('WeddingPlanner');
 
     var service = oOD.weddingPlanner.invitations.invitation;
+    var weddingService = oOD.weddingPlanner.weddings.wedding;
     var createModal = new abp.ModalManager({
         viewUrl: abp.appPath + 'Invitations/CreateModal',
         scriptUrl: "/Pages/select2modal.js",
@@ -22,6 +23,7 @@ $(function () {
         };
     };
 
+    var weddingList = await weddingService.getList({ maxCountResult: 0 });
     var dataTable = $('#InvitationTable').DataTable(abp.libs.datatables.normalizeConfiguration({
         processing: true,
         serverSide: true,
@@ -89,6 +91,7 @@ $(function () {
             },
             {
                 title: l('Wedding'),
+                visible: weddingList.totalCount > 1,
                 render: function (_, type, record) {
                     if (record.wedding) return record.wedding.name;
                     return "";

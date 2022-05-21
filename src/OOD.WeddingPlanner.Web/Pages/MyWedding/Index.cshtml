@@ -1,0 +1,67 @@
+@page
+@using OOD.WeddingPlanner.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using OOD.WeddingPlanner.Web.Pages.MyWedding
+@using OOD.WeddingPlanner.Localization
+@using OOD.WeddingPlanner.Web.Menus
+@model IndexModel
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<WeddingPlannerResource> L
+@inject IAuthorizationService Authorization
+@{
+  PageLayout.Content.Title = L["Wedding"].Value;
+  PageLayout.Content.BreadCrumb.Add(L["Menu:Wedding"].Value);
+  PageLayout.Content.MenuItemName = WeddingPlannerMenus.Wedding;
+}
+
+@section scripts
+{
+<abp-script src="/Pages/MyWedding/index.js" />
+}
+@section styles
+{
+<abp-style src="/Pages/MyWedding/index.css" />
+}
+
+<form asp-page="Index">
+  <abp-card>
+    <abp-card-header>
+      <abp-row>
+        <abp-column size-md="_6">
+          <abp-card-title>@L["My wedding"]</abp-card-title>
+        </abp-column>
+        <abp-column size-md="_6" class="text-right">
+          @if (await Authorization.IsGrantedAsync(WeddingPlannerPermissions.Wedding.Create) && Model.Id == Guid.Empty ||
+          await Authorization.IsGrantedAsync(WeddingPlannerPermissions.Wedding.Update) && Model.Id != Guid.Empty)
+          {
+            <input type="submit" value="@L["SaveWedding"].Value" class="btn btn-primary" />
+          }
+        </abp-column>
+      </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+      <abp-input asp-for="Id" type="hidden" />
+      <abp-container>
+        <abp-row>
+          <abp-column size-md=_6>
+            <abp-input asp-for="Wedding.Name" />
+            <abp-input asp-for="Wedding.GroomName" />
+            <abp-input asp-for="Wedding.BrideName" />
+            <abp-input asp-for="Wedding.ContactPhoneNumber" />
+
+            <label asp-for="Wedding.InvitationNoteHtml"></label>
+            <textarea asp-for="Wedding.InvitationNoteHtml"></textarea>
+          </abp-column>
+          <abp-column size-md=_6>
+            <label asp-for="Wedding.InvitationHeaderHtml"></label>
+            <textarea asp-for="Wedding.InvitationHeaderHtml"></textarea>
+            <label asp-for="Wedding.InvitationFooterHtml"></label>
+            <textarea asp-for="Wedding.InvitationFooterHtml"></textarea>
+          </abp-column>
+        </abp-row>
+      </abp-container>
+    </abp-card-body>
+  </abp-card>
+</form>
