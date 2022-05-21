@@ -17,8 +17,8 @@ namespace OOD.WeddingPlanner.Web.Models
     public class ViewInvitationModel : InvitationWithNavigationPropertiesDto
     {
         public IStringLocalizer<WeddingPlannerResource> L { get; private set; }
-        public TableMenuDto[] AdultMenus { get; private set; }
-        public TableMenuDto[] ChildMenus { get; private set; }
+        public TableMenu[] AdultMenus { get; private set; }
+        public TableMenu[] ChildMenus { get; private set; }
         public CreatePlusOneViewModel PlusOne { get; set; }
 
         public ViewInvitationModel()
@@ -39,10 +39,10 @@ namespace OOD.WeddingPlanner.Web.Models
         public async Task PrepareAsync(IServiceProvider serviceProvider)
         {
             L = serviceProvider.GetService<IStringLocalizer<WeddingPlannerResource>>();
-            var menuAppService = serviceProvider.GetService<ITableMenuAppService>();
-            var menus = await menuAppService.GetListAsync(new PagedAndSortedResultRequestDto() { MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount });
-            AdultMenus = menus.Items.Where(p => p.Adult).OrderBy(p => p.Order).ToArray();
-            ChildMenus = menus.Items.Where(p => !p.Adult).OrderBy(p => p.Order).ToArray();
+            var menuAppRepository = serviceProvider.GetService<ITableMenuRepository>();
+            var menus = await menuAppRepository.GetListAsync();
+            AdultMenus = menus.Where(p => p.Adult).OrderBy(p => p.Order).ToArray();
+            ChildMenus = menus.Where(p => !p.Adult).OrderBy(p => p.Order).ToArray();
             PlusOne = new CreatePlusOneViewModel();
             PlusOne.GenderItems.Add(new SelectListItem(L["Male"], "true"));
             PlusOne.GenderItems.Add(new SelectListItem(L["Female"], "false"));
