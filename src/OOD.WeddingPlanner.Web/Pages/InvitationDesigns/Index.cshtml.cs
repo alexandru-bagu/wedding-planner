@@ -29,15 +29,5 @@ namespace OOD.WeddingPlanner.Web.Pages.InvitationDesigns
             }
             await Task.CompletedTask;
         }
-
-        public virtual async Task<IActionResult> OnPostAsync(PostBody input)
-        {
-            return File(Encoding.UTF8.GetBytes(input.Body), "text/plain");
-        }
-
-        public class PostBody
-        {
-            public string Body { get; set; }
-        }
     }
 }

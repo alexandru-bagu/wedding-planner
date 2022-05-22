@@ -49,6 +49,8 @@ abp.modals.designModal = function () {
                 design.paperDpi.subscribe(updateIframe);
 
                 function updateIframe() {
+                    var canvas = document.getElementById('preview');
+                    canvas.innerHTML = "";
                     var content = editor.getValue();
 
                     var jsonStr = ko.toJSON(window.bogusInvitation);
@@ -60,24 +62,29 @@ abp.modals.designModal = function () {
                     content = content.replace('/*INVITATION DATA*/', "var invitation = " + JSON.stringify(json));
                     
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "/Pages/InvitationDesign");
+                    xhr.open("POST", "/Design/Preview");
 
                     xhr.setRequestHeader("Accept", "application/json");
                     xhr.setRequestHeader("Content-Type", "application/json");
 
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState === 4) {
-                            debugger;
                             var arrayBuffer = xhr.response;
-
                             var byteArray = new Uint8Array(arrayBuffer);
-                        
-                            var blob = new Blob([arrayBuffer], {type: "application/pdf"});
-                            var url = URL.createObjectURL(blob);
-                            someImageElement.src = url;
+
+                            PDFJS.getDocument(byteArray).then(function (pdf) {
+                                pdf.getPage(1).then(function (page) {
+                                  var scale = 1;
+                                  var viewport = page.getViewport(scale);
+                                  var context = canvas.getContext('2d');
+                                  canvas.height = viewport.height;
+                                  canvas.width = viewport.width;
+                                  page.render({ canvasContext: context, viewport: viewport });
+                                });
+                            });
                         }
                     };
-                    xhr.send(JSON.stringify({ body: content }));
+                    xhr.send(JSON.stringify({ body: content, invitation: json }));
                 }
                 updateIframe();
                 modal.find('[data-bs-toggle="pill"]').on('click', updateIframe);

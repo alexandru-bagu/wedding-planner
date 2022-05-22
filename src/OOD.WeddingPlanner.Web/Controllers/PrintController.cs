@@ -25,6 +25,7 @@ using Volo.Abp.MultiTenancy;
 using WkHtmlToPdfDotNet;
 using WkHtmlToPdfDotNet.Contracts;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace OOD.WeddingPlanner.Web.Controllers
 {
@@ -213,6 +214,42 @@ namespace OOD.WeddingPlanner.Web.Controllers
             workbook.SaveAsStream(stream, true);
             stream.Position = 0;
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "tables.xlsx");
+        }
+
+        [HttpPost]
+        [Route("Design/Preview")]
+        [IgnoreAntiforgeryToken]
+        public virtual ActionResult PreviewDesign([FromBody] PostBody input)
+        {
+            var design = input.Invitation.Design;
+            var doc = new HtmlToPdfDocument()
+            {
+                GlobalSettings =
+                {
+                    ColorMode = ColorMode.Color,
+                    Orientation = Orientation.Portrait,
+                    PaperSize =  new PechkinPaperSize(design.PaperWidth + design.MeasurementUnit, design.PaperHeight + design.MeasurementUnit),
+                    DPI = (int)design.PaperDpi,
+                    Margins = new MarginSettings(0, 0, 0, 0)
+                },
+                Objects =
+                {
+                    new ObjectSettings()
+                    {
+                        PagesCount = true,
+                        WebSettings = { DefaultEncoding = "utf-8" },
+                        HtmlContent = input.Body,
+                        LoadSettings = { DebugJavascript = true }
+                    }
+                }
+            };
+            return File(HtmlConverter.Convert(doc), "text/plain");
+        }
+
+        public class PostBody
+        {
+            public string Body { get; set; }
+            public InvitationWithNavigationPropertiesDto Invitation { get; set; }
         }
     }
 }
