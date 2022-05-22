@@ -14,7 +14,7 @@ namespace OOD.WeddingPlanner.Invitations
 
             return queryable
                 .Include(p => p.Invitees)
-                .Include(p => p.Wedding).ThenInclude(p => p.Events)
+                .Include(p => p.Wedding)
                 .Include(p => p.Design);
         }
     }
