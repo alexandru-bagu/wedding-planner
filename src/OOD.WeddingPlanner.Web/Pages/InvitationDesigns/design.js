@@ -49,24 +49,35 @@ abp.modals.designModal = function () {
                 design.paperDpi.subscribe(updateIframe);
 
                 function updateIframe() {
-                    if (iframe && iframe.contentWindow && iframe.contentWindow.document) {
-                        var content = editor.getValue();
+                    var content = editor.getValue();
 
-                        var jsonStr = ko.toJSON(window.bogusInvitation);
-                        var json = JSON.parse(jsonStr);
-                        json.design.paperWidth = Globalize.parseNumber(json.design.paperWidth);
-                        json.design.paperHeight = Globalize.parseNumber(json.design.paperHeight);
-                        json.design.paperDpi = Globalize.parseNumber(json.design.paperDpi);
+                    var jsonStr = ko.toJSON(window.bogusInvitation);
+                    var json = JSON.parse(jsonStr);
+                    json.design.paperWidth = Globalize.parseNumber(json.design.paperWidth);
+                    json.design.paperHeight = Globalize.parseNumber(json.design.paperHeight);
+                    json.design.paperDpi = Globalize.parseNumber(json.design.paperDpi);
 
-                        content = content.replace('/*INVITATION DATA*/', "var invitation = " + JSON.stringify(json));
-                        iframe.contentWindow.document.open();
-                        iframe.contentWindow.document.write('clean');
-                        iframe.contentWindow.document.close();
+                    content = content.replace('/*INVITATION DATA*/', "var invitation = " + JSON.stringify(json));
+                    
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/Pages/InvitationDesign");
 
-                        iframe.contentWindow.document.open();
-                        iframe.contentWindow.document.write(content);
-                        iframe.contentWindow.document.close();
-                    }
+                    xhr.setRequestHeader("Accept", "application/json");
+                    xhr.setRequestHeader("Content-Type", "application/json");
+
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4) {
+                            debugger;
+                            var arrayBuffer = xhr.response;
+
+                            var byteArray = new Uint8Array(arrayBuffer);
+                        
+                            var blob = new Blob([arrayBuffer], {type: "application/pdf"});
+                            var url = URL.createObjectURL(blob);
+                            someImageElement.src = url;
+                        }
+                    };
+                    xhr.send(JSON.stringify({ body: content }));
                 }
                 updateIframe();
                 modal.find('[data-bs-toggle="pill"]').on('click', updateIframe);

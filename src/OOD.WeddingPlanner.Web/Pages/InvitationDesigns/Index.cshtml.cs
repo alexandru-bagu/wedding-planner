@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Mvc;
 using OOD.WeddingPlanner.Invitations;
 using OOD.WeddingPlanner.Invitations.Dtos;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace OOD.WeddingPlanner.Web.Pages.InvitationDesigns
@@ -9,19 +11,33 @@ namespace OOD.WeddingPlanner.Web.Pages.InvitationDesigns
         public InvitationWithNavigationPropertiesDto Invitation { get; set; }
         public IInvitationAppService AppService { get; }
 
-        public IndexModel(IInvitationAppService appService) {
+        public IndexModel(IInvitationAppService appService)
+        {
             AppService = appService;
         }
 
         public virtual async Task OnGetAsync()
         {
-            var invitations = await AppService.GetListWithNavigationAsync(new GetInvitationsInputDto(){ MaxResultCount = 1 });
-            if(invitations.TotalCount == 0) {
+            var invitations = await AppService.GetListWithNavigationAsync(new GetInvitationsInputDto() { MaxResultCount = 1 });
+            if (invitations.TotalCount == 0)
+            {
                 Invitation = Bogus.InvitationWithNavigationProperties();
-            } else {
+            }
+            else
+            {
                 Invitation = invitations.Items[0];
             }
             await Task.CompletedTask;
+        }
+
+        public virtual async Task<IActionResult> OnPostAsync(PostBody input)
+        {
+            return File(Encoding.UTF8.GetBytes(input.Body), "text/plain");
+        }
+
+        public class PostBody
+        {
+            public string Body { get; set; }
         }
     }
 }

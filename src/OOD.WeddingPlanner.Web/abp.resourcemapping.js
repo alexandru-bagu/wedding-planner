@@ -18,6 +18,6 @@ module.exports = {
         "@node_modules/quill-image-resize-module/**": "@libs/quill-image-resize-module",
         "@node_modules/quill-image-drop-module/**": "@libs/quill-image-drop-module",
         "@node_modules/add-to-calendar-button/**": "@libs/add-to-calendar-button",
-        "@node_modules/pdf.js/**": "@libs/pdf.js",
+        "@node_modules/pdfjs-dist/**": "@libs/pdf.js",
     }
 };

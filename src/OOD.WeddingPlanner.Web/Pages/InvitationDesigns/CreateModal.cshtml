@@ -16,10 +16,11 @@
                     <abp-form-content />
                 </abp-tab>
                 <abp-tab title="Body">
+                    <label asp-for="ViewModel.Body"></label>
                     <textarea asp-for="ViewModel.Body"></textarea>
                 </abp-tab>
                 <abp-tab title="Preview">
-                    <iframe id="preview" class="shadow p-3 mb-5 bg-white rounded vh60"></iframe>
+                    <div id="preview" class="shadow p-3 mb-5 bg-white rounded vh60"></div>
                 </abp-tab>
             </abp-tabs>
         </abp-modal-body>
