@@ -221,10 +221,14 @@ namespace OOD.WeddingPlanner.Web.Controllers
         [IgnoreAntiforgeryToken]
         public virtual ActionResult PreviewDesign([FromBody] PostBody input)
         {
-            var design = input.Invitation.Design;
-            var doc = new HtmlToPdfDocument()
+            try
             {
-                GlobalSettings =
+                var design = input.Invitation.Design;
+                input.Invitation.Design.Body = "";
+                input.Body = input.Body.Replace("\"/", $"\"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/");
+                var doc = new HtmlToPdfDocument()
+                {
+                    GlobalSettings =
                 {
                     ColorMode = ColorMode.Color,
                     Orientation = Orientation.Portrait,
@@ -232,7 +236,7 @@ namespace OOD.WeddingPlanner.Web.Controllers
                     DPI = (int)design.PaperDpi,
                     Margins = new MarginSettings(0, 0, 0, 0)
                 },
-                Objects =
+                    Objects =
                 {
                     new ObjectSettings()
                     {
@@ -242,8 +246,10 @@ namespace OOD.WeddingPlanner.Web.Controllers
                         LoadSettings = { DebugJavascript = true }
                     }
                 }
-            };
-            return File(HtmlConverter.Convert(doc), "text/plain");
+                };
+                return File(HtmlConverter.Convert(doc), "application/octet-stream");
+            }
+            catch { return File(new byte[0], "application/octet-stream"); }
         }
 
         public class PostBody

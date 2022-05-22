@@ -49,7 +49,7 @@ abp.modals.designModal = function () {
                 design.paperDpi.subscribe(updateIframe);
 
                 function updateIframe() {
-                    var canvas = document.getElementById('preview');
+                    var canvas = document.getElementById('pdf-preview');
                     canvas.innerHTML = "";
                     var content = editor.getValue();
 
@@ -58,33 +58,61 @@ abp.modals.designModal = function () {
                     json.design.paperWidth = Globalize.parseNumber(json.design.paperWidth);
                     json.design.paperHeight = Globalize.parseNumber(json.design.paperHeight);
                     json.design.paperDpi = Globalize.parseNumber(json.design.paperDpi);
+                    json.design.body = '';
 
                     content = content.replace('/*INVITATION DATA*/', "var invitation = " + JSON.stringify(json));
                     
                     var xhr = new XMLHttpRequest();
                     xhr.open("POST", "/Design/Preview");
 
-                    xhr.setRequestHeader("Accept", "application/json");
+                    xhr.setRequestHeader("Accept", "application/octet-stream");
                     xhr.setRequestHeader("Content-Type", "application/json");
+                    xhr.responseType = "arraybuffer";
 
-                    xhr.onreadystatechange = function () {
+                    xhr.onreadystatechange = async function () {
                         if (xhr.readyState === 4) {
                             var arrayBuffer = xhr.response;
                             var byteArray = new Uint8Array(arrayBuffer);
 
-                            PDFJS.getDocument(byteArray).then(function (pdf) {
-                                pdf.getPage(1).then(function (page) {
-                                  var scale = 1;
-                                  var viewport = page.getViewport(scale);
-                                  var context = canvas.getContext('2d');
-                                  canvas.height = viewport.height;
-                                  canvas.width = viewport.width;
-                                  page.render({ canvasContext: context, viewport: viewport });
-                                });
+                            var pdfTask = await pdfjsLib.getDocument(byteArray);
+                            var pdf = await pdfTask.promise;
+                            pdf.getPage(1).then(function (page) {
+                                var scale = 1.5;
+                                var viewport = page.getViewport({ scale: scale, });
+                                // Support HiDPI-screens.
+                                var outputScale = window.devicePixelRatio || 1;
+
+                                var context = canvas.getContext('2d');
+
+                                canvas.width = Math.floor(viewport.width * outputScale);
+                                canvas.height = Math.floor(viewport.height * outputScale);
+                                canvas.style.width = Math.floor(viewport.width) + "px";
+                                canvas.style.height = Math.floor(viewport.height) + "px";
+
+                                var transform = outputScale !== 1
+                                    ? [outputScale, 0, 0, outputScale, 0, 0]
+                                    : null;
+
+                                var renderContext = {
+                                    canvasContext: context,
+                                    transform: transform,
+                                    viewport: viewport
+                                };
+                                page.render(renderContext);
                             });
                         }
                     };
                     xhr.send(JSON.stringify({ body: content, invitation: json }));
+
+                    if (iframe && iframe.contentWindow && iframe.contentWindow.document) {
+                        iframe.contentWindow.document.open();
+                        iframe.contentWindow.document.write('clean');
+                        iframe.contentWindow.document.close();
+
+                        iframe.contentWindow.document.open();
+                        iframe.contentWindow.document.write(content);
+                        iframe.contentWindow.document.close();
+                    }
                 }
                 updateIframe();
                 modal.find('[data-bs-toggle="pill"]').on('click', updateIframe);
