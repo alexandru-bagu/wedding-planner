@@ -25,7 +25,7 @@ namespace OOD.WeddingPlanner.Web.Pages.InvitationDesigns
             }
             else
             {
-                Invitation = await AppService.GetWithNavigationByIdAsync(invitations.Items[0].Invitation.Id);
+                Invitation = await AppService.GetWithFullNavigationByIdAsync(invitations.Items[0].Invitation.Id);
             }
             await Task.CompletedTask;
         }
