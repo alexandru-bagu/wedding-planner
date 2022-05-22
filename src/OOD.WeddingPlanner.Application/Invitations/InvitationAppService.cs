@@ -108,5 +108,12 @@ namespace OOD.WeddingPlanner.Invitations
             await _inviteeRepository.UpdateManyAsync(inviteeList, true);
             return invitation;
         }
+
+        [Authorize(WeddingPlannerPermissions.Invitation.Default)]
+        public async Task<InvitationWithNavigationPropertiesDto> GetWithFullNavigationByIdAsync(Guid id)
+        {
+            return ObjectMapper.Map<InvitationWithNavigationProperties, InvitationWithNavigationPropertiesDto>(
+              await _repository.GetWithFullNavigationByIdAsync(id));
+        }
     }
 }
