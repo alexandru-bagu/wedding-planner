@@ -225,6 +225,9 @@ namespace OOD.WeddingPlanner.Web.Controllers
             {
                 var design = input.Invitation.Design;
                 input.Invitation.Design.Body = "";
+                input.Invitation.Wedding.InvitationNoteHtml = "";
+                input.Invitation.Wedding.InvitationHeaderHtml = "";
+                input.Invitation.Wedding.InvitationFooterHtml = "";
                 input.Body = input.Body.Replace("\"/", $"\"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/");
                 var doc = new HtmlToPdfDocument()
                 {

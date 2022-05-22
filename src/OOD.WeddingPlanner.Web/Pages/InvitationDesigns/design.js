@@ -59,6 +59,9 @@ abp.modals.designModal = function () {
                     json.design.paperHeight = Globalize.parseNumber(json.design.paperHeight);
                     json.design.paperDpi = Globalize.parseNumber(json.design.paperDpi);
                     json.design.body = '';
+                    json.wedding.invitationNoteHtml = "";
+                    json.wedding.invitationHeaderHtml = "";
+                    json.wedding.invitationFooterHtml = "";
 
                     content = content.replace('/*INVITATION DATA*/', "var invitation = " + JSON.stringify(json));
                     
