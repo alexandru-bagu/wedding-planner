@@ -20,7 +20,12 @@
           <textarea asp-for="ViewModel.Body"></textarea>
         </abp-tab>
         <abp-tab title="PDF Preview">
-          <div class="shadow p-3 mb-5 bg-white rounded vh60" style="overflow-y: scroll">
+          <div>
+            <span id="pdf-previous" class="btn btn-primary"><span class="fas fa-arrow-left"></span></span>
+            <span id="pdf-page" class="btn btn-secondary disabled"></span>
+            <span id="pdf-next" class="btn btn-primary"><span class="fas fa-arrow-right"></span></span>
+          </div>
+          <div class="shadow p-3 mb-5 bg-white rounded vh60" id="container-preview" style="overflow-y: scroll">
             <canvas id="pdf-preview"></canvas>
           </div>
         </abp-tab>
