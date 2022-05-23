@@ -145,15 +145,15 @@ abp.modals.designModal = function () {
                     };
                     xhr.send(JSON.stringify({ body: content, invitation: json }));
 
-                    if (iframe && iframe.contentWindow && iframe.contentWindow.document) {
-                        iframe.contentWindow.document.open();
-                        iframe.contentWindow.document.write('clean');
-                        iframe.contentWindow.document.close();
+                    //if (iframe && iframe.contentWindow && iframe.contentWindow.document) {
+                    //    iframe.contentWindow.document.open();
+                    //    iframe.contentWindow.document.write('clean');
+                    //    iframe.contentWindow.document.close();
 
-                        iframe.contentWindow.document.open();
-                        iframe.contentWindow.document.write(content);
-                        iframe.contentWindow.document.close();
-                    }
+                    //    iframe.contentWindow.document.open();
+                    //    iframe.contentWindow.document.write(content);
+                    //    iframe.contentWindow.document.close();
+                    //}
                 }
                 updateIframe();
                 modal.find('[data-bs-toggle="pill"]').on('click', updateIframe);
