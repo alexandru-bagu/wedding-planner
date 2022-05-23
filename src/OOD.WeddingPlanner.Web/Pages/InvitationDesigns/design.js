@@ -34,6 +34,67 @@ abp.modals.designModal = function () {
             ko.cleanNode(modal[0]);
             ko.applyBindings(design, modal[0]);
 
+            var state = {
+                pdf: null,
+                PDFRenderingInProgress: false,
+                canvas: document.getElementById('pdf-preview'),
+                container: document.getElementById('container-preview'),
+                wheelTimeoutHandler: null,
+                wheelTimeout: 250, //ms
+                page: 1,
+                scale: 3,
+                next: function () {
+                    if (state.pdf.numPages > state.page) {
+                        state.page++;
+                        state.render();
+                    }
+                },
+                previous: function () {
+                    if (state.page > 1) {
+                        state.page--;
+                        state.render();
+                    }
+                },
+                render: function (scale) {
+                    state.scale = state.scale || scale;
+                    if (!state.context) {
+                        state.context = state.canvas.getContext('2d');
+                    }
+                    state.pdf.getPage(state.page).then(function (page) {
+                        modal.find("#pdf-page").text(state.page);
+                        var viewport = page.getViewport({ scale: state.scale });
+                        var outputScale = window.devicePixelRatio || 1;
+                        state.canvas.width = Math.floor(viewport.width * outputScale);
+                        state.canvas.height = Math.floor(viewport.height * outputScale);
+                        state.canvas.style.width = Math.floor(viewport.width) + "px";
+                        state.canvas.style.height = Math.floor(viewport.height) + "px";
+
+                        var transform = outputScale !== 1
+                            ? [outputScale, 0, 0, outputScale, 0, 0]
+                            : null;
+
+                        var renderContext = {
+                            canvasContext: state.context,
+                            viewport: viewport,
+                            transform: transform
+                        };
+
+                        if (!state.PDFRenderingInProgress) {
+                            state.PDFRenderingInProgress = true
+                            var renderTask = page.render(renderContext);
+                            renderTask.promise.then(function () {
+                                state.PDFRenderingInProgress = false
+                            })
+                        }
+                    });
+                }
+            };
+
+            state.panzoom = panzoom(state.canvas)
+
+            modal.find("#pdf-previous").on('click', function () { state.previous(); });
+            modal.find("#pdf-next").on('click', function () { state.next(); });
+
             require(['vs/editor/editor.main'], function () {
                 var editor = monaco.editor.create(bodyContainer[0], {
                     value: htmlBodyInput.val(),
@@ -41,7 +102,7 @@ abp.modals.designModal = function () {
                     automaticLayout: true
                 });
 
-                var iframe = modal.find('iframe#preview')[0];
+                // var iframe = modal.find('iframe#preview')[0];
 
                 design.measurementUnit.subscribe(updateIframe);
                 design.paperWidth.subscribe(updateIframe);
@@ -49,8 +110,7 @@ abp.modals.designModal = function () {
                 design.paperDpi.subscribe(updateIframe);
 
                 function updateIframe() {
-                    var canvas = document.getElementById('pdf-preview');
-                    canvas.innerHTML = "";
+                    state.canvas.innerHTML = "";
                     var content = editor.getValue();
 
                     var jsonStr = ko.toJSON(window.bogusInvitation);
@@ -64,7 +124,7 @@ abp.modals.designModal = function () {
                     json.wedding.invitationFooterHtml = "";
 
                     content = content.replace('/*INVITATION DATA*/', "var invitation = " + JSON.stringify(json));
-                    
+
                     var xhr = new XMLHttpRequest();
                     xhr.open("POST", "/Design/Preview");
 
@@ -78,31 +138,9 @@ abp.modals.designModal = function () {
                             var byteArray = new Uint8Array(arrayBuffer);
 
                             var pdfTask = await pdfjsLib.getDocument(byteArray);
-                            var pdf = await pdfTask.promise;
-                            pdf.getPage(1).then(function (page) {
-                                var scale = 1.5;
-                                var viewport = page.getViewport({ scale: scale, });
-                                // Support HiDPI-screens.
-                                var outputScale = window.devicePixelRatio || 1;
-
-                                var context = canvas.getContext('2d');
-
-                                canvas.width = Math.floor(viewport.width * outputScale);
-                                canvas.height = Math.floor(viewport.height * outputScale);
-                                canvas.style.width = Math.floor(viewport.width) + "px";
-                                canvas.style.height = Math.floor(viewport.height) + "px";
-
-                                var transform = outputScale !== 1
-                                    ? [outputScale, 0, 0, outputScale, 0, 0]
-                                    : null;
-
-                                var renderContext = {
-                                    canvasContext: context,
-                                    transform: transform,
-                                    viewport: viewport
-                                };
-                                page.render(renderContext);
-                            });
+                            state.pdf = await pdfTask.promise;
+                            state.page = 1;
+                            state.render();
                         }
                     };
                     xhr.send(JSON.stringify({ body: content, invitation: json }));
