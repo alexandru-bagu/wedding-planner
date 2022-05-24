@@ -101,6 +101,7 @@
     "LanguageTextValue": "LanguageTextValue",
     "CreateLanguageText": "CreateLanguageText",
     "EditLanguageText": "EditLanguageText",
-    "LanguageTextDeletionConfirmationMessage": "Are you sure to delete the languageText {0}?"
+    "LanguageTextDeletionConfirmationMessage": "Are you sure to delete the languageText {0}?",
+    "PleaseConfirmInvitees": "Si prega di confermare le persone che si uniranno a noi."
   }
 }
