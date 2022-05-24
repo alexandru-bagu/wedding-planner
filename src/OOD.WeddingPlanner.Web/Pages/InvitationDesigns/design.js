@@ -40,7 +40,7 @@ abp.modals.designModal = function () {
                 canvas: document.getElementById('pdf-preview'),
                 container: document.getElementById('container-preview'),
                 wheelTimeoutHandler: null,
-                wheelTimeout: 250, //ms
+                wheelTimeout: 50, //ms
                 page: 1,
                 scale: 3,
                 next: function () {
@@ -56,7 +56,9 @@ abp.modals.designModal = function () {
                     }
                 },
                 render: function (scale) {
-                    state.scale = state.scale || scale;
+                    state.scale = scale || state.scale;
+                    if (state.scale < 0.1) state.scale = 0.1;
+                    if (state.scale > 5) state.scale = 5;
                     if (!state.context) {
                         state.context = state.canvas.getContext('2d');
                     }
@@ -89,8 +91,18 @@ abp.modals.designModal = function () {
                     });
                 }
             };
-
-            state.panzoom = panzoom(state.canvas)
+            state.panzoom = panzoom(state.canvas, { transformOrigin: { x: 0, y: 0 } });
+            $(state.canvas.parentElement).on('wheel', function () {
+                var transform = state.panzoom.getTransform();
+                state.scale = transform.scale * state.scale;
+                state.panzoom.zoomTo(0, 0, 1 / transform.scale);
+                if (!state.wheelTimeoutHandler) {
+                    state.wheelTimeoutHandler = setTimeout(function () {
+                        state.render(state.scale);
+                        state.wheelTimeoutHandler = null;
+                    }, state.wheelTimeout);
+                }
+            });
 
             modal.find("#pdf-previous").on('click', function () { state.previous(); });
             modal.find("#pdf-next").on('click', function () { state.next(); });
