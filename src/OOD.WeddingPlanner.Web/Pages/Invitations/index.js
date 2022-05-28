@@ -28,7 +28,7 @@ $(async function () {
                 return value.toLowerCase() === 'true';
             })(),
             brideSide: (function () {
-                var value = $("#brideSideFilter").val();
+                var value = $("#BrideSideFilter").val();
                 if (value === undefined || value === null || value === '') {
                     return '';
                 }
