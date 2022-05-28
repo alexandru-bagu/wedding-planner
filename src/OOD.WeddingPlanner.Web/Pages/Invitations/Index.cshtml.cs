@@ -10,7 +10,9 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations
 {
     public class IndexModel : WeddingPlannerPageModel
     {
+        [SelectItems(nameof(BooleanFilterItems))]
         public bool? GroomSideFilter { get; set; }
+        [SelectItems(nameof(BooleanFilterItems))]
         public bool? BrideSideFilter { get; set; }
         public string DestinationFilter { get; set; }
         public string SurnameFilter { get; set; }
