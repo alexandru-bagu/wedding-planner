@@ -179,7 +179,7 @@ namespace OOD.WeddingPlanner.Web
             {
                 options.Languages.Add(new LanguageInfo("en", "en", "English"));
                 options.Languages.Add(new LanguageInfo("ro-RO", "ro-RO", "Română"));
-                options.Languages.Add(new LanguageInfo("it", "it", "Italiano", "it"));
+                //options.Languages.Add(new LanguageInfo("it", "it", "Italiano", "it"));
                 //options.Languages.Add(new LanguageInfo("ar", "ar", "العربية"));
                 //options.Languages.Add(new LanguageInfo("cs", "cs", "Čeština"));
                 //options.Languages.Add(new LanguageInfo("en-GB", "en-GB", "English (UK)"));

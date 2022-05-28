@@ -48,6 +48,12 @@
             <abp-column size-md="_3">
                 <abp-input asp-for="DestinationFilter" label="@L["InvitationDestination"].Value" />
             </abp-column>
+            <abp-column size-md="_3">
+                <abp-input asp-for="GroomSideFilter" label="@L["InvitationGroomSide"].Value" />
+            </abp-column>
+            <abp-column size-md="_3">
+                <abp-input asp-for="BrideSideFilter" label="@L["InvitationBrideSide"].Value" />
+            </abp-column>
         </abp-row>
         <abp-table striped-rows="true" id="InvitationTable" class="nowrap" />
     </abp-card-body>

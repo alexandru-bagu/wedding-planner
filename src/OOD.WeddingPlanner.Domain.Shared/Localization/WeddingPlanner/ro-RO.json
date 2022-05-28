@@ -148,6 +148,9 @@
     "LanguageTextValue": "Valoare",
     "CreateLanguageText": "Adaugă traducere",
     "EditLanguageText": "Modifică traducere",
-    "LanguageTextDeletionConfirmationMessage": "Ești sigur că vrei să ștergi traducerea {0}?"
+    "LanguageTextDeletionConfirmationMessage": "Ești sigur că vrei să ștergi traducerea {0}?",
+    "InvitationGroomSide": "Din partea mirelui",
+    "InvitationBrideSide": "Din partea miresei",
+    "InvitationNotes": "Notițe"
   }
 }

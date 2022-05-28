@@ -12,9 +12,9 @@ using Volo.Abp.Uow;
 
 namespace OOD.WeddingPlanner.Invitations
 {
-  [Authorize]
+    [Authorize]
     public class InvitationAppService : CrudAppService<Invitation, InvitationDto, Guid, GetInvitationsInputDto, CreateUpdateInvitationDto, CreateUpdateInvitationDto>,
-        IInvitationAppService
+          IInvitationAppService
     {
         protected override string GetPolicyName { get; set; } = WeddingPlannerPermissions.Invitation.Default;
         protected override string GetListPolicyName { get; set; } = WeddingPlannerPermissions.Invitation.Default;
@@ -57,6 +57,8 @@ namespace OOD.WeddingPlanner.Invitations
             var query = await base.CreateFilteredQueryAsync(input);
             query = query.WhereIf(input.WeddingId.HasValue, p => p.WeddingId == input.WeddingId);
             query = query.WhereIf(!string.IsNullOrWhiteSpace(input.Destination), p => p.Destination.Contains(input.Destination));
+            query = query.WhereIf(input.GroomSide.HasValue, p => p.GroomSide == input.GroomSide);
+            query = query.WhereIf(input.BrideSide.HasValue, p => p.BrideSide == input.BrideSide);
             return query;
         }
 

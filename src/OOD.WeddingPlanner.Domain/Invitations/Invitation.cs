@@ -24,6 +24,12 @@ namespace OOD.WeddingPlanner.Invitations
         public virtual bool PlusOne { get; set; }
 
         public virtual string UniqueCode { get; set; }
+        
+        public virtual bool GroomSide { get; set; }
+        
+        public virtual bool BrideSide { get; set; }
+
+        public virtual string Notes { get; set; }
 
         public virtual List<Invitee> Invitees { get; set; } = new List<Invitee>();
 

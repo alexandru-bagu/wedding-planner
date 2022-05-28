@@ -140,6 +140,9 @@
     "LanguageTextValue": "Value",
     "CreateLanguageText": "Add translation",
     "EditLanguageText": "Edit translations",
-    "LanguageTextDeletionConfirmationMessage": "Are you sure to delete the translation {0}?"
+    "LanguageTextDeletionConfirmationMessage": "Are you sure to delete the translation {0}?",
+    "InvitationGroomSide": "Groom side",
+    "InvitationBrideSide": "Bride side",
+    "InvitationNotes": "Notes"
   }
 }

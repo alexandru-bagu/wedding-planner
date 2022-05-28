@@ -13,6 +13,12 @@ namespace OOD.WeddingPlanner.Invitations.Dtos
 
         public bool PlusOne { get; set; }
 
+        public bool GroomSide { get; set; }
+        
+        public bool BrideSide { get; set; }
+
+        public string Notes { get; set; }
+
         public List<Guid> InviteeIds { get; set; } = new List<Guid>();
     }
 }
