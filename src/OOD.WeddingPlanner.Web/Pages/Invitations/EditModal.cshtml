@@ -20,6 +20,13 @@
       <abp-input asp-for="ViewModel.Destination" />
       <abp-select asp-for="ViewModel.InviteeIds" asp-items="Model.ViewModel.InviteeItems" />
       <abp-input asp-for="ViewModel.PlusOne" />
+      <abp-input asp-for="ViewModel.PlusOne" />
+      <abp-select asp-for="ViewModel.GroomSide" asp-items="Model.ViewModel.BooleanItems"  />
+      <abp-select asp-for="ViewModel.BrideSide" asp-items="Model.ViewModel.BooleanItems"  />
+      <div>
+        <label asp-for="ViewModel.Notes"></label>
+        <textarea class="form-control" asp-for="ViewModel.Notes"></textarea>
+      </div>
       <abp-input asp-for="ViewModel.UniqueCode" />
     </abp-modal-body>
     <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>

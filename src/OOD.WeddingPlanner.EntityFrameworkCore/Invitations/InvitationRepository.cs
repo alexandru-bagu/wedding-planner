@@ -49,12 +49,14 @@ namespace OOD.WeddingPlanner.Invitations
             return result;
         }
 
-        public async Task<List<InvitationWithNavigationProperties>> GetListWithNavigationAsync(Guid? weddingId, string destination, string sorting, int skipCount, int maxResultCount)
+        public async Task<List<InvitationWithNavigationProperties>> GetListWithNavigationAsync(Guid? weddingId, string destination, bool? groomSide, bool? brideSide, string sorting, int skipCount, int maxResultCount)
         {
             var query = await GetQueryableAsync();
             query = query.IncludeDetails();
             query = query.WhereIf(weddingId.HasValue, p => p.WeddingId == weddingId);
             query = query.WhereIf(!string.IsNullOrWhiteSpace(destination), p => p.Destination.Contains(destination));
+            query = query.WhereIf(groomSide.HasValue, p => p.GroomSide == groomSide);
+            query = query.WhereIf(brideSide.HasValue, p => p.BrideSide == brideSide);
             return await query.Select(p => new InvitationWithNavigationProperties()
             {
                 Invitation = p,
@@ -65,19 +67,23 @@ namespace OOD.WeddingPlanner.Invitations
             .Skip(skipCount).Take(maxResultCount).ToListAsync();
         }
 
-        public async Task<long> GetCountAsync(Guid? weddingId, string destination)
+        public async Task<long> GetCountAsync(Guid? weddingId, string destination, bool? groomSide, bool? brideSide)
         {
             var query = await GetQueryableAsync();
             query = query.WhereIf(weddingId.HasValue, p => p.WeddingId == weddingId);
             query = query.WhereIf(!string.IsNullOrWhiteSpace(destination), p => p.Destination.Contains(destination));
+            query = query.WhereIf(groomSide.HasValue, p => p.GroomSide == groomSide);
+            query = query.WhereIf(brideSide.HasValue, p => p.BrideSide == brideSide);
             return await query.LongCountAsync();
         }
 
-        public async Task<List<Invitation>> GetListAsync(Guid? weddingId, string destination, string sorting, int skipCount, int maxResultCount)
+        public async Task<List<Invitation>> GetListAsync(Guid? weddingId, string destination, bool? groomSide, bool? brideSide, string sorting, int skipCount, int maxResultCount)
         {
             var query = await GetQueryableAsync();
             query = query.WhereIf(weddingId.HasValue, p => p.WeddingId == weddingId);
             query = query.WhereIf(!string.IsNullOrWhiteSpace(destination), p => p.Destination.Contains(destination));
+            query = query.WhereIf(groomSide.HasValue, p => p.GroomSide == groomSide);
+            query = query.WhereIf(brideSide.HasValue, p => p.BrideSide == brideSide);
             query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? $"{nameof(Invitation.Destination)}" : sorting);
             query = query.Skip(skipCount).Take(maxResultCount);
             var result = await query.ToListAsync();

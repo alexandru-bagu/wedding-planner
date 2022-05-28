@@ -10,9 +10,9 @@ namespace OOD.WeddingPlanner.Invitations
         Task<InvitationWithNavigationProperties> GetWithNavigationByIdAsync(Guid id);
         Task<InvitationWithNavigationProperties> GetWithFullNavigationByIdAsync(Guid id);
         Task<InvitationWithNavigationProperties> GetWithFullNavigationByCodeAsync(string code);
-        Task<long> GetCountAsync(Guid? weddingId = null, string destination = null);
-        Task<List<Invitation>> GetListAsync(Guid? weddingId = null, string destination = null, string sorting = null, int skipCount = 0, int maxResultCount = int.MaxValue);
-        Task<List<InvitationWithNavigationProperties>> GetListWithNavigationAsync(Guid? weddingId = null, string destination = null, string sorting = null, int skipCount = 0, int maxResultCount = int.MaxValue);
+        Task<long> GetCountAsync(Guid? weddingId = null, string destination = null, bool? groomSide = null, bool? brideSide = null);
+        Task<List<Invitation>> GetListAsync(Guid? weddingId = null, string destination = null, bool? groomSide = null, bool? brideSide = null, string sorting = null, int skipCount = 0, int maxResultCount = int.MaxValue);
+        Task<List<InvitationWithNavigationProperties>> GetListWithNavigationAsync(Guid? weddingId = null, string destination = null, bool? groomSide = null, bool? brideSide = null, string sorting = null, int skipCount = 0, int maxResultCount = int.MaxValue);
         Task<bool> UniqueCodeUsedAsync(string unique);
     }
 }
