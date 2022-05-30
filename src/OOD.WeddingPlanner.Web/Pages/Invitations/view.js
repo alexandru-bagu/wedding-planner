@@ -14,19 +14,27 @@
     });
 
     $(document).on('change', '[data-rsvp]', async function (evt) {
-        var el = $("[name='" + evt.target.name + "']:checked");
-        var menu = $('[data-menu][data-invitee-id="' + el.data('invitee-id') + '"]');
-        if (el.val() === "false") { menu.closest(".invitee-menu").addClass("d-none"); }
-        else { menu.closest(".invitee-menu").removeClass("d-none"); }
-        await abp.ajax({ url: abp.appPath + 'RSVP/' + el.data('invitee-id') + '/' + encodeURIComponent(window.app_tenant_name || ""), data: JSON.stringify(el.val()) });
-        if (el.val() !== "false") { menu.trigger('change'); }
-        console.log(l('SuccessfullyUpdated'));
+        try {
+            var el = $("[name='" + evt.target.name + "']:checked");
+            var menu = $('[data-menu][data-invitee-id="' + el.data('invitee-id') + '"]');
+            if (el.val() === "false") { menu.closest(".invitee-menu").addClass("d-none"); }
+            else { menu.closest(".invitee-menu").removeClass("d-none"); }
+            await abp.ajax({ url: abp.appPath + 'RSVP/' + el.data('invitee-id') + '/' + encodeURIComponent(window.app_tenant_name || ""), data: JSON.stringify(el.val()) });
+            if (el.val() !== "false") { menu.trigger('change'); }
+            abp.notify.success(l('SuccessfullyUpdated'),"", {timeOut: 100});
+        } catch (ex) {
+            abp.notify.error(l('UpdateFailed'),"", {timeOut: 1000});
+        }
     });
 
     $(document).on('change', '[data-menu]', async function (evt) {
-        var el = $(evt.target);
-        await abp.ajax({ url: abp.appPath + 'RSVPMenu/' + el.data('invitee-id') + '/' + encodeURIComponent(window.app_tenant_name || ""), data: JSON.stringify(el.val()) });
-        console.log(l('SuccessfullyUpdated'));
+        try {
+            var el = $(evt.target);
+            await abp.ajax({ url: abp.appPath + 'RSVPMenu/' + el.data('invitee-id') + '/' + encodeURIComponent(window.app_tenant_name || ""), data: JSON.stringify(el.val()) });
+            abp.notify.success(l('SuccessfullyUpdated'),"", {timeOut: 100});
+        } catch (ex) {
+            abp.notify.error(l('UpdateFailed'),"", {timeOut: 1000});
+        }
     });
 
     $(document).on('click keypress', '[data-events] li a', function (evt) {
