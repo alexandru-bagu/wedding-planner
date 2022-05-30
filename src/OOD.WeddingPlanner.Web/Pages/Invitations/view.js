@@ -31,9 +31,9 @@
         try {
             var el = $(evt.target);
             await abp.ajax({ url: abp.appPath + 'RSVPMenu/' + el.data('invitee-id') + '/' + encodeURIComponent(window.app_tenant_name || ""), data: JSON.stringify(el.val()) });
-            abp.notify.success(l('SuccessfullyUpdated'),"", {timeOut: 100});
+            if(evt.originalEvent) abp.notify.success(l('SuccessfullyUpdated'),"", {timeOut: 100});
         } catch (ex) {
-            abp.notify.error(l('UpdateFailed'),"", {timeOut: 1000});
+            if(evt.originalEvent) abp.notify.error(l('UpdateFailed'),"", {timeOut: 1000});
         }
     });
 
