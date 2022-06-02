@@ -72,7 +72,7 @@ namespace OOD.WeddingPlanner.Web.Controllers
             var invitation = await Repository.GetAsync(id);
             var design = await DesignRepository.GetAsync(invitation.DesignId.Value);
             var content = PrintInvitationJpeg(id, CurrentTenant.Name, design, HttpContext.Request.Scheme + "://" + HttpContext.Request.Host, Logger);
-            return File(content, "image/jpeg", $"{invitation.Destination}.png");
+            return File(content, "image/jpeg", $"{invitation.Destination}.jpeg");
         }
 
         [HttpGet]
@@ -163,7 +163,7 @@ namespace OOD.WeddingPlanner.Web.Controllers
             var image = HtmlConverter.Core.HtmlConverter.ConvertUrlToImage(new ImageConfiguration
             {
                 Url = url,
-                Quality = 89,
+                Quality = 98,
                 CustomSwitches = " --zoom 2 ",
                 Format = ImageFormat.Jpeg
             });
