@@ -77,7 +77,7 @@ namespace OOD.WeddingPlanner.Web.Download
                         {
                             if (CancellationTokenSource.Token.IsCancellationRequested) break;
                             var design = await invitationDesignRepository.GetAsync(invitation.DesignId.Value);
-                            var response = PrintController.PrintInvitation(invitation.Id, tenant.Name, design, _baseUrl, converter, logger);
+                            var response = PrintController.PrintInvitationPDF(invitation.Id, tenant.Name, design, _baseUrl, converter, logger);
                             using (var oStream = new FileStream(Path.Combine(_path, $"{invitation.Id}.pdf"), FileMode.Create))
                                 await oStream.WriteAsync(response, 0, response.Length);
                             Complete++;

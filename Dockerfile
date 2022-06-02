@@ -10,7 +10,7 @@ RUN dotnet publish -c Release -o /app/build/dbmigrator src/OOD.WeddingPlanner.Db
 
 # # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
-RUN apt-get update -qq && apt-get -y install libgdiplus libc6-dev
+RUN apt-get update -qq && apt-get -y install libgdiplus libc6-dev wkhtmltopdf
 WORKDIR /app
 COPY container/entrypoint.sh /app
 COPY --from=build-env /app/build .

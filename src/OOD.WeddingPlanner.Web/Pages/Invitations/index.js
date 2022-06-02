@@ -49,10 +49,18 @@ $(async function () {
                                 }
                             },
                             {
-                                text: l('Print'),
+                                text: l('Print PDF'),
                                 action: function (data) {
                                     var form = $('#download-invitation');
-                                    form.attr('action', abp.appPath + "Invitation/Print/" + data.record.invitation.id);
+                                    form.attr('action', abp.appPath + "Invitation/Print/PDF/" + data.record.invitation.id);
+                                    form[0].submit();
+                                }
+                            },
+                            {
+                                text: l('Print Image'),
+                                action: function (data) {
+                                    var form = $('#download-invitation');
+                                    form.attr('action', abp.appPath + "Invitation/Print/Image/" + data.record.invitation.id);
                                     form[0].submit();
                                 }
                             },
