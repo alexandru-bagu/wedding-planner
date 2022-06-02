@@ -37,6 +37,20 @@ namespace OOD.WeddingPlanner.Web.Pages.Invitations.ViewModels
         [HiddenInput]
         [ReadOnlyInput]
         public string UniqueCode { get; set; }
+        
+        [Required]
+        [Display(Name = "InvitationGroomSide")]
+        [SelectItems(nameof(BooleanItems))]
+        public bool GroomSide { get; set; }
+        
+        [Required]
+        [Display(Name = "InvitationBrideSide")]
+        [SelectItems(nameof(BooleanItems))]
+        public bool BrideSide { get; set; }
+
+        [Display(Name = "InvitationNotes")]
+        [TextArea]
+        public string Notes { get; set; }
 
         public List<SelectListItem> WeddingItems { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> InviteeItems { get; set; } = new List<SelectListItem>();

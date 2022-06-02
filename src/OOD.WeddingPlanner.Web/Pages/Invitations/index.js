@@ -19,7 +19,21 @@ $(async function () {
         return {
             filter: $("#FilterText").val(),
             destination: $("#DestinationFilter").val(),
-            weddingId: $("#WeddingIdFilter").val()
+            weddingId: $("#WeddingIdFilter").val(),
+            groomSide: (function () {
+                var value = $("#GroomSideFilter").val();
+                if (value === undefined || value === null || value === '') {
+                    return '';
+                }
+                return value.toLowerCase() === 'true';
+            })(),
+            brideSide: (function () {
+                var value = $("#BrideSideFilter").val();
+                if (value === undefined || value === null || value === '') {
+                    return '';
+                }
+                return value.toLowerCase() === 'true';
+            })(),
         };
     };
 
