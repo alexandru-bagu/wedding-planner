@@ -161,7 +161,7 @@ namespace OOD.WeddingPlanner.Web.Controllers
             logger.LogInformation($"Printing invitation by url {url}");
 
             var defaultDpi = 96;
-            var desiredDpi = design.PaperDpi * 2;
+            var desiredDpi = design.PaperDpi * 3;
             var zoom = (int)(desiredDpi / (float)defaultDpi);
 
             var ratio = 1f;
@@ -173,7 +173,7 @@ namespace OOD.WeddingPlanner.Web.Controllers
             {
                 Url = url,
                 Quality = 94,
-                Width = (int)(width * zoom),
+                Width = (int)width,
                 Zoom = (int)zoom,
                 Format = ImageFormat.Png
             });
