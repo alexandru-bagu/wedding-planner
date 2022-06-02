@@ -71,8 +71,8 @@ namespace OOD.WeddingPlanner.Web.Controllers
         {
             var invitation = await Repository.GetAsync(id);
             var design = await DesignRepository.GetAsync(invitation.DesignId.Value);
-            var content = PrintInvitationPNG(id, CurrentTenant.Name, design, HttpContext.Request.Scheme + "://" + HttpContext.Request.Host, Logger);
-            return File(content, "image/png", $"{invitation.Destination}.png");
+            var content = PrintInvitationJpeg(id, CurrentTenant.Name, design, HttpContext.Request.Scheme + "://" + HttpContext.Request.Host, Logger);
+            return File(content, "image/jpeg", $"{invitation.Destination}.png");
         }
 
         [HttpGet]
@@ -155,27 +155,17 @@ namespace OOD.WeddingPlanner.Web.Controllers
             return converter.Convert(doc);
         }
 
-        public static byte[] PrintInvitationPNG(Guid id, string tenant_name, InvitationDesign design, string baseUrl, ILogger logger)
+        public static byte[] PrintInvitationJpeg(Guid id, string tenant_name, InvitationDesign design, string baseUrl, ILogger logger)
         {
             var url = baseUrl + $"/Invitation/Print/{id}/{tenant_name}";
             logger.LogInformation($"Printing invitation by url {url}");
 
-            var defaultDpi = 96;
-            var desiredDpi = design.PaperDpi * 3;
-            var zoom = (int)(desiredDpi / (float)defaultDpi);
-
-            var ratio = 1f;
-            if (design.MeasurementUnit == "mm") ratio = 25.4f;
-            if (design.MeasurementUnit == "cm") ratio = 2.54f;
-            var width = design.PaperWidth * desiredDpi / ratio;
-
             var image = HtmlConverter.Core.HtmlConverter.ConvertUrlToImage(new ImageConfiguration
             {
                 Url = url,
-                Quality = 94,
-                Width = (int)width,
-                Zoom = (int)zoom,
-                Format = ImageFormat.Png
+                Quality = 89,
+                CustomSwitches = " --zoom 2 ",
+                Format = ImageFormat.Jpeg
             });
             return image;
         }
