@@ -46,7 +46,7 @@ $(function () {
                                     service.delete(data.record.id)
                                         .then(function () {
                                             abp.notify.info(l('SuccessfullyDeleted'));
-                                            dataTable.ajax.reload();
+                                            dataTable.ajax.reload(null, false);
                                         });
                                 }
                             }
@@ -73,11 +73,11 @@ $(function () {
     }));
 
     createModal.onResult(function () {
-        dataTable.ajax.reload();
+        dataTable.ajax.reload(null, false);
     });
 
     editModal.onResult(function () {
-        dataTable.ajax.reload();
+        dataTable.ajax.reload(null, false);
     });
 
     $('#NewWeddingButton').click(function (e) {

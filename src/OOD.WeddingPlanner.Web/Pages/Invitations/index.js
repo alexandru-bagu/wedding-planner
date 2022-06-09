@@ -104,7 +104,7 @@ $(async function () {
                                     service.delete(data.record.invitation.id)
                                         .then(function () {
                                             abp.notify.info(l('SuccessfullyDeleted'));
-                                            dataTable.ajax.reload();
+                                            dataTable.ajax.reload(null, false);
                                         });
                                 }
                             }
@@ -131,15 +131,19 @@ $(async function () {
                 title: l('InvitationPlusOne'),
                 data: "invitation.plusOne"
             },
+            {
+                title: l('InvitationNotes'),
+                data: "invitation.notes"
+            },
         ]
     }));
 
     createModal.onResult(function () {
-        dataTable.ajax.reload();
+        dataTable.ajax.reload(null, false);
     });
 
     editModal.onResult(function () {
-        dataTable.ajax.reload();
+        dataTable.ajax.reload(null, false);
     });
 
     $('#NewInvitationButton').click(function (e) {

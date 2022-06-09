@@ -76,7 +76,7 @@ $(async function () {
                                     service.delete(data.record.invitee.id)
                                         .then(function () {
                                             abp.notify.info(l('SuccessfullyDeleted'));
-                                            dataTable.ajax.reload();
+                                            dataTable.ajax.reload(null, false);
                                         });
                                 }
                             }
@@ -147,11 +147,11 @@ $(async function () {
     }));
 
     createModal.onResult(function () {
-        dataTable.ajax.reload();
+        dataTable.ajax.reload(null, false);
     });
 
     editModal.onResult(function () {
-        dataTable.ajax.reload();
+        dataTable.ajax.reload(null, false);
     });
 
     $('#NewInviteeButton').click(function (e) {
