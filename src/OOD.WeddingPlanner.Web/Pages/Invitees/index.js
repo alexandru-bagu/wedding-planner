@@ -47,7 +47,7 @@ $(async function () {
     };
     function filterChanged(newFilter) {
         var json = JSON.stringify(newFilter);
-        var ret = json === prevFilter;
+        var ret = json !== prevFilter;
         prevFilter = json;
         return ret;
     }
