@@ -47,7 +47,7 @@ $(async function () {
                                     service.delete(data.record.event.id)
                                         .then(function () {
                                             abp.notify.info(l('SuccessfullyDeleted'));
-                                            dataTable.ajax.reload();
+                                            dataTable.ajax.reload(null, false);
                                         });
                                 }
                             }
@@ -78,11 +78,11 @@ $(async function () {
     }));
 
     createModal.onResult(function () {
-        dataTable.ajax.reload();
+        dataTable.ajax.reload(null, false);
     });
 
     editModal.onResult(function () {
-        dataTable.ajax.reload();
+        dataTable.ajax.reload(null, false);
     });
 
     $('#NewEventButton').click(function (e) {

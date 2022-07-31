@@ -71,10 +71,18 @@ $(async function () {
                                 }
                             },
                             {
-                                text: l('Print'),
+                                text: l('Print PDF'),
                                 action: function (data) {
                                     var form = $('#download-invitation');
-                                    form.attr('action', abp.appPath + "Invitation/Print/" + data.record.invitation.id);
+                                    form.attr('action', abp.appPath + "Invitation/Print/PDF/" + data.record.invitation.id);
+                                    form[0].submit();
+                                }
+                            },
+                            {
+                                text: l('Print Image'),
+                                action: function (data) {
+                                    var form = $('#download-invitation');
+                                    form.attr('action', abp.appPath + "Invitation/Print/Image/" + data.record.invitation.id);
                                     form[0].submit();
                                 }
                             },
@@ -104,7 +112,7 @@ $(async function () {
                                     service.delete(data.record.invitation.id)
                                         .then(function () {
                                             abp.notify.info(l('SuccessfullyDeleted'));
-                                            dataTable.ajax.reload();
+                                            dataTable.ajax.reload(null, false);
                                         });
                                 }
                             }
@@ -131,17 +139,19 @@ $(async function () {
                 title: l('InvitationPlusOne'),
                 data: "invitation.plusOne"
             },
+            {
+                title: l('InvitationNotes'),
+                data: "invitation.notes"
+            },
         ]
     }));
 
     createModal.onResult(function () {
-        if(filterChanged(getFilter()))
-            dataTable.ajax.reload();
+        dataTable.ajax.reload(null, false);
     });
 
     editModal.onResult(function () {
-        if(filterChanged(getFilter()))
-            dataTable.ajax.reload();
+        dataTable.ajax.reload(null, false);
     });
 
     $('#NewInvitationButton').click(function (e) {
@@ -181,6 +191,6 @@ $(async function () {
 
     $('input, select').on('blur change', function () {
         if(filterChanged(getFilter()))
-            dataTable.ajax.reload();
+            dataTable.ajax.reload(null, false);
     });
 });

@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NanoXLSX;
 using OOD.WeddingPlanner.InvitationDesigns;
@@ -14,18 +12,17 @@ using OOD.WeddingPlanner.Web.Models;
 using OOD.WeddingPlanner.Web.Providers;
 using OOD.WeddingPlanner.Web.Services;
 using System;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.Mvc;
-using Volo.Abp.Data;
 using Volo.Abp.MultiTenancy;
 using WkHtmlToPdfDotNet;
 using WkHtmlToPdfDotNet.Contracts;
 using Newtonsoft.Json;
-using System.Text;
+using HtmlConverter.Configurations;
+using HtmlConverter.Options;
 
 namespace OOD.WeddingPlanner.Web.Controllers
 {
@@ -33,7 +30,7 @@ namespace OOD.WeddingPlanner.Web.Controllers
     {
         public IInvitationRepository Repository { get; }
         public IInvitationDesignRepository DesignRepository { get; }
-        public IConverter HtmlConverter { get; }
+        public IConverter PdfHtmlConverter { get; }
         public IInvitationDownloadManager InvitationDownloadManager { get; }
         public ITenantStore TenantStore { get; }
         public ITableInviteeAppService TableInviteeAppService { get; }
@@ -43,7 +40,7 @@ namespace OOD.WeddingPlanner.Web.Controllers
         {
             Repository = repository;
             DesignRepository = designRepository;
-            HtmlConverter = htmlConverter;
+            PdfHtmlConverter = htmlConverter;
             InvitationDownloadManager = invitationDownloadManager;
             TenantStore = tenantStore;
             TableInviteeAppService = tableInviteeAppService;
@@ -57,14 +54,25 @@ namespace OOD.WeddingPlanner.Web.Controllers
         }
 
         [HttpPost]
-        [Route("Invitation/Print/{id}")]
+        [Route("Invitation/Print/PDF/{id}")]
         [Authorize(WeddingPlannerPermissions.Invitation.Default)]
-        public async Task<IActionResult> PostPrint(Guid id)
+        public async Task<IActionResult> PostPrintPdf(Guid id)
         {
             var invitation = await Repository.GetAsync(id);
             var design = await DesignRepository.GetAsync(invitation.DesignId.Value);
-            var content = PrintInvitation(id, CurrentTenant.Name, design, HttpContext.Request.Scheme + "://" + HttpContext.Request.Host, HtmlConverter, Logger);
+            var content = PrintInvitationPDF(id, CurrentTenant.Name, design, HttpContext.Request.Scheme + "://" + HttpContext.Request.Host, PdfHtmlConverter, Logger);
             return File(content, "application/pdf", $"{invitation.Destination}.pdf");
+        }
+
+        [HttpPost]
+        [Route("Invitation/Print/Image/{id}")]
+        [Authorize(WeddingPlannerPermissions.Invitation.Default)]
+        public async Task<IActionResult> PostPrintImage(Guid id)
+        {
+            var invitation = await Repository.GetAsync(id);
+            var design = await DesignRepository.GetAsync(invitation.DesignId.Value);
+            var content = PrintInvitationJpeg(id, CurrentTenant.Name, design, HttpContext.Request.Scheme + "://" + HttpContext.Request.Host, Logger);
+            return File(content, "image/jpeg", $"{invitation.Destination}.jpeg");
         }
 
         [HttpGet]
@@ -119,7 +127,7 @@ namespace OOD.WeddingPlanner.Web.Controllers
             }
         }
 
-        public static byte[] PrintInvitation(Guid id, string tenant_name, InvitationDesign design, string baseUrl, IConverter converter, ILogger logger)
+        public static byte[] PrintInvitationPDF(Guid id, string tenant_name, InvitationDesign design, string baseUrl, IConverter converter, ILogger logger)
         {
             var url = baseUrl + $"/Invitation/Print/{id}/{tenant_name}";
             var doc = new HtmlToPdfDocument()
@@ -127,7 +135,7 @@ namespace OOD.WeddingPlanner.Web.Controllers
                 GlobalSettings =
                 {
                     ColorMode = ColorMode.Color,
-                    Orientation = Orientation.Portrait,
+                    Orientation = WkHtmlToPdfDotNet.Orientation.Portrait,
                     PaperSize =  new PechkinPaperSize(design.PaperWidth + design.MeasurementUnit, design.PaperHeight + design.MeasurementUnit),
                     DPI = (int)design.PaperDpi,
                     Margins = new MarginSettings(0, 0, 0, 0)
@@ -145,6 +153,21 @@ namespace OOD.WeddingPlanner.Web.Controllers
             };
             logger.LogInformation($"Printing invitation by url {url}");
             return converter.Convert(doc);
+        }
+
+        public static byte[] PrintInvitationJpeg(Guid id, string tenant_name, InvitationDesign design, string baseUrl, ILogger logger)
+        {
+            var url = baseUrl + $"/Invitation/Print/{id}/{tenant_name}";
+            logger.LogInformation($"Printing invitation by url {url}");
+
+            var image = HtmlConverter.Core.HtmlConverter.ConvertUrlToImage(new ImageConfiguration
+            {
+                Url = url,
+                Quality = 98,
+                CustomSwitches = " --zoom 2 ",
+                Format = ImageFormat.Jpeg
+            });
+            return image;
         }
 
         [HttpPost]
@@ -232,25 +255,25 @@ namespace OOD.WeddingPlanner.Web.Controllers
                 var doc = new HtmlToPdfDocument()
                 {
                     GlobalSettings =
-                {
-                    ColorMode = ColorMode.Color,
-                    Orientation = Orientation.Portrait,
-                    PaperSize =  new PechkinPaperSize(design.PaperWidth + design.MeasurementUnit, design.PaperHeight + design.MeasurementUnit),
-                    DPI = (int)design.PaperDpi,
-                    Margins = new MarginSettings(0, 0, 0, 0)
-                },
-                    Objects =
-                {
-                    new ObjectSettings()
                     {
-                        PagesCount = true,
-                        WebSettings = { DefaultEncoding = "utf-8" },
-                        HtmlContent = input.Body,
-                        LoadSettings = { DebugJavascript = true }
+                        ColorMode = ColorMode.Color,
+                        Orientation = WkHtmlToPdfDotNet.Orientation.Portrait,
+                        PaperSize =  new PechkinPaperSize(design.PaperWidth + design.MeasurementUnit, design.PaperHeight + design.MeasurementUnit),
+                        DPI = (int)design.PaperDpi,
+                        Margins = new MarginSettings(0, 0, 0, 0)
+                    },
+                    Objects =
+                    {
+                        new ObjectSettings()
+                        {
+                            PagesCount = true,
+                            WebSettings = { DefaultEncoding = "utf-8" },
+                            HtmlContent = input.Body,
+                            LoadSettings = { DebugJavascript = true }
+                        }
                     }
-                }
                 };
-                return File(HtmlConverter.Convert(doc), "application/octet-stream");
+                return File(PdfHtmlConverter.Convert(doc), "application/octet-stream");
             }
             catch { return File(new byte[0], "application/octet-stream"); }
         }

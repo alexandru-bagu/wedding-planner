@@ -84,7 +84,7 @@ $(async function () {
                                     service.delete(data.record.invitee.id)
                                         .then(function () {
                                             abp.notify.info(l('SuccessfullyDeleted'));
-                                            dataTable.ajax.reload();
+                                            dataTable.ajax.reload(null, false);
                                         });
                                 }
                             },
@@ -96,6 +96,7 @@ $(async function () {
                                     invitee.confirmed = true;
                                     invitee.rSVP = new Date();
                                     await service.update(data.record.invitee.id, invitee);
+                                    dataTable.ajax.reload(null, false);
                                 }
                             },
                             {
@@ -106,6 +107,7 @@ $(async function () {
                                     invitee.confirmed = true;
                                     invitee.rSVP = new Date();
                                     await service.update(data.record.invitee.id, invitee);
+                                    dataTable.ajax.reload(null, false);
                                 }
                             },
                             {
@@ -188,13 +190,11 @@ $(async function () {
     }));
 
     createModal.onResult(function () {
-        if(filterChanged(getFilter()))
-            dataTable.ajax.reload();
+        dataTable.ajax.reload(null, false);
     });
 
     editModal.onResult(function () {
-        if(filterChanged(getFilter()))
-            dataTable.ajax.reload();
+        dataTable.ajax.reload(null, false);
     });
 
     $('#NewInviteeButton').click(function (e) {
@@ -205,7 +205,7 @@ $(async function () {
     $("#SearchForm").submit(function (e) {
         e.preventDefault();
         if(filterChanged(getFilter()))
-            dataTable.ajax.reload();
+            dataTable.ajax.reload(null, false);
     });
 
     $('#AdvancedFilterSectionToggler').on('click', function (e) {
@@ -214,12 +214,12 @@ $(async function () {
 
     $('#AdvancedFilterSection').on('keypress', function (e) {
         if (e.which === 13) {
-            dataTable.ajax.reload();
+            dataTable.ajax.reload(null, false);
         }
     });
 
     $('input, select').on('blur change', function () {
         if(filterChanged(getFilter()))
-            dataTable.ajax.reload();
+            dataTable.ajax.reload(null, false);
     });
 });
