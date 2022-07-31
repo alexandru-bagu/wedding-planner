@@ -59,6 +59,7 @@ $(async function () {
         searching: false,
         autoWidth: false,
         scrollCollapse: true,
+        lengthMenu: [ 10, 25, 50, 75, 100, 200 ],
         order: [[1, "asc"]],
         ajax: abp.libs.datatables.createAjax(service.getListWithNavigation, getFilter),
         columnDefs: [
