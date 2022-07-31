@@ -60,6 +60,10 @@ $(async function () {
         autoWidth: false,
         scrollCollapse: true,
         lengthMenu: [ 10, 25, 50, 75, 100, 200 ],
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
         order: [[1, "asc"]],
         ajax: abp.libs.datatables.createAjax(service.getListWithNavigation, getFilter),
         columnDefs: [
@@ -92,7 +96,7 @@ $(async function () {
                             {
                                 text: l('RSVP Yes'),
                                 visible: function(data) { return data.record.invitee.confirmed !== true && abp.auth.isGranted('WeddingPlanner.Invitee.Update') },
-                                action: function (data) {
+                                action: async function (data) {
                                     var invitee = await service.get(data.record.invitee.id);
                                     invitee.confirmed = true;
                                     invitee.rSVP = new Date();
@@ -103,7 +107,7 @@ $(async function () {
                             {
                                 text: l('RSVP No'),
                                 visible: function(data) { return data.record.invitee.confirmed !== false && abp.auth.isGranted('WeddingPlanner.Invitee.Update') },
-                                action: function (data) {
+                                action: async function (data) {
                                     var invitee = await service.get(data.record.invitee.id);
                                     invitee.confirmed = true;
                                     invitee.rSVP = new Date();
@@ -114,7 +118,7 @@ $(async function () {
                             {
                                 text: l('Open invite'),
                                 visible: function(data) { return data.record.invitee.invitationId },
-                                action: function (data) {
+                                action: async function (data) {
                                     var invitation = await invitationService.get(data.record.invitee.invitationId);
                                     if(invitation) {
                                         var a = $('<a href="' + abp.appPath + invitation.id + '/' + encodeURIComponent(abp.currentTenant.name || "") + '" target="_blank"></a>');
