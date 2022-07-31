@@ -60,7 +60,7 @@ $(async function () {
         autoWidth: false,
         scrollCollapse: true,
         lengthMenu: [ 10, 25, 50, 75, 100, 200 ],
-        dom: 'Bfrtip',
+        dom: 'B',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ],
@@ -95,7 +95,7 @@ $(async function () {
                             },
                             {
                                 text: l('RSVP Yes'),
-                                visible: function(data) { return data.record.invitee.confirmed !== true && abp.auth.isGranted('WeddingPlanner.Invitee.Update') },
+                                visible: function(data) { return data.invitee.confirmed !== true && abp.auth.isGranted('WeddingPlanner.Invitee.Update') },
                                 action: async function (data) {
                                     var invitee = await service.get(data.record.invitee.id);
                                     invitee.confirmed = true;
@@ -106,7 +106,7 @@ $(async function () {
                             },
                             {
                                 text: l('RSVP No'),
-                                visible: function(data) { return data.record.invitee.confirmed !== false && abp.auth.isGranted('WeddingPlanner.Invitee.Update') },
+                                visible: function(data) { return data.invitee.confirmed !== false && abp.auth.isGranted('WeddingPlanner.Invitee.Update') },
                                 action: async function (data) {
                                     var invitee = await service.get(data.record.invitee.id);
                                     invitee.confirmed = true;
@@ -117,7 +117,7 @@ $(async function () {
                             },
                             {
                                 text: l('Open invite'),
-                                visible: function(data) { return data.record.invitee.invitationId },
+                                visible: function(data) { return data.invitee.invitationId },
                                 action: async function (data) {
                                     var invitation = await invitationService.get(data.record.invitee.invitationId);
                                     if(invitation) {
