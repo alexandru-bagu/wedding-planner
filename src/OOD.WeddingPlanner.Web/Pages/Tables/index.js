@@ -96,7 +96,7 @@ $(async function () {
             }
             if (pushUpdates) {
                 if (previous) {
-                    var tblInv = await tableInviteeService.getList({ tableId: table.id, inviteeId: previous });
+                    var tblInv = await tableInviteeService.getList({ tableId: table.id, inviteeId: previous, maxResultCount: 1000 });
                     if (tblInv.items) {
                         await tableInviteeService.delete(tblInv.items[0].id);
                         abp.notify.info(l("SuccessfullyUpdated"));
@@ -166,11 +166,11 @@ $(async function () {
 
         vm.event.subscribe(async function () {
             pushUpdates = false;
-            var invitees = await inviteeService.getList({ confirmed: true, weddingId: vm.wedding() });
+            var invitees = await inviteeService.getList({ confirmed: true, weddingId: vm.wedding(), maxResultCount: 1000 });
             invitees.items.splice(0, 0, { surname: "---------" });
             vm.allInvitees(invitees.items.map(function (value) { return new Invitee(value); }));
 
-            var tables = await service.getListWithNavigation({ eventId: vm.event(), sorting: 'table.creationTime ASC' });
+            var tables = await service.getListWithNavigation({ eventId: vm.event(), maxResultCount: 1000, sorting: 'table.creationTime ASC' });
             vm.tables(tables.items.map(function (value) { return new Table(value); }));
         });
 
@@ -178,7 +178,7 @@ $(async function () {
             vm.tables([]);
             setTimeout(async function () {
                 vm.allInvitees([]);
-                var events = await eventService.getLookupList({ weddingId: vm.wedding() });
+                var events = await eventService.getLookupList({ weddingId: vm.wedding(), maxResultCount: 1000 });
                 if (!events.items.length) {
                     events.items.push({ id: '00000000-0000-0000-0000-000000000001', displayName: '-----' });
                 }
@@ -187,7 +187,7 @@ $(async function () {
         });
 
         vm.init = async function () {
-            var weddings = await weddingService.getLookupList({});
+            var weddings = await weddingService.getLookupList({ maxResultCount: 1000 });
             vm.weddings(weddings.items.map(function (value) { return new Lookup(value); }));
         }
 

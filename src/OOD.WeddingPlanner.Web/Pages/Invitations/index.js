@@ -15,6 +15,7 @@ $(async function () {
         modalClass: "select2modal"
     });
 
+    var prevFilter = '';
     var getFilter = function () {
         return {
             filter: $("#FilterText").val(),
@@ -36,6 +37,13 @@ $(async function () {
             })(),
         };
     };
+    function filterChanged(newFilter) {
+        var json = JSON.stringify(newFilter);
+        var ret = json === prevFilter;
+        prevFilter = json;
+        return ret;
+    }
+
 
     var weddingList = await weddingService.getList({ maxCountResult: 0 });
     var dataTable = $('#InvitationTable').DataTable(abp.libs.datatables.normalizeConfiguration({
@@ -127,11 +135,13 @@ $(async function () {
     }));
 
     createModal.onResult(function () {
-        dataTable.ajax.reload();
+        if(filterChanged(getFilter()))
+            dataTable.ajax.reload();
     });
 
     editModal.onResult(function () {
-        dataTable.ajax.reload();
+        if(filterChanged(getFilter()))
+            dataTable.ajax.reload();
     });
 
     $('#NewInvitationButton').click(function (e) {
@@ -170,6 +180,7 @@ $(async function () {
     });
 
     $('input, select').on('blur change', function () {
-        dataTable.ajax.reload();
+        if(filterChanged(getFilter()))
+            dataTable.ajax.reload();
     });
 });

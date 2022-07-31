@@ -3,6 +3,7 @@ $(async function () {
     var l = abp.localization.getResource('WeddingPlanner');
 
     var service = oOD.weddingPlanner.invitees.invitee;
+    var invitationService = oOD.weddingPlanner.invitations.invitation;
     var weddingService = oOD.weddingPlanner.weddings.wedding;
     var createModal = new abp.ModalManager({
         viewUrl: abp.appPath + 'Invitees/CreateModal',
@@ -15,6 +16,7 @@ $(async function () {
         modalClass: "inviteeModal"
     });
 
+    var prevFilter = '';
     var getFilter = function () {
         return {
             filter: $("#FilterText").val(),
@@ -43,6 +45,12 @@ $(async function () {
             })()
         };
     };
+    function filterChanged(newFilter) {
+        var json = JSON.stringify(newFilter);
+        var ret = json === prevFilter;
+        prevFilter = json;
+        return ret;
+    }
     var weddingList = await weddingService.getList({ maxCountResult: 0 });
     var dataTable = $('#InviteeTable').DataTable(abp.libs.datatables.normalizeConfiguration({
         processing: true,
@@ -78,6 +86,39 @@ $(async function () {
                                             abp.notify.info(l('SuccessfullyDeleted'));
                                             dataTable.ajax.reload();
                                         });
+                                }
+                            },
+                            {
+                                text: l('RSVP Yes'),
+                                visible: function(data) { return data.record.invitee.confirmed !== true && abp.auth.isGranted('WeddingPlanner.Invitee.Update') },
+                                action: function (data) {
+                                    var invitee = await service.get(data.record.invitee.id);
+                                    invitee.confirmed = true;
+                                    invitee.rSVP = new Date();
+                                    await service.update(data.record.invitee.id, invitee);
+                                }
+                            },
+                            {
+                                text: l('RSVP No'),
+                                visible: function(data) { return data.record.invitee.confirmed !== false && abp.auth.isGranted('WeddingPlanner.Invitee.Update') },
+                                action: function (data) {
+                                    var invitee = await service.get(data.record.invitee.id);
+                                    invitee.confirmed = true;
+                                    invitee.rSVP = new Date();
+                                    await service.update(data.record.invitee.id, invitee);
+                                }
+                            },
+                            {
+                                text: l('Open invite'),
+                                visible: function(data) { return data.record.invitee.invitationId },
+                                action: function (data) {
+                                    var invitation = await invitationService.get(data.record.invitee.invitationId);
+                                    if(invitation) {
+                                        var a = $('<a href="' + abp.appPath + invitation.id + '/' + encodeURIComponent(abp.currentTenant.name || "") + '" target="_blank"></a>');
+                                        a.appendTo(document.body);
+                                        a[0].click();
+                                        a.remove();
+                                    }
                                 }
                             }
                         ]
@@ -147,11 +188,13 @@ $(async function () {
     }));
 
     createModal.onResult(function () {
-        dataTable.ajax.reload();
+        if(filterChanged(getFilter()))
+            dataTable.ajax.reload();
     });
 
     editModal.onResult(function () {
-        dataTable.ajax.reload();
+        if(filterChanged(getFilter()))
+            dataTable.ajax.reload();
     });
 
     $('#NewInviteeButton').click(function (e) {
@@ -161,7 +204,8 @@ $(async function () {
 
     $("#SearchForm").submit(function (e) {
         e.preventDefault();
-        dataTable.ajax.reload();
+        if(filterChanged(getFilter()))
+            dataTable.ajax.reload();
     });
 
     $('#AdvancedFilterSectionToggler').on('click', function (e) {
@@ -175,6 +219,7 @@ $(async function () {
     });
 
     $('input, select').on('blur change', function () {
-        dataTable.ajax.reload();
+        if(filterChanged(getFilter()))
+            dataTable.ajax.reload();
     });
 });
